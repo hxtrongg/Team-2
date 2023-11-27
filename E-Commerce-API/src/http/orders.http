@@ -1,0 +1,42 @@
+#Get all User
+
+GET  http://localhost:9494/api/v1/orders HTTP/1.1
+
+###
+
+#Post a new user
+POST http://localhost:9494/api/v1/orders HTTP/1.1
+content-type: application/json
+
+{
+    "createdDate": "2023-10-15T08:00:00.000Z",
+    "shippedDate": "2023-10-16T10:00:00.000Z",
+    "status": "WAINTING",
+    "description": "Với dung lượng lên tới 1TB bộ mã màu sinh động",
+    "shippingAddress": "38 Yen Bai",
+    "shippingCity": "Da Nang",
+    "paymentType": "CREDIT",
+    "customer": "6537e5b442b9625c6cd70b54",
+    "employee": "652fc8ae2feb808e0ea84be1",
+    "orderDetail": [
+        {
+            "product": "652e6d23161040367654ae67",
+            "quantity": 2,
+            "price": 999.99,
+            "discount": 10
+        }
+    ]
+}
+
+###
+DELETE   http://localhost:9494/api/v1/categories/6534d9daab94b6583114c9ac HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTM0ZDhjNWFiOTRiNjU4MzExNGM5YTIiLCJlbWFpbCI6InF1eUBnbWFpbC5jb20iLCJpYXQiOjE2OTc5NjI0MDgsImV4cCI6MTY5OTI1ODQwOH0.d263IOj74lB-Vz0CFAOHCjDQyCByITLBDxRo_M-o9Ic
+
+###
+PATCH  http://localhost:9494/api/v1/categories/2 HTTP/1.1
+content-type: application/json
+
+{
+    "description": "dây điện: 3.7m,Công suất hút: 12000 Pa"
+}

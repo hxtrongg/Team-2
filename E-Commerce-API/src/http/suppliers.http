@@ -1,0 +1,29 @@
+#Get all User
+
+GET  http://localhost:9494/api/v1/suppliers HTTP/1.1
+
+###
+
+#Post a new user
+POST http://localhost:9494/api/v1/suppliers HTTP/1.1
+content-type: application/json
+
+{
+    "name": "hxtrong",
+    "email": "hxtronga@gmail.com",
+    "phoneNumber": "098789777",
+    "address": "Thanh Pho Vinh"
+
+}
+
+###
+DELETE   http://localhost:9494/api/v1/suppliers/1 HTTP/1.1
+
+
+###
+PATCH  http://localhost:9494/api/v1/suppliers/1 HTTP/1.1
+content-type: application/json
+
+{
+    "email": "hxtrong@gmail.com"
+}

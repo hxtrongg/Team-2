@@ -1,0 +1,31 @@
+#Get all User
+
+GET  http://localhost:8080/api/v1/products HTTP/1.1
+
+###
+
+#Post a new user
+POST http://localhost:9494/api/v1/products HTTP/1.1
+content-type: application/json
+
+{
+    "name":"Sam Sung Galaxy S8 128GB",
+    "price":800,
+    "discount":20,
+    "stock":60,
+    "description":"Sam Sung Galaxy S8 128GB với thiết kế sang trọng tinh gọn hỗ trợ trả góp",
+    "categoryId":"65268ea0b710cd34e9fbcbdb",
+    "supplier":"65269fcff69211010f2f13dc"
+}
+
+###
+DELETE   http://localhost:9494/api/v1/products/6526a2b12a45dcd30e7a0bf7 HTTP/1.1
+
+
+###
+PATCH  http://localhost:9494/api/v1/products/2 HTTP/1.1
+content-type: application/json
+
+{
+    "description": "dây điện: 3.7m,Công suất hút: 12000 Pa"
+}

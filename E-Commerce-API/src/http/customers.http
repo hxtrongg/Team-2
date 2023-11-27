@@ -1,0 +1,13 @@
+#Post a new user
+POST http://localhost:9494/api/v1/customers HTTP/1.1
+content-type: application/json
+
+{
+  "firstName": "Hoang Xuan",
+  "lastName": "Thong",
+  "email": "thong@gmail.com",
+  "phoneNumber": "0123456555",
+  "address": "Đà Nẵng",
+  "birthDay": "1994-09-10",
+  "password": "Eqwert123"
+}

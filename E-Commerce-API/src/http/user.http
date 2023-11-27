@@ -1,0 +1,27 @@
+#Get all User
+
+GET  http://localhost:9000/api/v1/users HTTP/1.1
+
+###
+
+#Post a new user
+POST http://localhost:9000/api/v1/users HTTP/1.1
+content-type: application/json
+
+{
+    "id": 5,
+    "name": "iPhone 14",
+    "description": "dây điện 3.7m,Công suất hút 12000 Pa"
+}
+
+###
+DELETE   http://localhost:9000/api/v1/users/2 HTTP/1.1
+
+
+###
+PATCH  http://localhost:9000/api/v1/users/2 HTTP/1.1
+content-type: application/json
+
+{
+    "description": "dây điện: 3.7m,Công suất hút: 12000 Pa"
+}
