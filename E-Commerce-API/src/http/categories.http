@@ -7,7 +7,7 @@ GET  http://localhost:9494/api/v1/categories HTTP/1.1
 #Post a new user
 POST http://localhost:9494/api/v1/categories HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTM0ZDhjNWFiOTRiNjU4MzExNGM5YTIiLCJlbWFpbCI6InF1eUBnbWFpbC5jb20iLCJpYXQiOjE2OTc5NjI0MDgsImV4cCI6MTY5OTI1ODQwOH0.d263IOj74lB-Vz0CFAOHCjDQyCByITLBDxRo_M-o9Ic
+
 
 {
     "name": "iPhone 17",

@@ -1,38 +1,22 @@
 #Get all User
 
-POST   http://localhost:8080/api/v1/auth/login HTTP/1.1
-Content-Type: application/json
-
-    {
-      "email": "trong@gmail.com",
-      "password": "Hxtrong123"
-    }
-###
-
-POST   http://localhost:9494/api/v1/auth/login HTTP/1.1
-content-type: application/json
-
-    {
-      "email": "tronghx1@gmail.com",
-      "password": "Hxtrong123@"
-    }
 
 ###
 #eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTM0ZDhjNWFiOTRiNjU4MzExNGM5YTIiLCJlbWFpbCI6InF1eUBnbWFpbC5jb20iLCJpYXQiOjE2OTc5NjI0MDgsImV4cCI6MTY5OTI1ODQwOH0.d263IOj74lB-Vz0CFAOHCjDQyCByITLBDxRo_M-o9Ic
  
 #Post a new user
-POST http://localhost:9494/api/v2/employees HTTP/1.1
+POST http://localhost:8080/api/v1/employees HTTP/1.1
 content-type: application/json
 
 {
-  "firstName": "Hoang Xuan",
-  "lastName": "Trong",
-  "email": "trong@gmail.com",
-  "phoneNumber": "0123456333",
+  "firstName": "Van",
+  "lastName": "Hieu",
+  "email": "vanquyhieu@gmail.com",
+  "phoneNumber": "0123456555",
   "address": "Đà Nẵng",
-  "birthDay": "1994-09-10",
-  "password": "Hxtrong123",
-  "photo": "https://scontent.fdad1-4.fna.fbcdn.net/v/t39.30808-6/395741584_735045631985236_5069760093543590295_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_ohc=HeC_ogJfFboAX8oN2uT&_nc_ht=scontent.fdad1-4.fna&_nc_e2o=f&oh=00_AfC_Y1etDlP2-VGOxcjnS2vpODDUIE1ydxsCwvxJfw82Kw&oe=653D3114"
+  "birthDay": "1995-09-10",
+  "password": "Vanhieu123",
+  "photo": " "
 }
 
 ###

@@ -22,7 +22,7 @@ const mongooseDbOptions = {
    * @param1 optional configs
    */
   mongoose
-    .connect('mongodb://localhost:27017/NodejsTest', mongooseDbOptions)
+    .connect('mongodb://localhost:27017/E-Commerce-Api', mongooseDbOptions)
     .then(() => {
        console.log('⚡️[MongoDB]: Connected successfully');
       //should listen app here

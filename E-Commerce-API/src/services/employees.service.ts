@@ -2,7 +2,7 @@ import Employee from '../models/employees.model';
 import { IEmployee } from '../types/model'; 
 
 const getAllItems = async () => {
-  const employees = Employee.find({}, ' -__v '); 
+  const employees = await Employee.find({}, ' -__v '); 
   /// get total documents in the Categories collection 
   const totalRecords = await Employee.count();
   return {
@@ -23,14 +23,14 @@ const createItem = async (payload: IEmployee) => {
 };
 
 const updateItem = async (id: string, payload: IEmployee) => {
-  const employee = Employee.findByIdAndUpdate(id, payload, {
+  const employee = await Employee.findByIdAndUpdate(id, payload, {
     new: true,
   });
   return employee;
 };
 
 const deleteItem = async (id: string) => {
-  const employee = Employee.findByIdAndDelete(id); 
+  const employee = await Employee.findByIdAndDelete(id); 
   return employee;
 };
 

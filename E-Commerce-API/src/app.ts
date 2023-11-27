@@ -9,7 +9,7 @@ import {sendJsonErrors} from './helpers/responseHandler';
 import usersRouter from './routes/v1/users.route';
 import categoriesRouter from './routes/v1/categories.route';
 import suppliersRouter from './routes/v1/suppliers.router';
-import employeesRouter from './routes/v2/employees.router';
+import employeesRouter from './routes/v1/employees.router';
 import customersRouter from './routes/v1/customers.router';
 import productsRouter from './routes/v1/products.router';
 import authRoute from './routes/v1/auth.router';
@@ -43,14 +43,14 @@ app.use(secondsMiddleware) //Middleware tự định nghĩa
 
 //Danh sách các routes
 app.get('/', (req: Request, res: Response) => {
-  res.status(200).json({message: 'Express + TypeScript Server'});
+  res.status(200).json({message: 'Kết nối thành công: Express + TypeScript Server'});
 });
 
 
 app.use('/api/v1/users',usersRouter);
 app.use('/api/v1/categories',categoriesRouter);
 app.use('/api/v1/suppliers',suppliersRouter);
-app.use('/api/v2/employees',employeesRouter);
+app.use('/api/v1/employees',employeesRouter);
 app.use('/api/v1/customers',customersRouter);
 app.use('/api/v1/products',productsRouter);
 app.use('/api/v1/auth',authRoute);
