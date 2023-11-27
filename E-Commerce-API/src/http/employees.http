@@ -12,15 +12,15 @@ content-type: application/json
   "firstName": "Van",
   "lastName": "Hieu",
   "email": "vanquyhieu@gmail.com",
-  "phoneNumber": "0123456555",
+  "phoneNumber": "0123456999",
   "address": "Đà Nẵng",
   "birthDay": "1995-09-10",
   "password": "Vanhieu123",
-  "photo": " "
+  "photo": "/image/avatar-default.jpg"
 }
 
 ###
-DELETE   http://localhost:9494/api/v1/auth/login HTTP/1.1/652fc8422feb808e0ea84bde HTTP/1.1
+DELETE   http://localhost:8080/api/v1/employees/65646be0887698d623e33ac2 HTTP/1.1/652fc8422feb808e0ea84bde HTTP/1.1
 
 
 ###

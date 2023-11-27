@@ -1,5 +1,6 @@
 import Employee from '../models/employees.model';
 import { IEmployee } from '../types/model'; 
+import path from 'path';
 
 const getAllItems = async () => {
   const employees = await Employee.find({}, ' -__v '); 
@@ -33,6 +34,23 @@ const deleteItem = async (id: string) => {
   const employee = await Employee.findByIdAndDelete(id); 
   return employee;
 };
+
+const getEmployeePhoto = async (id: string) => {
+  try {
+    const employee = await Employee.findById(id);
+
+    if (!employee || !employee.photo) {
+      return null;
+    }
+
+    const photoPath = path.join(__dirname, '..', 'public', employee.photo);
+    return photoPath;
+  } catch (error) {
+    console.error('Error getting employee photo path:', error);
+    throw error;
+  }
+};
+
 
 export default {
   getAllItems,

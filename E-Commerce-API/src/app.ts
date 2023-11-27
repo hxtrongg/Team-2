@@ -22,9 +22,11 @@ const app: Express = express();
 //   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 // }
 
+//Điều này cho phép Express phục vụ các tệp tĩnh từ thư mục public.
+app.use(express.static('public'));
+
 //Middleware Application ở đây
 app.use(cors({ origin: '*' })); //Cho phép gọi bất kỳ đâu
-
 //app.use(cors(corsOptions)); //cho phép gọi từ một domain xác định
 
 //Để nhận định dạng json gửi lên từ client
