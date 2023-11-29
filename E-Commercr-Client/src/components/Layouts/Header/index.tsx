@@ -91,11 +91,11 @@ const Header = () => {
                   <li className="group">
                     <a className="inline-block font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-green-300 to-blue-500" href="#">
                       <span className='py-6 px-2' data-config-id="auto-txt-1-5">Home</span>
-                      
+
                     </a>
 
-                  {/* mega menu1 */}
-                  <div className="hidden group-hover:block absolute top-0 left-0 right-0 mt-20 pt-10 pb-10 px-6 lg:px-10 bg-gray-900 z-50">
+                    {/* mega menu1 */}
+                    <div className="hidden group-hover:block absolute top-0 left-0 right-0 mt-20 pt-10 pb-10 px-6 lg:px-10 bg-gray-900 z-50">
                       <div className="pt-10 border-t border-gray-800">
                         <div className="flex flex-wrap -mx-4 justify-between">
                           <div className="w-2/5 px-4">
@@ -181,9 +181,9 @@ const Header = () => {
                       <span className='py-6 px-2' data-config-id="auto-txt-2-5">Product</span>
                       <div className="hidden group-hover:block absolute bottom-0 left-0 -mb-13 py-px w-full bg-yellow-500"></div>
                     </a>
-                    
-                        {/* mega menu2 */}
-                  <div className="hidden group-hover:block absolute top-0 left-0 right-0 mt-20 pt-10 pb-10 px-6 lg:px-10 bg-gray-900 z-50">
+
+                    {/* mega menu2 */}
+                    <div className="hidden group-hover:block absolute top-0 left-0 right-0 mt-20 pt-10 pb-10 px-6 lg:px-10 bg-gray-900 z-50">
                       <div className="pt-10 border-t border-gray-800">
                         <div className="flex flex-wrap -mx-4 justify-between">
                           <div className="w-2/5 px-4">
@@ -277,89 +277,143 @@ const Header = () => {
 
                 <div className="hidden lg:inline-flex items-center ml-auto">
 
-                {/* search */}
-                <div className="relative flex items-center me-6 w-56 border border-neutral-100 rounded-lg focus-within:border-neutral-600 hover:bg-gray-50">
-                  <input className="w-full px-4 pr-12 py-2 text-sm text-neutral-400 placeholder-neutral-400 bg-transparent outline-none" id="horizontalNav4-1" type="text" placeholder="Search..." data-config-id="auto-input-13-4" />
-                  <div className="absolute right-4">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" data-config-id="auto-svg-2-4">
-                      <path d="M15.2197 16.2803C15.5126 16.5732 15.9874 16.5732 16.2803 16.2803C16.5732 15.9874 16.5732 15.5126 16.2803 15.2197L15.2197 16.2803ZM11.7803 10.7197C11.4874 10.4268 11.0126 10.4268 10.7197 10.7197C10.4268 11.0126 10.4268 11.4874 10.7197 11.7803L11.7803 10.7197ZM12 7.5C12 9.98528 9.98528 12 7.5 12V13.5C10.8137 13.5 13.5 10.8137 13.5 7.5H12ZM7.5 12C5.01472 12 3 9.98528 3 7.5H1.5C1.5 10.8137 4.18629 13.5 7.5 13.5V12ZM3 7.5C3 5.01472 5.01472 3 7.5 3V1.5C4.18629 1.5 1.5 4.18629 1.5 7.5H3ZM7.5 3C9.98528 3 12 5.01472 12 7.5H13.5C13.5 4.18629 10.8137 1.5 7.5 1.5V3ZM16.2803 15.2197L11.7803 10.7197L10.7197 11.7803L15.2197 16.2803L16.2803 15.2197Z" fill="#B8C1CC"></path>
-                    </svg>
+                  {/* search */}
+                  <div className="relative flex items-center me-20 w-56 border border-neutral-100 rounded-lg focus-within:border-neutral-600 hover:bg-gray-50">
+                    <input className="w-full px-4 pr-12 py-1 text-sm text-neutral-400 placeholder-neutral-400 bg-transparent outline-none" id="horizontalNav4-1" type="text" placeholder="Search..." data-config-id="auto-input-13-4" />
+                    <div className="absolute right-4">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" data-config-id="auto-svg-2-4">
+                        <path d="M15.2197 16.2803C15.5126 16.5732 15.9874 16.5732 16.2803 16.2803C16.5732 15.9874 16.5732 15.5126 16.2803 15.2197L15.2197 16.2803ZM11.7803 10.7197C11.4874 10.4268 11.0126 10.4268 10.7197 10.7197C10.4268 11.0126 10.4268 11.4874 10.7197 11.7803L11.7803 10.7197ZM12 7.5C12 9.98528 9.98528 12 7.5 12V13.5C10.8137 13.5 13.5 10.8137 13.5 7.5H12ZM7.5 12C5.01472 12 3 9.98528 3 7.5H1.5C1.5 10.8137 4.18629 13.5 7.5 13.5V12ZM3 7.5C3 5.01472 5.01472 3 7.5 3V1.5C4.18629 1.5 1.5 4.18629 1.5 7.5H3ZM7.5 3C9.98528 3 12 5.01472 12 7.5H13.5C13.5 4.18629 10.8137 1.5 7.5 1.5V3ZM16.2803 15.2197L11.7803 10.7197L10.7197 11.7803L15.2197 16.2803L16.2803 15.2197Z" fill="#B8C1CC"></path>
+                      </svg>
+                    </div>
                   </div>
-                </div>
-                {/* end search */}
-                <a className="mr-8 group inline-flex items-center" href="#">
-                  <span className="text-white group-hover:text-yellow-500">
-                    <svg width="18" height="20" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg" data-config-id="auto-svg-10-1">
-                      <path d="M11.3334 8.16667V4.83333C11.3334 2.99238 9.84099 1.5 8.00004 1.5C6.15909 1.5 4.66671 2.99238 4.66671 4.83333V8.16667M2.16671 6.5H13.8334L14.6667 16.5H1.33337L2.16671 6.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                  </span>
-                  <span className="-ml-2 -mt-4 flex items-center justify-center h-6 w-6 border-2 bg-red-600 rounded-full">
-                    <span className="text-xs font-semibold text-white" data-config-id="auto-txt-14-1">3</span>
-                  </span>
-                </a>
-                <div className="inline-flex items-center font-medium text-white hover:text-yellow-500" >
-                  <a className="inline-flex items-center" href="#"><img className="mr-2" src="https://shuffle.dev/dashy-assets/images/avatar4.png" alt="" data-config-id="auto-img-2-4" /></a>
-                  <div className='cursor-pointer relative group'>
-                    <span className="mx-3 py-3.5" data-config-id="auto-txt-15-1">My Account</span>
-                    <svg className='inline-block' width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg" data-config-id="auto-svg-12-1">
-                      <path d="M10.6667 1L6.00004 5.66667L1.33337 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                    <div
-                      className="hidden group-hover:block absolute w-56 mt-3 pt-4 px-2 z-50 min-w-max -right-9  bg-white shadow-lg rounded-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <div className="py-1 border-b border-gray-200 dark:border-gray-600" role="none">
-                        <p className="px-4 pt-2 mb-1 font-normal text-gray-500 dark:text-gray-500">Signed in as:</p>
-                        <a href="#"
-                          className="flex px-4 py-2 text-sm font-semibold text-gray-700 border-l-2 border-transparent hover:border-blue-500 dark:text-gray-400 dark:hover:text-gray-300 hover:text-blue-500 dark:hover:border-blue-400">
-                          <span className="mr-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                              className="w-4 h-4 bi bi-person-circle" viewBox="0 0 16 16">
-                              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                              <path fill-rule="evenodd"
-                                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                            </svg>
-                          </span>User@gmail.com</a>
+                  {/* end search */}
+                 
+                   <div className='relative group'>
+                   <a className="mr-7 inline-flex items-center" href="#">
+                      <span className="text-white  group-hover:text-yellow-500">
+                        <svg  width="20" height="25" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg" data-config-id="auto-svg-10-1">
+                          <path d="M11.3334 8.16667V4.83333C11.3334 2.99238 9.84099 1.5 8.00004 1.5C6.15909 1.5 4.66671 2.99238 4.66671 4.83333V8.16667M2.16671 6.5H13.8334L14.6667 16.5H1.33337L2.16671 6.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                      </span>
+                      <span className="-ml-2 -mt-4 flex items-center justify-center h-6 w-6 border-2 bg-red-600 rounded-full">
+                        <span className="text-xs  font-semibold text-white" data-config-id="auto-txt-14-1">3</span>
+                      </span>
+                    </a>
+                    {/* dropdown */}
+                    <div className="hidden group-hover:block absolute mt-5 top-full -right-20 min-w-max p-9 bg-gray-700 z-50">
+                    <div className="absolute right-24 inline-block w-9 overflow-hidden -translate-x-1/2 -top-6">
+                        <div
+                            className="w-6 h-6 origin-bottom-left transform rotate-45 bg-gray-500 drop-shadow">
+                        </div>
+                    </div>
+                      <div className="flex -mx-2 pb-8 border-b border-blueGray-800 items-center">
+                        <div className="w-1/4 px-2">
+                          <img className="block h-16 w-full" src="vendia-assets/images/cart-popup/image-product-cart1.png" alt="" data-config-id="auto-img-2-2" />
+                        </div>
+                        <div className="w-3/4 px-2">
+                          <div className="pr-14">
+                            <h6 className="font-bold text-white mb-1" data-config-id="auto-txt-9-2">Throwback Hip Bag</h6>
+                            <span className="text-sm text-gray-400" data-config-id="auto-txt-10-2">1 x $49.00</span>
+                          </div>
+                        </div>
                       </div>
-                      <div className="py-1" role="none">
-                        <a href="#"
-                          className="flex px-4 py-2 text-sm text-gray-700 border-l-2 border-transparent dark:hover:border-blue-400 hover:border-blue-500 dark:text-gray-400 dark:hover:text-gray-300 hover:text-blue-500">
-                          <span className="mr-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                              className="w-4 h-4 bi bi-envelope" viewBox="0 0 16 16">
-                              <path
-                                d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
-                            </svg>
-                          </span>Messages</a>
+                      <div className="flex py-8 border-b border-blueGray-800 items-center">
+                        <div className="w-1/4 px-2">
+                          <img className="block h-16 w-full" src="vendia-assets/images/cart-popup/image-product-cart3.png" alt="" data-config-id="auto-img-3-2" />
+                        </div>
+                        <div className="w-3/4 px-2">
+                          <div className="pr-14">
+                            <h6 className="font-bold text-white mb-1" data-config-id="auto-txt-11-2">Medium Stuff Satchel</h6>
+                            <span className="text-sm text-gray-400" data-config-id="auto-txt-12-2">1 x $49.00</span>
+                          </div>
+                        </div>
                       </div>
-                      <div className="py-1" role="none">
-                        <a href="#"
-                          className="flex px-4 py-2 text-sm text-gray-700 border-l-2 border-transparent dark:hover:border-blue-400 hover:border-blue-500 dark:text-gray-400 dark:hover:text-gray-300 hover:text-blue-500">
-                          <span className="mr-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                              className="w-4 h-4 bi bi-gear" viewBox="0 0 16 16">
-                              <path
-                                d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
-                              <path
-                                d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
-                            </svg>
-                          </span>Settings</a>
+                      <div className="flex pt-8 items-center">
+                        <div className="w-1/4 px-2">
+                          <img className="block h-16 w-full" src="vendia-assets/images/cart-popup/image-product-cart2.png" alt="" data-config-id="auto-img-4-2" />
+                        </div>
+                        <div className="w-3/4 px-2">
+                          <div className="pr-14">
+                            <h6 className="font-bold text-white mb-1" data-config-id="auto-txt-13-2">Zip Tote Basket</h6>
+                            <span className="text-sm text-gray-400" data-config-id="auto-txt-14-2">1 x $49.00</span>
+                          </div>
+                        </div>
                       </div>
-                      <div className="py-1" role="none">
-                        <a href="#"
-                          className="flex px-4 py-2 text-sm text-gray-700 border-l-2 border-transparent dark:hover:border-blue-400 rounded-bl-md hover:border-blue-500 dark:text-gray-400 dark:hover:text-gray-300 hover:text-blue-500">
-                          <span className="mr-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                              className="w-4 h-4 hover:text-blue-500 bi bi-box-arrow-right" viewBox="0 0 16 16">
-                              <path fill-rule="evenodd"
-                                d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
-                              <path fill-rule="evenodd"
-                                d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
-                            </svg>
-                          </span>Logout</a>
+                      <div className="mt-8 text-center">
+                        <a className="relative group inline-flex items-center justify-center h-11 w-full mb-5 px-4 py-3 text-center font-bold text-black transition duration-200 overflow-hidden" href="#">
+                          <div className="absolute top-0 left-0 w-full h-24 transform -translate-y-8 group-hover:-translate-y-1 transition duration-500 bg-gradient-to-br from-yellow-500 via-green-300 to-blue-500"></div>
+                          <span className="relative" data-config-id="auto-txt-15-2">Checkout</span>
+                        </a>
+                        <a className="inline-block text-sm font-bold text-gray-400 hover:text-gray-200" href="#" data-config-id="auto-txt-16-2">Continue Shopping</a>
+                      </div>
+                    </div>
+                   </div>
+                    {/* orderdropdown */}
+                  
+                
+                  <div className="inline-flex items-center font-medium text-white hover:text-yellow-500" >
+                    <a className="inline-flex items-center" href="#"><img className="mr-2" src="https://shuffle.dev/dashy-assets/images/avatar4.png" alt="" data-config-id="auto-img-2-4" /></a>
+                    <div className='cursor-pointer relative group'>
+                      <span className="mx-3 py-3.5" data-config-id="auto-txt-15-1">My Account</span>
+                      <svg className='inline-block' width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg" data-config-id="auto-svg-12-1">
+                        <path d="M10.6667 1L6.00004 5.66667L1.33337 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </svg>
+                      <div
+                        className="hidden group-hover:block absolute w-56 mt-3 pt-4 px-2 z-50 min-w-max -right-9  bg-white shadow-lg rounded-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <div className="py-1 border-b border-gray-200 dark:border-gray-600" role="none">
+                          <p className="px-4 pt-2 mb-1 font-normal text-gray-500 dark:text-gray-500">Signed in as:</p>
+                          <a href="#"
+                            className="flex px-4 py-2 text-sm font-semibold text-gray-700 border-l-2 border-transparent hover:border-blue-500 dark:text-gray-400 dark:hover:text-gray-300 hover:text-blue-500 dark:hover:border-blue-400">
+                            <span className="mr-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                className="w-4 h-4 bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                <path fill-rule="evenodd"
+                                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                              </svg>
+                            </span>User@gmail.com</a>
+                        </div>
+                        <div className="py-1" role="none">
+                          <a href="#"
+                            className="flex px-4 py-2 text-sm text-gray-700 border-l-2 border-transparent dark:hover:border-blue-400 hover:border-blue-500 dark:text-gray-400 dark:hover:text-gray-300 hover:text-blue-500">
+                            <span className="mr-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                className="w-4 h-4 bi bi-envelope" viewBox="0 0 16 16">
+                                <path
+                                  d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
+                              </svg>
+                            </span>Messages</a>
+                        </div>
+                        <div className="py-1" role="none">
+                          <a href="#"
+                            className="flex px-4 py-2 text-sm text-gray-700 border-l-2 border-transparent dark:hover:border-blue-400 hover:border-blue-500 dark:text-gray-400 dark:hover:text-gray-300 hover:text-blue-500">
+                            <span className="mr-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                className="w-4 h-4 bi bi-gear" viewBox="0 0 16 16">
+                                <path
+                                  d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
+                                <path
+                                  d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
+                              </svg>
+                            </span>Settings</a>
+                        </div>
+                        <div className="py-1" role="none">
+                          <a href="#"
+                            className="flex px-4 py-2 text-sm text-gray-700 border-l-2 border-transparent dark:hover:border-blue-400 rounded-bl-md hover:border-blue-500 dark:text-gray-400 dark:hover:text-gray-300 hover:text-blue-500">
+                            <span className="mr-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                className="w-4 h-4 hover:text-blue-500 bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                  d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+                                <path fill-rule="evenodd"
+                                  d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                              </svg>
+                            </span>Logout</a>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
               </div>
             </nav>
 
