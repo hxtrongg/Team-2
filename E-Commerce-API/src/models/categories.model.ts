@@ -1,10 +1,13 @@
-import { Schema, model, Document } from 'mongoose';
+// categoriesModel.ts
 
-interface ICategory extends Document {
+import { Schema, model, Document } from 'mongoose';
+import slugify from 'slugify';
+
+export interface ICategory extends Document {
   name: string;
   description?: string;
-  thumbnail?: string;
-  products?: string[]; // Giả sử sử dụng các định danh sản phẩm
+  products: Schema.Types.ObjectId[];
+  slug: string;
 }
 
 const categoriesSchema = new Schema<ICategory>(
@@ -18,16 +21,30 @@ const categoriesSchema = new Schema<ICategory>(
     description: {
       type: String,
     },
-    thumbnail: {
-      type: String,
-    },
     products: [{
       type: Schema.Types.ObjectId,
-      ref: 'Product', // Giả sử mô hình sản phẩm có tên là 'Product'
+      ref: 'Product',
     }],
+    slug: {
+      type: String,
+      unique: true,
+      required: false,
+      minLength: 4,
+    },
   },
   { timestamps: true }
 );
+
+// Middleware to automatically generate slug before saving or updating
+categoriesSchema.pre<ICategory>('save', function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+categoriesSchema.pre<ICategory>('updateOne', function (next) {
+  // this.slug = slugify(this.name, { lower: true });  // Uncomment if updating the name should also update the slug
+  next();
+});
 
 const Category = model<ICategory>('Category', categoriesSchema);
 
