@@ -1,14 +1,17 @@
-import Joi from 'joi';
+// validations/categoryValidation.ts
+import { Request, Response, NextFunction } from 'express';
+import Joi from "joi";
+import { ICategory } from "../types/model";
 
-// Định nghĩa schema cho dữ liệu của danh mục
-const categorySchema = Joi.object({
+const categorySchema = Joi.object<ICategory>({
   name: Joi.string().min(4).required(),
-  description: Joi.string().max(500),
-  // Các quy tắc kiểm tra dữ liệu khác nếu cần
+  description: Joi.string(),
+  products: Joi.array().items(Joi.string()), // Giả sử các định danh sản phẩm là string
+  slug: Joi.string().min(4).required(),
 });
 
 // Middleware để kiểm tra dữ liệu khi tạo hoặc cập nhật danh mục
-const validateCategory = (req, res, next) => {
+const validateCategory = (req: Request, res: Response, next:NextFunction ) => {
   const { error } = categorySchema.validate(req.body);
 
   if (error) {
@@ -18,4 +21,10 @@ const validateCategory = (req, res, next) => {
   next();
 };
 
-export default validateCategory;
+export default {
+  categorySchema,
+};
+
+
+
+

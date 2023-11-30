@@ -2,9 +2,11 @@ import { ObjectId } from "mongoose";
 
 export interface ICategory {
     _id?: ObjectId;
-    name: string;
-    description: string
-  }
+      name: string;
+      description: string;
+      products: number[]; // Mảng chứa id của các sản phẩm thuộc danh mục
+      slug: string;
+    }
 
   export interface ISupplier {
     _id?: ObjectId;
@@ -34,10 +36,13 @@ export interface ICategory {
     email: string;
     phoneNumber: string;
     address?: string;
-    birthDay?: Date,
+    birthDay?: Date;
     password: string;
     photo?: string;
-    role: string
+    role: string;
+    position?: string;
+    department?: string;
+    isActive?: boolean;
   }
 
   export interface ICustomer {
