@@ -13,7 +13,8 @@ export interface ICategory {
     name: string;
     email: string;
     phoneNumber: string;
-    address: string
+    address: string;
+    slug: string
   }
 
   export interface IProduct {

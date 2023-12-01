@@ -10,10 +10,25 @@ import {ISupplier} from '../types/model';
  * Các hàm trong service phải có return
  */
 
-const getAllItems = async () => {
-  // Tương đương: SELECT * FROM suppliers (SQL)
-  const suppliers = Supplier.find({}, ' -__v ');
-  return suppliers;
+const getAllItems = async (page: number, limit: number) => {
+  try {
+    const supplier = await Supplier.find()
+      .select('-__v')
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    const totalRecords = await Supplier.countDocuments();
+
+    return {
+      supplier,
+      totalRecords,
+      totalPages: Math.ceil(totalRecords / limit),
+      currentPage: page,
+      recordsPerPage: limit,
+    };
+  } catch (error) {
+    throw error;
+  }
 };
 
 const getItemById = async (id: string) => {
