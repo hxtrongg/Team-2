@@ -9,7 +9,10 @@ import suppliersService from '../services/suppliers.service';
 
 const getAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const suppliers = await suppliersService.getAllItems();
+    const page = req.query.page ? parseInt(req.query.page as string) : 1;
+    const limit = req.query.limit ? parseInt(req.query.limit as string) : 5;
+
+    const suppliers = await suppliersService.getAllItems(page, limit);
     sendJsonSuccess(res)(suppliers); // Gọi hàm mà có truyền giá trị cho data
   } catch (error) {
     next(error);

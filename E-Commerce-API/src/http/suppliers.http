@@ -5,14 +5,14 @@ GET  http://localhost:9494/api/v1/suppliers HTTP/1.1
 ###
 
 #Post a new user
-POST http://localhost:9494/api/v1/suppliers HTTP/1.1
+POST http://localhost:8080/api/v1/suppliers HTTP/1.1
 content-type: application/json
 
 {
-    "name": "hxtrong",
-    "email": "hxtronga@gmail.com",
-    "phoneNumber": "098789777",
-    "address": "Thanh Pho Vinh"
+    "name": "JBL Audio",
+    "email": "jbl@audio.com",
+    "phoneNumber": "678-901-2345",
+    "address": "Los Angeles, CA, USA"
 
 }
 
