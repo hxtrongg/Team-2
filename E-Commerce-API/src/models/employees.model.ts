@@ -1,36 +1,36 @@
 import { Schema, model } from 'mongoose';
-import {IEmployee} from '../types/model';
+import { IEmployee } from '../types/model';
 
 const employeeSchema = new Schema<IEmployee>({
   firstName: {
     type: String,
-    require: true,
+    required: true,
     minLength: 2,
-    maxLength: 50
+    maxLength: 50,
   },
   lastName: {
     type: String,
-    require: true,
+    required: true,
     minLength: 2,
-    maxLength: 50
+    maxLength: 50,
   },
   email: {
     type: String,
     maxLength: 50,
     unique: true,
-    require: true
+    required: true,
   },
   phoneNumber: {
     type: String,
-     maxLength: 50,
-     unique: true,
+    maxLength: 50,
+    unique: true,
   },
   address: {
     type: String,
-    maxLength: 255
+    maxLength: 255,
   },
   birthDay: {
-    type: Date
+    type: Date,
   },
   password: {
     type: String,
@@ -43,17 +43,27 @@ const employeeSchema = new Schema<IEmployee>({
     },
   },
   photo: {
-    type: String
+    type: String,
   },
   role: {
     type: String,
     required: true,
-    enum: ["Admin","User", "Editor"],
-    default: 'User' // mặc định khi tạo mới tài khoản sẽ là user
-    
-}
+    enum: ["Admin", "User", "Editor"],
+    default: 'User',
+  },
+  position: {
+    type: String,
+    maxLength: 50,
+  },
+  department: {
+    type: String,
+    maxLength: 50,
+  },
+  isActive: {
+    type: Boolean,
+    default: true, // hoặc giá trị mặc định khác nếu cần
+  }
 });
-
 
 const Employee = model<IEmployee>('Employee', employeeSchema);
 export default Employee;

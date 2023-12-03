@@ -1,24 +1,33 @@
 #Get all User
-
-GET  http://localhost:9494/api/v1/categories HTTP/1.1
-
-###
-
-#Post a new user
-POST http://localhost:9494/api/v1/categories HTTP/1.1
+POST http://localhost:8080/api/v1/auth/login HTTP/1.1
 content-type: application/json
-
 
 {
-    "name": "iPhone 17",
-    "description": "Với dung lượng lên tới 1TB bộ mã màu sinh động"
+ 
+  "email": "tronghoangg@gmail.com",
+  "password": "Tronghoang123"
+  
+}
+### User Trong
+
+#Post a new user
+POST   http://localhost:8080/api/v1/categories HTTP/1.1
+content-type: application/json
+
+{
+  "name": "Thiết Bị Cho Sức Khỏe",
+  "description": "Thiết Bị Cho Sức Khỏe và các phụ kiện kèm theo giá tốt.",
+  "products": []
 }
 
-###
-DELETE   http://localhost:9494/api/v1/categories/6534d9daab94b6583114c9ac HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTM0ZDhjNWFiOTRiNjU4MzExNGM5YTIiLCJlbWFpbCI6InF1eUBnbWFpbC5jb20iLCJpYXQiOjE2OTc5NjI0MDgsImV4cCI6MTY5OTI1ODQwOH0.d263IOj74lB-Vz0CFAOHCjDQyCByITLBDxRo_M-o9Ic
 
+###
+PATCH    http://localhost:8080/api/v1/categories/65688e42c94df3a50a2a8e45 HTTP/1.1
+content-type: application/json
+
+{
+  "name": "Điện thoại"
+}
 ###
 PATCH  http://localhost:9494/api/v1/categories/2 HTTP/1.1
 content-type: application/json
