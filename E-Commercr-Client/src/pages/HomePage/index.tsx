@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Helmet } from 'react-helmet';
-import styles from './HomePageClone.module.css';
+import './HomePage.module.css';
 import '../../App.css'
 import 'swiper/css';
 import 'swiper/css/pagination';
