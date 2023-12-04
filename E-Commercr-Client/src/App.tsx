@@ -13,6 +13,8 @@ import CheckoutPage from './pages/CheckoutPage';
 import Customers from './pages/Customers';
 import CustomerOrders from './pages/Customers/CustomerOrders';
 import CustomerProfile from './pages/Customers/CustomerProfile';
+import CheckoutDonePage from './pages/CheckoutDonePage';
+import SignUpPage from './pages/SignUpPage';
 import {
   QueryClient,
   QueryClientProvider,
@@ -32,7 +34,8 @@ function App() {
           <Route path='/' element={<DefaultLayout />}>
               <Route index element={<HomePage />} />
               <Route path="products" element={<ProductsPage />} />
-              <Route path="products/:slug" element={<ProductDetailsPage />} />
+              {/* <Route path="products/:slug" element={<ProductDetailsPage />} /> */}
+              <Route path="productdetail" element={<ProductDetailsPage />} />
           </Route>
           
           {/* OnlyHeaderLayout */}
@@ -41,6 +44,9 @@ function App() {
           </Route>
           <Route path='/checkout' element={<OnlyHeaderLayout />}>
               <Route index element={<CheckoutPage />} />
+          </Route>
+          <Route path='/checkout-done' element={<OnlyHeaderLayout />}>
+              <Route index element={<CheckoutDonePage />} />
           </Route>
           {/* Nested Layout */}
           <Route path='/customers' element={<OnlyHeaderLayout />}>
@@ -53,6 +59,9 @@ function App() {
           {/* EmptyLayout */}
           <Route path='/login' element={<EmptyLayout />}>
             <Route index element={<Login />} />
+          </Route>
+          <Route path='/signup' element={<EmptyLayout />}>
+            <Route index element={<SignUpPage />} />
           </Route>
 
           {/* 404 */}
