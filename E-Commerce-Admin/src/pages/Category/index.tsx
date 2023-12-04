@@ -69,10 +69,10 @@ const Category = () => {
   const mutationDelete = useMutation({
     mutationFn: fetchDelete,
     onSuccess: () => {
-      console.log("Delete success !");
+      console.log("Đã xóa !");
       messageApi.open({
         type: "success",
-        content: "Delete success !",
+        content: "Đã xóa !",
       });
       // Làm tươi lại danh sách danh mục dựa trên key đã định nghĩa
       queryClient.invalidateQueries({ queryKey: ["categories"] });
@@ -91,10 +91,10 @@ const Category = () => {
   const mutationUpdate = useMutation({
     mutationFn: fetchUpdate,
     onSuccess: () => {
-      console.log("Update success !");
+      console.log("Cập nhật thành công !");
       messageApi.open({
         type: "success",
-        content: "Update success !",
+        content: "Cập nhật thành công !",
       });
       // Làm tươi lại danh sách danh mục dựa trên key đã định nghĩa
       queryClient.invalidateQueries({ queryKey: ["categories"] });
@@ -139,10 +139,10 @@ const Category = () => {
   const mutationCreate = useMutation({
     mutationFn: fetchCreate,
     onSuccess: () => {
-      console.log("Create success !");
+      console.log("Thêm mới thành công !");
       messageApi.open({
         type: "success",
-        content: "Create success !",
+        content: "Thêm mới thành công !",
       });
       // Làm tươi lại danh sách danh mục dựa trên key đã định nghĩa
       queryClient.invalidateQueries({ queryKey: ["categories"] });
@@ -182,19 +182,19 @@ const Category = () => {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: "Name",
+      title: "Tên danh mục",
       dataIndex: "name",
       key: "name",
       render: (text) => <a>{text}</a>,
     },
     {
-      title: "Description",
+      title: "Mô tả",
       dataIndex: "description",
       key: "description",
     },
 
     {
-      title: "Action",
+      title: "Thao tác",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
@@ -205,7 +205,7 @@ const Category = () => {
               updateForm.setFieldsValue(record);
             }}
           >
-            Edit
+            Sửa
           </Button>
 
           <Button
@@ -215,7 +215,7 @@ const Category = () => {
               mutationDelete.mutate(record._id as string);
             }}
           >
-            Delete
+            Xóa
           </Button>
         </Space>
       ),
@@ -233,7 +233,7 @@ const Category = () => {
           setIsModalCreateOpen(true);
         }}
       >
-        Create a new Category
+        Thêm
       </Button>
 
       <Table
@@ -254,7 +254,7 @@ const Category = () => {
       </div>
       {/* begin Edit Modal */}
       <Modal
-        title="Edit Category"
+        title="Sửa danh mục"
         open={isModalEditOpen}
         onOk={handleEditOk}
         onCancel={handleEditCancel}
@@ -270,10 +270,10 @@ const Category = () => {
           autoComplete="off"
         >
           <Form.Item<DataType>
-            label="Name"
+            label="Tên danh mục"
             name="name"
             rules={[
-              { required: true, message: "Please input category Name!" },
+              { required: true, message: "Vui lòng nhập tên!" },
               { min: 4, message: "Tối thiểu 4 kí tự" },
             ]}
           >
@@ -281,7 +281,7 @@ const Category = () => {
           </Form.Item>
 
           <Form.Item<DataType>
-            label="Description"
+            label="Mô tả"
             name="description"
             rules={[{ max: 500, message: "Tối đa 500 kí tự" }]}
           >
@@ -297,7 +297,7 @@ const Category = () => {
 
       {/* begin Create Modal */}
       <Modal
-        title="Create Category"
+        title="Thêm mới danh mục"
         open={isModalCreateOpen}
         onOk={handleCreateOk}
         onCancel={handleCreateCancel}
@@ -313,7 +313,7 @@ const Category = () => {
           autoComplete="off"
         >
           <Form.Item<DataType>
-            label="Name"
+            label="Tên danh mục"
             name="name"
             rules={[
               { required: true, message: "Please input category Name!" },
@@ -324,7 +324,7 @@ const Category = () => {
           </Form.Item>
 
           <Form.Item<DataType>
-            label="Description"
+            label="Mô tả"
             name="description"
             rules={[{ max: 500, message: "Tối đa 500 kí tự" }]}
           >
