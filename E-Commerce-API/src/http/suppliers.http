@@ -9,10 +9,10 @@ POST http://localhost:8080/api/v1/suppliers HTTP/1.1
 content-type: application/json
 
 {
-    "name": "JBL Audio",
-    "email": "jbl@audio.com",
-    "phoneNumber": "678-901-2345",
-    "address": "Los Angeles, CA, USA"
+    "name": "Nikon Cameras",
+    "email": "nikon@cameras.com",
+    "phoneNumber": "234-345-6789",
+    "address": "Tokyo, Japan"
 
 }
 
