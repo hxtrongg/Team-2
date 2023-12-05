@@ -5,7 +5,7 @@ import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
-  BarChartOutlined,
+  ShoppingCartOutlined,
   PieChartOutlined
 } from '@ant-design/icons';
 import { Layout, Menu, Button, theme, Space, Avatar } from 'antd';
@@ -47,32 +47,32 @@ const DefaultLayout = () => {
     {
       key: 'categories',
       icon: <VideoCameraOutlined />,
-      label: 'Categories Management',
+      label: 'Danh mục sản phẩm',
     },
     {
       key: 'products',
       icon: <UploadOutlined />,
-      label: 'Products Management',
+      label: 'Sản phẩm',
     },
     {
       key: 'customers',
       icon: <UploadOutlined />,
-      label: 'Customers Management',
+      label: 'Khách hàng',
     },
     {
       key: 'suppliers',
       icon: <PieChartOutlined />,
-      label: 'Suppliers Management',
+      label: 'Nhà cung cấp',
     },
     {
       key: 'employees',
-      icon: <UploadOutlined />,
-      label: 'Employees Management',
+      icon: <UserOutlined />,
+      label: 'Nhân Viên',
     },
     {
       key: 'orders',
-      icon: <BarChartOutlined />,
-      label: 'Orders Management',
+      icon: <ShoppingCartOutlined />,
+      label: 'Đặt hàng',
     },
   ];
   return (
@@ -87,7 +87,7 @@ const DefaultLayout = () => {
           fontSize: '20px',
           fontWeight: 'bold',
           padding: '10px 20px',
-        }} >Admin</div>
+        }} >Trang chủ</div>
         <Menu
           theme="dark"
           mode="inline"

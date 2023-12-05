@@ -27,6 +27,9 @@ const Category = () => {
   const [isModalEditOpen, setIsModalEditOpen] = React.useState(false);
   //Toggle Modal Create
   const [isModalCreateOpen, setIsModalCreateOpen] = React.useState(false);
+  //Modal xác nhận xóa.
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
+  const [itemToDelete, setItemToDelete] = React.useState<string | DataType | undefined>(undefined);
 
   const navigate = useNavigate();
   //=========================== PHÂN TRANG =================================//
@@ -62,8 +65,9 @@ const Category = () => {
   );
 
   //======= Sự kiện XÓA =====//
-  const fetchDelete = async (objectID: string) => {
-    return axiosClient.delete(config.urlAPI + "/v1/categories/" + objectID);
+  const fetchDelete = async (objectID: string | DataType) => {
+    const idToDelete = typeof objectID === 'string' ? objectID : objectID._id;
+    return axiosClient.delete(config.urlAPI + '/v1/categories/' + idToDelete);
   };
   // Mutations => Thêm mới, xóa, edit
   const mutationDelete = useMutation({
@@ -155,6 +159,22 @@ const Category = () => {
     },
   });
 
+  // Khi nhấn nút "Xác nhận xóa" trên modal xóa
+  const handleDeleteConfirm = async () => {
+    // Thực hiện cuộc gọi API để xóa nhân viên
+    await mutationDelete.mutate(itemToDelete);
+ // Đóng modal xác nhận xóa và đặt lại giá trị itemToDelete
+    setIsDeleteModalOpen(false);
+    setItemToDelete(undefined);
+  };
+// Khi nhấn nút "Hủy" trên modal xóa
+  const handleDeleteCancel = () => {
+     // Đóng modal xác nhận xóa và đặt lại giá trị itemToDelete
+    setIsDeleteModalOpen(false);
+    setItemToDelete(undefined);
+    // Các hành động khác nếu cần
+  };
+
   const [createForm] = Form.useForm();
   //Khi nhấn nut OK trên Modal
   const handleCreateOk = () => {
@@ -211,8 +231,11 @@ const Category = () => {
           <Button
             danger
             onClick={() => {
-              console.log("Delete this item", record);
-              mutationDelete.mutate(record._id as string);
+              console.log('Delete this item', record);
+              if (record && '_id' in record) {
+                setItemToDelete(record);
+                setIsDeleteModalOpen(true); // Mở modal xác nhận xóa
+              }
             }}
           >
             Xóa
@@ -252,6 +275,13 @@ const Category = () => {
           showTotal={(total) => `Total ${total} items`}
         />
       </div>
+      <Modal
+      title="Xác nhận xóa"
+      open={isDeleteModalOpen}
+      onOk={handleDeleteConfirm}
+      onCancel={handleDeleteCancel}>
+      <p>Bạn có chắc chắn muốn xóa?</p>
+    </Modal>
       {/* begin Edit Modal */}
       <Modal
         title="Sửa danh mục"

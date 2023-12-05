@@ -77,10 +77,10 @@ const Customer = () => {
   const mutationDelete = useMutation({
     mutationFn: fetchDelete,
     onSuccess: () => {
-      console.log("Delete success !");
+      console.log("Xóa thành công !");
       messageApi.open({
         type: "success",
-        content: "Delete success !",
+        content: "Xóa thành công !",
       });
       // Làm tươi lại danh sách danh mục dựa trên key đã định nghĩa
       queryClient.invalidateQueries({ queryKey: ["customers"] });
@@ -99,10 +99,10 @@ const Customer = () => {
   const mutationUpdate = useMutation({
     mutationFn: fetchUpdate,
     onSuccess: () => {
-      console.log("Update success !");
+      console.log("Sửa thành công !");
       messageApi.open({
         type: "success",
-        content: "Update success !",
+        content: "Sửa thành công !",
       });
       // Làm tươi lại danh sách danh mục dựa trên key đã định nghĩa
       queryClient.invalidateQueries({ queryKey: ["customers"] });
@@ -130,13 +130,13 @@ const Customer = () => {
 
   //hàm lấy thông tin từ form Edit
   const onFinishEdit = async (values: any) => {
-    console.log("Success:", values); //=> chính là thông tin ở form edit
+    console.log("Thành công:", values); //=> chính là thông tin ở form edit
     //Gọi API để update category
     mutationUpdate.mutate(values);
   };
 
   const onFinishEditFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    console.log("Lỗi:", errorInfo);
   };
 
   //======= Sự kiện Create =====//
@@ -147,10 +147,10 @@ const Customer = () => {
   const mutationCreate = useMutation({
     mutationFn: fetchCreate,
     onSuccess: () => {
-      console.log("Create success !");
+      console.log("Tạo mới thành công !");
       messageApi.open({
         type: "success",
-        content: "Create success !",
+        content: "Tạo mới thành công !",
       });
       // Làm tươi lại danh sách danh mục dựa trên key đã định nghĩa
       queryClient.invalidateQueries({ queryKey: ["customers"] });
@@ -179,23 +179,23 @@ const Customer = () => {
 
   //hàm lấy thông tin từ form Create
   const onFinishCreate = async (values: any) => {
-    console.log("Success:", values); //=> chính là thông tin ở form edit
+    console.log("Thành công:", values); //=> chính là thông tin ở form edit
     //Gọi API để update category
     mutationCreate.mutate(values);
   };
 
   const onFinishCreateFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    console.log("Lỗi:", errorInfo);
   };
 
   const columns: ColumnsType<DataType> = [
     {
-      title: "FirstName",
+      title: "Họ",
       dataIndex: "firstName",
       key: "firstName",
     },
     {
-      title: "LastName",
+      title: "Tên",
       dataIndex: "lastName",
       key: "lastName",
     },
@@ -206,28 +206,28 @@ const Customer = () => {
       render: (text) => <a>{text}</a>,
     },
     {
-      title: "PhoneNumber",
+      title: "Điện thoại",
       dataIndex: "phoneNumber",
       key: "phoneNumber",
     },
     {
-      title: "Address",
+      title: "Địa chỉ",
       dataIndex: "address",
       key: "address",
     },
     {
-      title: "BirthDay",
+      title: "Năm sinh",
       dataIndex: "birthDay",
       key: "birthDay",
     },
-    {
-      title: "PassWord",
-      dataIndex: "password",
-      key: "password",
-    },
+    // {
+    //   title: "PassWord",
+    //   dataIndex: "password",
+    //   key: "password",
+    // },
 
     {
-      title: "Action",
+      title: "Thao tác",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
@@ -238,7 +238,7 @@ const Customer = () => {
               updateForm.setFieldsValue(record);
             }}
           >
-            Edit
+            Sửa
           </Button>
 
           <Button
@@ -248,7 +248,7 @@ const Customer = () => {
               mutationDelete.mutate(record._id as string);
             }}
           >
-            Delete
+            Xóa
           </Button>
         </Space>
       ),
@@ -266,7 +266,7 @@ const Customer = () => {
           setIsModalCreateOpen(true);
         }}
       >
-        Create a new Customer
+        Thêm
       </Button>
 
       <Table

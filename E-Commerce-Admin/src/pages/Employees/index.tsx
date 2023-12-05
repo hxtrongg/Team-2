@@ -178,20 +178,20 @@ const Employees= () => {
     setIsModalCreateOpen(false);
     console.log('Create cancel');
   };
-
+// Khi nhấn nút "Xác nhận xóa" trên modal xóa
   const handleDeleteConfirm = async () => {
     // Thực hiện cuộc gọi API để xóa nhân viên
     await mutationDelete.mutate(itemToDelete);
-  
-    // Đóng modal xác nhận xóa và đặt lại giá trị itemToDelete
+ // Đóng modal xác nhận xóa và đặt lại giá trị itemToDelete
     setIsDeleteModalOpen(false);
     setItemToDelete(undefined);
   };
-  
+// Khi nhấn nút "Hủy" trên modal xóa
   const handleDeleteCancel = () => {
-    // Xử lý hủy xóa ở đây
-    setIsModalDeleteOpen(false);
-    console.log('Delete cancel');
+     // Đóng modal xác nhận xóa và đặt lại giá trị itemToDelete
+    setIsDeleteModalOpen(false);
+    setItemToDelete(undefined);
+    // Các hành động khác nếu cần
   };
   
 
@@ -245,11 +245,11 @@ const Employees= () => {
         return <span>{formattedDate}</span>;
       },
     },
-    {
-      title: 'Mật khẩu',
-      dataIndex: 'password',
-      key: 'password',
-    },
+    // {
+    //   title: 'Mật khẩu',
+    //   dataIndex: 'password',
+    //   key: 'password',
+    // },
     {
       title: 'Avatar',
       dataIndex: 'photo',
@@ -295,6 +295,7 @@ const Employees= () => {
               console.log('Delete this item', record);
               if (record && '_id' in record) {
                 setItemToDelete(record);
+                setIsDeleteModalOpen(true); // Mở modal xác nhận xóa
               }
             }}
           >
@@ -478,7 +479,14 @@ const Employees= () => {
    
       </Modal>
       {/* End Edit Modal */}
-
+      {/* Modal xác nhận xóa */}
+      <Modal
+      title="Xác nhận xóa"
+      open={isDeleteModalOpen}
+      onOk={handleDeleteConfirm}
+      onCancel={handleDeleteCancel}>
+      <p>Bạn có chắc chắn muốn xóa?</p>
+    </Modal>
       {/* begin Create Modal - Thêm mới sản phẩm*/}
      <Modal title="Thêm mới người dùng" open={isModalCreateOpen} onOk={handleCreateOk} onCancel={handleCreateCancel}>
      <Form
@@ -620,14 +628,7 @@ const Employees= () => {
    
       </Modal>
       {/* End Create Modal */}
-      {/* Modal xác nhận xóa */}
-      <Modal
-      title="Xác nhận xóa"
-      open={isDeleteModalOpen}
-      onOk={handleDeleteConfirm}
-      onCancel={handleDeleteCancel}>
-      <p>Bạn có chắc chắn muốn xóa?</p>
-    </Modal>
+      
 
     </>
   )
