@@ -47,6 +47,7 @@ export interface ICategory {
   }
 
   export interface ICustomer {
+    _id?: ObjectId;
     firstName: string;
     lastName: string;
     email: string;

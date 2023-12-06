@@ -1,6 +1,4 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
-import myloggerMiddleware from './middleware/mylogger.middleware';
-import secondsMiddleware from './middleware/seconds.middleware';
 import bodyParser from 'body-parser';
 import cors from "cors";
 import createError from 'http-errors';
@@ -35,10 +33,6 @@ app.use(bodyParser.json())
 //app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: false }))
 
-
-app.use(myloggerMiddleware) //Middleware tự định nghĩa
-app.use(secondsMiddleware) //Middleware tự định nghĩa
-
 //Gắn thêm một route vào app.ts
 //localhost:8080/api/v1/users
 
@@ -70,11 +64,13 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
 });
 
 // error handler --> tất cả lỗi khác rơi vào đây
+// error handler --> tất cả lỗi khác rơi vào đây
 app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
   console.log('<<< Error Handler Stack >>>', err.stack);
   //console.error('<< Middleware Error >>', err);
   
   sendJsonErrors(res, err);
 });
+
 //Xuất app ra cho server.ts
 export default app

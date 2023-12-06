@@ -38,6 +38,7 @@ const objectId =  (value: string, helpers: any) => {
     return value;
 }
 
+
 const slugFriendly =  (value: string, helpers: any) => {
     if(!value.match(/^[a-z0-9\-]+$/)){
         return helpers.message(`Slug contain only letters, numbers, and hyphens`);
