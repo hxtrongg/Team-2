@@ -9,10 +9,10 @@ POST http://localhost:8080/api/v1/products HTTP/1.1
 content-type: application/json
 
 {
-  "name": "Điện thoại iPhone 15 Pro Max 256GB",
-  "slug": "dien-thoai-iphone-15-pro-max-256gb", 
-  "supplierId": "656a0ea500d2b32aa0693b7b", 
-  "category": "656d9f069b6e79d96e99466a", 
+  "name": "MacBook Pro 14 inch M3 2023 8CPU - 10GPU",
+  "slug": "macbook-pro-14-inch-m3-2023-8cpu-10gpu", 
+  "supplier": "656a0ea500d2b32aa0693b7b", 
+  "category": "65688ef0c94df3a50a2a8e49", 
   "price": 100, 
   "meteTitle": "Mô tả ngắn", 
   "meteDescription": "Mô tả chi tiết", 
