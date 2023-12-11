@@ -1,6 +1,4 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
-import myloggerMiddleware from './middleware/mylogger.middleware';
-import secondsMiddleware from './middleware/seconds.middleware';
 import bodyParser from 'body-parser';
 import cors from "cors";
 import createError from 'http-errors';
@@ -35,9 +33,6 @@ app.use(bodyParser.json())
 //app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: false }))
 
-
-app.use(myloggerMiddleware) //Middleware tự định nghĩa
-app.use(secondsMiddleware) //Middleware tự định nghĩa
 
 //Gắn thêm một route vào app.ts
 //localhost:8080/api/v1/users
