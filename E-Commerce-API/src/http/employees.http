@@ -24,7 +24,7 @@ content-type: application/json
   "address": "Đà Nẵng",
   "birthDay": "1995-09-10",
   "password": "Ngocanh123",
-  "photo": "/image/avatar-default.jpg",
+  "photo": "/images/avatar-default.jpg",
   "role": "Admin",
   "position": "Manger Associate",
   "department": "Manger",
