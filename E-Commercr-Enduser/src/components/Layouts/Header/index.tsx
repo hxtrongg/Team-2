@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import Navigation from "../../Navigation";
-
+import useAuth from '../../../hooks/useAuth';
 
 const Header = () => {
-
+  const {user, logout} = useAuth();
   console.log('Header render');
   useEffect(() => {
     const toggleMenu = () => {
@@ -352,9 +352,9 @@ const Header = () => {
                   
                 
                   <div className="inline-flex items-center font-medium text-white hover:text-yellow-500" >
-                    <a className="inline-flex items-center" href="#"><img className="mr-2" src="https://shuffle.dev/dashy-assets/images/avatar4.png" alt="" data-config-id="auto-img-2-4" /></a>
+                    <a className="inline-flex items-center" href="#"><img className="mr-2 h-6 w-6"  src={user?.photo} alt="" data-config-id="auto-img-2-4" /></a>
                     <div className='cursor-pointer relative group'>
-                      <span className="mx-3 py-3.5" data-config-id="auto-txt-15-1">My Account</span>
+                      <span className="mx-3 py-3.5" data-config-id="auto-txt-15-1">Hi {user?.firstName}</span>
                       <svg className='inline-block' width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg" data-config-id="auto-svg-12-1">
                         <path d="M10.6667 1L6.00004 5.66667L1.33337 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                       </svg>
@@ -362,40 +362,21 @@ const Header = () => {
                         className="hidden group-hover:block absolute w-56 mt-3 pt-4 px-2 z-50 min-w-max -right-9  bg-white shadow-lg rounded-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1 border-b border-gray-200 dark:border-gray-600" role="none">
                           <p className="px-4 pt-2 mb-1 font-normal text-gray-500 dark:text-gray-500">Signed in as:</p>
+                          <div 
+                            className="flex px-4 py-2 text-sm font-semibold text-gray-700 border-l-2 border-transparent">
+                           {user?.email}</div>
+                        </div>
+                        <div className="py-1" role="none">
                           <a href="#"
-                            className="flex px-4 py-2 text-sm font-semibold text-gray-700 border-l-2 border-transparent hover:border-blue-500 dark:text-gray-400 dark:hover:text-gray-300 hover:text-blue-500 dark:hover:border-blue-400">
+                            className="flex px-4 py-2 text-sm text-gray-700 border-l-2 border-transparent dark:hover:border-blue-400 hover:border-blue-500 dark:text-gray-400 dark:hover:text-gray-300 hover:text-blue-500">
                             <span className="mr-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 className="w-4 h-4 bi bi-person-circle" viewBox="0 0 16 16">
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                                 <path fill-rule="evenodd"
                                   d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                               </svg>
-                            </span>User@gmail.com</a>
-                        </div>
-                        <div className="py-1" role="none">
-                          <a href="#"
-                            className="flex px-4 py-2 text-sm text-gray-700 border-l-2 border-transparent dark:hover:border-blue-400 hover:border-blue-500 dark:text-gray-400 dark:hover:text-gray-300 hover:text-blue-500">
-                            <span className="mr-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                className="w-4 h-4 bi bi-envelope" viewBox="0 0 16 16">
-                                <path
-                                  d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
-                              </svg>
-                            </span>Messages</a>
-                        </div>
-                        <div className="py-1" role="none">
-                          <a href="#"
-                            className="flex px-4 py-2 text-sm text-gray-700 border-l-2 border-transparent dark:hover:border-blue-400 hover:border-blue-500 dark:text-gray-400 dark:hover:text-gray-300 hover:text-blue-500">
-                            <span className="mr-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                className="w-4 h-4 bi bi-gear" viewBox="0 0 16 16">
-                                <path
-                                  d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
-                                <path
-                                  d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
-                              </svg>
-                            </span>Settings</a>
+                            </span>Profile</a>
                         </div>
                         <div className="py-1" role="none">
                           <a href="#"

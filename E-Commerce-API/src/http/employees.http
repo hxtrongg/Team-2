@@ -17,10 +17,10 @@ POST http://localhost:8080/api/v1/employees HTTP/1.1
 content-type: application/json
 
 {
-  "firstName": "Ngoc",
-  "lastName": "Anh",
-  "email": "ngocanh30927@gmail.com",
-  "phoneNumber": "0123456666",
+  "firstName": "Smith",
+  "lastName": "Rowe",
+  "email": "rowe@gmail.com",
+  "phoneNumber": "0123457766",
   "address": "Đà Nẵng",
   "birthDay": "1995-09-10",
   "password": "Ngocanh123",
