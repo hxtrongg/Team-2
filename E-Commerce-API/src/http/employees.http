@@ -1,19 +1,19 @@
 #Get all User
 
-POST http://localhost:8080/api/v1/auth/login HTTP/1.1
+POST http://localhost:9494/api/v1/auth/login HTTP/1.1
 content-type: application/json
 
 {
  
-  "email": "tronghoangg@gmail.com",
-  "password": "Tronghoang123"
+  "email": "ngocanh30927@gmail.com",
+  "password": "Ngocanh123"
   
 }
 ###
 #eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTY4NGY0ZWJiY2IyZjkwMzY2OTBiYmYiLCJlbWFpbCI6InRyb25naG9hbmdnQGdtYWlsLmNvbSIsImlhdCI6MTcwMTM0ODU2MSwiZXhwIjoxNzAyNjQ0NTYxfQ.SqzmKQWa982S6TawYkqRWhVZepxdj0yUevABjO0jlIc
  
 #Post a new user
-POST http://localhost:8080/api/v1/employees HTTP/1.1
+POST http://localhost:9494/api/v1/employees HTTP/1.1
 content-type: application/json
 
 {
