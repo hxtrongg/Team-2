@@ -11,9 +11,6 @@ import { RiShoppingCartLine } from "react-icons/ri";
 const ProductsPage = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
-
-
-
   const page = params.get('page');
   const limit = 2;
   const int_page = page ? parseInt(page) : 1;
