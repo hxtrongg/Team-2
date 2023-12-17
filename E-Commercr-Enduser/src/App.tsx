@@ -15,6 +15,7 @@ import CustomerOrders from './pages/Customers/CustomerOrders';
 import CustomerProfile from './pages/Customers/CustomerProfile';
 import CheckoutDonePage from './pages/CheckoutDonePage';
 import SignUpPage from './pages/SignUpPage';
+
 import {
   QueryClient,
   QueryClientProvider,
@@ -34,8 +35,9 @@ function App() {
           <Route path='/' element={<DefaultLayout />}>
               <Route index element={<HomePage />} />
               <Route path="products" element={<ProductsPage />} />
-              {/* <Route path="products/:slug" element={<ProductDetailsPage />} /> */}
+              <Route path="products/:slug" element={<ProductDetailsPage />} />
               <Route path="productdetail" element={<ProductDetailsPage />} />
+              
           </Route>
           
           {/* OnlyHeaderLayout */}

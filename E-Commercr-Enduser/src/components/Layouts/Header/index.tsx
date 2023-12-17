@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
 import Navigation from "../../Navigation";
+import { useCartStore } from '../../../hooks/useCartStore';
 import useAuth from '../../../hooks/useAuth';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const {user, logout} = useAuth();
+  const { items, total, itemCount, removeItem } = useCartStore();
   console.log('Header render');
   useEffect(() => {
     const toggleMenu = () => {
@@ -289,16 +292,16 @@ const Header = () => {
                   {/* end search */}
                  
                    <div className='relative group'>
-                   <a className="mr-7 inline-flex items-center" href="#">
+                   <Link className="mr-7 inline-flex items-center" to={'/cart'}>
                       <span className="text-white  group-hover:text-yellow-500">
                         <svg  width="20" height="25" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg" data-config-id="auto-svg-10-1">
                           <path d="M11.3334 8.16667V4.83333C11.3334 2.99238 9.84099 1.5 8.00004 1.5C6.15909 1.5 4.66671 2.99238 4.66671 4.83333V8.16667M2.16671 6.5H13.8334L14.6667 16.5H1.33337L2.16671 6.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg>
                       </span>
                       <span className="-ml-2 -mt-4 flex items-center justify-center h-6 w-6 border-2 bg-red-600 rounded-full">
-                        <span className="text-xs  font-semibold text-white" data-config-id="auto-txt-14-1">3</span>
+                        <span className="text-xs  font-semibold text-white" data-config-id="auto-txt-14-1">{itemCount}</span>
                       </span>
-                    </a>
+                    </Link>
                     {/* dropdown */}
                     <div className="hidden group-hover:block absolute mt-5 top-full -right-20 min-w-max p-9 bg-gray-700 z-50">
                     <div className="absolute right-24 inline-block w-9 overflow-hidden -translate-x-1/2 -top-6">

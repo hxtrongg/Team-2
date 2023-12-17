@@ -23,7 +23,7 @@ router.post('/', productsController.createItem);
  * PATH /api/v1//:id
  */
 router.patch('/:id', productsController.updateItem);
-
+router.get('/slug/:slug', productsController.getItemBySlug);
 /**
  * Delete a user by ID
  * DELETE /api/v1//:id

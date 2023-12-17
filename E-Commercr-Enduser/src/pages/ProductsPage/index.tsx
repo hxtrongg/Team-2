@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-query';
 import axios from 'axios';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
+import { useCartStore } from '../../hooks/useCartStore';
 import Pagination from '../../components/Pagination';
 import { RiShoppingCartLine } from "react-icons/ri";
 const ProductsPage = () => {
@@ -18,27 +19,29 @@ const ProductsPage = () => {
 
   const [currentPage, setCurrentPage] = React.useState(int_page);
 
+  const { addItem } = useCartStore();
+
   //Hàm fetch products
-  const getProducts = async (page = 1, limit = 2) => {
-    return axios.get(config.urlAPI + `/v1/products?page=${page}&limit=${limit}`);
+  const getProducts = async ()=> {
+    return axios.get(config.urlAPI+'/v1/products')
   }
 
-  // Queries
-  const queryProducts = useQuery({
-    queryKey: ['products', int_page, limit],
-    queryFn: () => getProducts(int_page, limit),
-    onSuccess: (data) => {
+   // Queries
+   const queryProducts = useQuery({ 
+    queryKey: ['products'],
+    queryFn: getProducts,
+    onSuccess: (data)=>{
       //Thành công thì trả lại data
       console.log(data.data.data.products);
     },
-    onError: (error) => {
+    onError: (error)=>{
       console.log(error);
     },
 
   })
 
   // Handle lỗi khi ko fetch được API
-  if (queryProducts.isError) {
+  if(queryProducts.isError){
     return (
       <h1>Error Processing</h1>
     )
@@ -49,7 +52,9 @@ const ProductsPage = () => {
         <meta charSet="utf-8" />
         <title>Products Page</title>
       </Helmet>
-      <section data-section-id="1" data-share="" data-category="search-solid" data-component-id="fce12138_02_awz" className="py-10 bg-gray-100">
+     {
+      queryProducts && (
+        <section data-section-id="1" data-share="" data-category="search-solid" data-component-id="fce12138_02_awz" className="py-10 bg-gray-100">
         <div className="container px-4 mx-auto">
           <div className=" flex flex-wrap -mx-4">
             <div className="w-full lg:w-4/12 xl:w-3/12 px-4">
@@ -64,23 +69,27 @@ const ProductsPage = () => {
                 </div>
                 <div className="hidden lg:block pb-10 lg:border-b border-gray-600">
                   <h6 className="font-bold text-black mb-8" data-config-id="auto-txt-5-2">Category</h6>
-                  <ul className="list-unstyled mb-0">
-                    <li className="mb-4"><a className="inline-block font-medium text-gray-600 hover:text-gray-400" href="#" data-config-id="auto-txt-6-2">New Releases</a></li>
-                    <li className="mb-4"><a className="inline-block font-medium text-gray-600 hover:text-gray-400" href="#" data-config-id="auto-txt-7-2">Pet Toys</a></li>
-                    <li className="mb-4"><a className="inline-block font-medium text-gray-600 hover:text-gray-400" href="#" data-config-id="auto-txt-8-2">Pet Foods</a></li>
-                    <li className="mb-4"><a className="inline-block font-medium text-gray-600 hover:text-gray-400" href="#" data-config-id="auto-txt-9-2">Pet Fasion</a></li>
-                    <li><a className="inline-block font-medium text-gray-600 hover:text-gray-400" href="#" data-config-id="auto-txt-10-2">Pet Wears</a></li>
-                  </ul>
+                  {
+                    queryProducts.data && queryProducts.data.data.data.products ? queryProducts.data.data.data.products.map((product: any)=>{
+                      return(
+                        <ul className="list-unstyled mb-0">
+                          <li className="mb-4"><a className="inline-block font-medium text-gray-600 hover:text-gray-400" href="#" data-config-id="auto-txt-6-2">{product.category.name}</a></li>
+                        </ul>
+                      )
+                    }):null
+                  }
                 </div>
                 <div className="hidden lg:block max-w-xs">
                   <h6 className="font-bold text-black mb-8" data-config-id="auto-txt-5-2">Brand</h6>
-                  <ul className="list-unstyled mb-0">
-                    <li className="mb-4"><a className="inline-block font-medium text-gray-600 hover:text-gray-400" href="#" data-config-id="auto-txt-6-2">New Releases</a></li>
-                    <li className="mb-4"><a className="inline-block font-medium text-gray-600 hover:text-gray-400" href="#" data-config-id="auto-txt-7-2">Pet Toys</a></li>
-                    <li className="mb-4"><a className="inline-block font-medium text-gray-600 hover:text-gray-400" href="#" data-config-id="auto-txt-8-2">Pet Foods</a></li>
-                    <li className="mb-4"><a className="inline-block font-medium text-gray-600 hover:text-gray-400" href="#" data-config-id="auto-txt-9-2">Pet Fasion</a></li>
-                    <li><a className="inline-block font-medium text-gray-600 hover:text-gray-400" href="#" data-config-id="auto-txt-10-2">Pet Wears</a></li>
-                  </ul>
+                  {/* {
+                    queryProducts.data && queryProducts.data.data.data.products ? queryProducts.data.data.data.products.map((product: any)=>{
+                      return(
+                        <ul className="list-unstyled mb-0">
+                          <li className="mb-4"><a className="inline-block font-medium text-gray-600 hover:text-gray-400" href="#" data-config-id="auto-txt-6-2">{product.category.name}</a></li>
+                        </ul>
+                      )
+                    }):null
+                  } */}
                 </div>
               </div>
             </div>
@@ -129,24 +138,37 @@ const ProductsPage = () => {
               </div>
               <div className="flex flex-wrap mb-20">
                 {
-                  queryProducts.data && queryProducts.data.data.data.products ? queryProducts.data.data.data.products.map((product: any) => {
-                    <div className="w-full sm:w-1/2  xl:w-1/3 bg-white overflow-hidden group border border-gray-300">
-                      <Link to={`/products/${product.slug}`} className="block p-5 ">
-                        <img className="block w-full h-80 mb-8 object-cover transition-all group-hover:scale-105" src={product.thumnail} alt={product.name} data-config-id="auto-img-1-9" />
-                        <div className="">
+                  queryProducts.data && queryProducts.data.data.data.products ? queryProducts.data.data.data.products.map((product: any)=>{
+                   return(
+                    <div className="w-full sm:w-1/2  xl:w-1/3 bg-white overflow-hidden group border border-gray-300 ">
+                    <Link to={`/products/${product.slug}`} className="block p-5 ">
+                      <img className="block w-full h-80 mb-8 object-cover transition-all group-hover:scale-105" src={product.thumnail} alt={product.name} data-config-id="auto-img-1-9" />
+                      <div className="">
 
-                          <h6 className="font-bold text-black mt-2 mb-5" data-config-id="auto-txt-2-9">{product.name}</h6>
+                        <h6 className="font-bold text-black mt-2 mb-5" data-config-id="auto-txt-2-9">{product.name}</h6>
 
-                          <div className="flex justify-between items-center mb-3">
-                            <div>
-                              <span className="font-bold text-black" data-config-id="auto-txt-1-9">{product.price}</span>
-                              <del className="font-semibold text-red-600">discount</del>
-                            </div>
-                            <div className="w-12 h-12  text-sky-500 hover:bg-sky-600 hover:text-white rounded-3xl border border-sky-500 flex items-center justify-center"><a href="#"><RiShoppingCartLine /></a></div>
+                        <div className="flex justify-between items-center mb-3">
+                          <div>
+                            <span className="font-bold text-black" data-config-id="auto-txt-1-9">{product.price}</span>
+                            <del className="ms-2 font-semibold text-red-600">{product.discount}</del>
                           </div>
+                          <div className="w-12 h-12  text-sky-500 hover:bg-sky-600 hover:text-white rounded-3xl border border-sky-500 flex items-center justify-center"><a  onClick={() => {
+                        console.log('Thêm giỏ hàng ID');
+                        const item = product?.data?.data;
+  
+                        addItem({
+                          id: item._id,
+                          price: item.price,
+                          name: item.name,
+                          quantity: 0,
+                          thumb: item.thumbnail
+                        });
+                      }}><RiShoppingCartLine /></a></div>
                         </div>
-                      </Link>
-                    </div>
+                      </div>
+                    </Link>
+                  </div>
+                   )
                   }) : null
                 }
 
@@ -164,6 +186,8 @@ const ProductsPage = () => {
           </div>
         </div>
       </section>
+      )
+     }
     </>
   )
 }
