@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import Navigation from "../../Navigation";
+import { FaRegTrashAlt,  FaAddressCard } from "react-icons/fa";
 import { useCartStore } from '../../../hooks/useCartStore';
 import useAuth from '../../../hooks/useAuth';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
-  const {user, logout} = useAuth();
+  const { user, logout } = useAuth();
   const { items, total, itemCount, removeItem } = useCartStore();
   console.log('Header render');
   useEffect(() => {
@@ -80,7 +81,7 @@ const Header = () => {
               <div className="flex items-center">
                 <a className="inline-block text-lg font-bold" href="#">
                   {/* <img className="h-6" src="vendia-assets/logos/vendia.svg" alt="" width="auto" data-config-id="auto-img-1-5" /> */}
-                  <h1 className='text-white'>LOGO</h1>
+                  <h1 className='text-white'><Link to={'/'}>LOGO</Link></h1>
                 </a>
                 <div className="lg:hidden ml-auto">
                   <button className="navbar-burger flex items-center p-3 text-white hover:text-yellow-500">
@@ -290,11 +291,11 @@ const Header = () => {
                     </div>
                   </div>
                   {/* end search */}
-                 
-                   <div className='relative group'>
-                   <Link className="mr-7 inline-flex items-center" to={'/cart'}>
+
+                  <div className='relative group'>
+                    <Link className="mr-7 inline-flex items-center" to={'/cart'}>
                       <span className="text-white  group-hover:text-yellow-500">
-                        <svg  width="20" height="25" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg" data-config-id="auto-svg-10-1">
+                        <svg width="20" height="25" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg" data-config-id="auto-svg-10-1">
                           <path d="M11.3334 8.16667V4.83333C11.3334 2.99238 9.84099 1.5 8.00004 1.5C6.15909 1.5 4.66671 2.99238 4.66671 4.83333V8.16667M2.16671 6.5H13.8334L14.6667 16.5H1.33337L2.16671 6.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg>
                       </span>
@@ -304,58 +305,67 @@ const Header = () => {
                     </Link>
                     {/* dropdown */}
                     <div className="hidden group-hover:block absolute mt-5 top-full -right-20 min-w-max p-9 bg-gray-700 z-50">
-                    <div className="absolute right-24 inline-block w-9 overflow-hidden -translate-x-1/2 -top-6">
+                      <div className="absolute right-24 inline-block w-9 overflow-hidden -translate-x-1/2 -top-6">
                         <div
-                            className="w-6 h-6 origin-bottom-left transform rotate-45 bg-gray-500 drop-shadow">
+                          className="w-6 h-6 origin-bottom-left transform rotate-45 bg-gray-500 drop-shadow">
                         </div>
-                    </div>
+                      </div>
                       <div className="flex -mx-2 pb-8 border-b border-blueGray-800 items-center">
-                        <div className="w-1/4 px-2">
-                          <img className="block h-16 w-full" src="vendia-assets/images/cart-popup/image-product-cart1.png" alt="" data-config-id="auto-img-2-2" />
-                        </div>
-                        <div className="w-3/4 px-2">
-                          <div className="pr-14">
-                            <h6 className="font-bold text-white mb-1" data-config-id="auto-txt-9-2">Throwback Hip Bag</h6>
-                            <span className="text-sm text-gray-400" data-config-id="auto-txt-10-2">1 x $49.00</span>
-                          </div>
-                        </div>
+                        {
+                          itemCount === 0 ? (
+                            <div className='py-2 text-center'>
+                              <picture>
+                              <img width={270} height={180} src="../../../../public/images/empty-cart.png" alt="" />
+                              </picture>
+                              <p className='text-white font-semibold text-base'>Chưa có sản phẩm trong giỏ hàng</p>
+                            </div>
+                          ) : (
+                            <>
+                              {
+                                items.map((item) => {
+                                  return (
+
+                                    <>
+                                      <div className="w-1/4 px-2">
+                                        <img className="block h-16 w-full" src={item.thumb} alt={item.name} />
+                                      </div>
+                                      <div className="w-3/4 px-2 flex">
+                                        <div className="pr-14">
+                                          <h6 className="font-bold text-white mb-1" data-config-id="auto-txt-9-2">{item.name}</h6>
+                                          <span className="text-sm text-gray-400" data-config-id="auto-txt-10-2">{item.quantity} x ${item.price * item.quantity}</span>
+                                        </div>
+                                        <a href="#"
+                                          onClick={() => {
+                                            removeItem(item.id);
+                                          }} className='text-white mt-2'>
+                                          <FaRegTrashAlt />
+                                        </a>
+                                      </div>
+                                    </>
+
+                                  )
+                                })
+                              }
+                            </>
+                          )
+                        }
                       </div>
-                      <div className="flex py-8 border-b border-blueGray-800 items-center">
-                        <div className="w-1/4 px-2">
-                          <img className="block h-16 w-full" src="vendia-assets/images/cart-popup/image-product-cart3.png" alt="" data-config-id="auto-img-3-2" />
-                        </div>
-                        <div className="w-3/4 px-2">
-                          <div className="pr-14">
-                            <h6 className="font-bold text-white mb-1" data-config-id="auto-txt-11-2">Medium Stuff Satchel</h6>
-                            <span className="text-sm text-gray-400" data-config-id="auto-txt-12-2">1 x $49.00</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex pt-8 items-center">
-                        <div className="w-1/4 px-2">
-                          <img className="block h-16 w-full" src="vendia-assets/images/cart-popup/image-product-cart2.png" alt="" data-config-id="auto-img-4-2" />
-                        </div>
-                        <div className="w-3/4 px-2">
-                          <div className="pr-14">
-                            <h6 className="font-bold text-white mb-1" data-config-id="auto-txt-13-2">Zip Tote Basket</h6>
-                            <span className="text-sm text-gray-400" data-config-id="auto-txt-14-2">1 x $49.00</span>
-                          </div>
-                        </div>
-                      </div>
+
                       <div className="mt-8 text-center">
-                        <a className="relative group inline-flex items-center justify-center h-11 w-full mb-5 px-4 py-3 text-center font-bold text-black transition duration-200 overflow-hidden" href="#">
+                        <Link to={'/cart'} className="relative group inline-flex items-center justify-center h-11 w-full mb-5 px-4 py-3 text-center font-bold text-black transition duration-200 overflow-hidden hover:text-white">
                           <div className="absolute top-0 left-0 w-full h-24 transform -translate-y-8 group-hover:-translate-y-1 transition duration-500 bg-gradient-to-br from-yellow-500 via-green-300 to-blue-500"></div>
-                          <span className="relative" data-config-id="auto-txt-15-2">Checkout</span>
-                        </a>
-                        <a className="inline-block text-sm font-bold text-gray-400 hover:text-gray-200" href="#" data-config-id="auto-txt-16-2">Continue Shopping</a>
+                          <span className="relative" data-config-id="auto-txt-15-2">Giỏ hàng</span>
+                        </Link>
+                        <Link to={'/product'} className="inline-block text-sm font-bold text-gray-400 hover:text-gray-200" data-config-id="auto-txt-16-2">Đến mục sản phẩm</Link>
                       </div>
                     </div>
-                   </div>
-                    {/* orderdropdown */}
-                  
-                
+                  </div>
+                  {/* orderdropdown */}
+
+
                   <div className="inline-flex items-center font-medium text-white hover:text-yellow-500" >
-                    <a className="inline-flex items-center" href="#"><img className="mr-2 h-6 w-6"  src={user?.photo} alt="" data-config-id="auto-img-2-4" /></a>
+                    
+                    <a className="inline-flex items-center" href="#"><img className="mr-2 h-6 w-6" src={user?.photo} alt="" data-config-id="auto-img-2-4" /></a>
                     <div className='cursor-pointer relative group'>
                       <span className="mx-3 py-3.5" data-config-id="auto-txt-15-1">Hi {user?.firstName}</span>
                       <svg className='inline-block' width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg" data-config-id="auto-svg-12-1">
@@ -365,26 +375,33 @@ const Header = () => {
                         className="hidden group-hover:block absolute w-56 mt-3 pt-4 px-2 z-50 min-w-max -right-9  bg-white shadow-lg rounded-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1 border-b border-gray-200 dark:border-gray-600" role="none">
                           <p className="px-4 pt-2 mb-1 font-normal text-gray-500 dark:text-gray-500">Signed in as:</p>
-                          <div 
+                          <div
                             className="flex px-4 py-2 text-sm font-semibold text-gray-700 border-l-2 border-transparent">
-                           {user?.email}</div>
+                            {user?.email}</div>
                         </div>
                         <div className="py-1" role="none">
-                          <a href="#"
+                          <Link to={'/login'}
                             className="flex px-4 py-2 text-sm text-gray-700 border-l-2 border-transparent dark:hover:border-blue-400 hover:border-blue-500 dark:text-gray-400 dark:hover:text-gray-300 hover:text-blue-500">
-                            <span className="mr-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            <span className="mr-5 mt-1">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 className="w-4 h-4 bi bi-person-circle" viewBox="0 0 16 16">
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                                 <path fill-rule="evenodd"
                                   d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                               </svg>
-                            </span>Profile</a>
+                            </span>Đăng nhập</Link>
                         </div>
                         <div className="py-1" role="none">
-                          <a href="#"
+                          <Link to={'/customer'}
+                            className="flex px-4 py-2 text-sm text-gray-700 border-l-2 border-transparent dark:hover:border-blue-400 hover:border-blue-500 dark:text-gray-400 dark:hover:text-gray-300 hover:text-blue-500">
+                            <span className="mr-5 mt-1">
+                            <FaAddressCard />
+                            </span>Khách hàng</Link>
+                        </div>
+                        <div className="py-1" role="none">
+                          <a onClick={logout}
                             className="flex px-4 py-2 text-sm text-gray-700 border-l-2 border-transparent dark:hover:border-blue-400 rounded-bl-md hover:border-blue-500 dark:text-gray-400 dark:hover:text-gray-300 hover:text-blue-500">
-                            <span className="mr-2">
+                            <span className="mr-5 mt-1">
                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 className="w-4 h-4 hover:text-blue-500 bi bi-box-arrow-right" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
@@ -392,7 +409,7 @@ const Header = () => {
                                 <path fill-rule="evenodd"
                                   d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
                               </svg>
-                            </span>Logout</a>
+                            </span>Đăng xuất</a>
                         </div>
                       </div>
                     </div>
