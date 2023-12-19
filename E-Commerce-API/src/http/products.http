@@ -1,6 +1,6 @@
 #Get all User
 
-GET  http://localhost:8080/api/v1/products HTTP/1.1
+GET  http://localhost:9494/api/v1/products HTTP/1.1
 
 ###
 
