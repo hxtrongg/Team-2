@@ -1,0 +1,7 @@
+- thumb gallery ở màn hình chính cần phải disable không tương tác cùng với gallery toogle model khi được active.
+- lỗi hiển thị button +- số lượng sản phẩm.
+*Mặc định sản phẩm được mua hoặc thêm giỏ = 1.
+
+-lỗi mua hàng, thêm giỏ hàng mua theo số lượng items sp
+
+-lấy 4 sản phẩm liên quan

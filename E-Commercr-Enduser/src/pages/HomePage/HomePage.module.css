@@ -13,9 +13,36 @@
   justify-content: center;
   align-items: center;
 }
+
 .swiper-slide img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+@media only screen and (max-width: 426px) {
+  /* Quy tắc CSS cho thiết bị di động */
+  .slide_a:first-child{
+      margin-left: 10px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  /* Quy tắc CSS cho thiết bị máy tính bảng */
+  .slide_a{
+      margin-left: 15px;
+  }
+
+}
+@media only screen and (min-width: 1024px) {
+  /* Quy tắc CSS cho màn hình máy tính */
+  .slide_a{
+      margin-left: 4px;
+  }
+  @media only screen and (min-width: 1280px) {
+      .slide_a{
+          margin-left: 4px;
+      }
+  }
 }

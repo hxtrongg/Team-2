@@ -1,0 +1,3 @@
+-kiểm tra hiển thị categories, brand
+-lọc sản phẩm theo categories, brand.
+-lọc sản phẩm theo  giá.
