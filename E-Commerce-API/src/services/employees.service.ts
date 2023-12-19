@@ -58,4 +58,5 @@ export default {
   updateItem,
   createItem,
   deleteItem,
+  getEmployeePhoto
 };
