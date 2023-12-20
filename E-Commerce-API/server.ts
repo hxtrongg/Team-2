@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 
 dotenv.config();
 //Khai báo port cho server
-const PORT = process.env.PORT || 9494;
+const PORT = process.env.PORT || 8080;
 
 /// Start the server
 const mongooseDbOptions = {
