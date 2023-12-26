@@ -8,7 +8,17 @@ import axios from 'axios';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { useCartStore } from '../../hooks/useCartStore';
 import Pagination from '../../components/Pagination';
+import {IProduct} from '../../constants/types'
+import ProductFilter from '../../components/ProductFilter';
 import { RiShoppingCartLine } from "react-icons/ri";
+
+
+type FiltersType = {
+  categoryId?: number;
+  price_min?: number;
+  price_max?: number;
+};
+
 const ProductsPage = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
@@ -58,40 +68,7 @@ const ProductsPage = () => {
         <div className="container px-4 mx-auto">
           <div className=" flex flex-wrap -mx-4">
             <div className="w-full lg:w-4/12 xl:w-3/12 px-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-6 md:gap-8 lg:gap-10 lg:max-w-2xs lg:pt-28  lg:pb-9 px-4">
-                <div className="hidden lg:block pb-10 lg:border-b border-gray-600">
-                  <h6 className="font-bold text-black mb-5" data-config-id="auto-txt-2-2">Price</h6>
-                  <input className="w-full bg-blue-500" type="range" data-config-id="auto-input-1-2" />
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-600" data-config-id="auto-txt-3-2">$0</span>
-                    <span className="text-sm font-medium text-gray-600" data-config-id="auto-txt-4-2">$200</span>
-                  </div>
-                </div>
-                <div className="hidden lg:block pb-10 lg:border-b border-gray-600">
-                  <h6 className="font-bold text-black mb-8" data-config-id="auto-txt-5-2">Category</h6>
-                  {
-                    queryProducts.data && queryProducts.data.data.data.products ? queryProducts.data.data.data.products.map((product: any)=>{
-                      return(
-                        <ul className="list-unstyled mb-0">
-                          <li className="mb-4"><a className="inline-block font-medium text-gray-600 hover:text-gray-400" href="#" data-config-id="auto-txt-6-2">{product.category.name}</a></li>
-                        </ul>
-                      )
-                    }):null
-                  }
-                </div>
-                <div className="hidden lg:block max-w-xs">
-                  <h6 className="font-bold text-black mb-8" data-config-id="auto-txt-5-2">Brand</h6>
-                  {/* {
-                    queryProducts.data && queryProducts.data.data.data.products ? queryProducts.data.data.data.products.map((product: any)=>{
-                      return(
-                        <ul className="list-unstyled mb-0">
-                          <li className="mb-4"><a className="inline-block font-medium text-gray-600 hover:text-gray-400" href="#" data-config-id="auto-txt-6-2">{product.category.name}</a></li>
-                        </ul>
-                      )
-                    }):null
-                  } */}
-                </div>
-              </div>
+              {/* ProductFilter */}
             </div>
             <div className="w-full lg:w-8/12 xl:9/12 px-4">
               <div className="flex flex-col sm:flex-row mb-6 sm:items-center pb-6 border-b border-gray-400  ">
