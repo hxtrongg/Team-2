@@ -1,3 +1,3 @@
 export default {
-    urlAPI: 'http://localhost:9494/api'
+    urlAPI: 'http://localhost:3000/api'
   }

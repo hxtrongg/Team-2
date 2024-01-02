@@ -42,7 +42,7 @@ const productSchema = new Schema({
   slug: {
     type: String,
     lowercase: true,
-    required: true,
+    required: false,
     unique: true,
     maxLength: 160,
     validate: {
@@ -122,7 +122,7 @@ productSchema.virtual('url').get(function () {
 });
 
 productSchema.virtual('salePrice').get(function () {
-  const discount = this.discount || 0;
+  const discount : number = this.discount || 0;
   return this.price * (1 - discount / 100);
 });
 

@@ -4,3 +4,8 @@
 .text-color{
     color: #212121;
 }
+/* antd styles */
+/* placeholder id */
+#control-hooks_id::placeholder {
+    color: red;
+ }

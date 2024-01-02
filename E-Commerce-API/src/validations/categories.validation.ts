@@ -4,10 +4,10 @@ import Joi from "joi";
 import { ICategory } from "../types/model";
 
 const categorySchema = Joi.object<ICategory>({
-  name: Joi.string().min(4).required(),
-  description: Joi.string(),
-  products: Joi.array().items(Joi.string()), // Giả sử các định danh sản phẩm là string
-  slug: Joi.string().min(4).required(),
+  id:Joi.number().optional,
+  name: Joi.string().optional(),
+  images: Joi.string().optional,
+  slug: Joi.string().optional(),
 });
 
 // Middleware để kiểm tra dữ liệu khi tạo hoặc cập nhật danh mục

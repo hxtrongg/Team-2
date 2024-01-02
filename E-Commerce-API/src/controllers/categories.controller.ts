@@ -54,7 +54,7 @@ const updateItem = async (req: Request, res: Response, next: NextFunction) => {
 
 const deleteItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params ;
     const deletedCategory = await categoriesService.deleteItem(id);
     sendJsonSuccess(res)(deletedCategory);
   } catch (err) {

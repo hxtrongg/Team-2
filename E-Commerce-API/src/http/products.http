@@ -55,9 +55,9 @@ DELETE   http://localhost:9494/api/v1/products/6526a2b12a45dcd30e7a0bf7 HTTP/1.1
 
 
 ###
-PATCH  http://localhost:9494/api/v1/products/2 HTTP/1.1
+PATCH  http://localhost:9494/api/v1/products/6570a1c2cc785a37486a3e49 HTTP/1.1
 content-type: application/json
 
 {
-    "description": "dây điện: 3.7m,Công suất hút: 12000 Pa"
+    "supplier" : "657337f27143f5ca2b9a8958"
 }

@@ -1,4 +1,4 @@
-#Get all User
+  #Get all User
 POST http://localhost:8080/api/v1/auth/login HTTP/1.1
 content-type: application/json
 
@@ -10,14 +10,14 @@ content-type: application/json
 }
 ### User Trong
 
-#Post a new user
-POST   http://localhost:8080/api/v1/categories HTTP/1.1
+###
+POST   http://localhost:3000/api/v1/categories HTTP/1.1
 content-type: application/json
 
 {
-  "name": "Thiết Bị Cho Sức Khỏe",
-  "description": "Thiết Bị Cho Sức Khỏe và các phụ kiện kèm theo giá tốt.",
-  "products": []
+  "id": "5",
+  "name": "mới1",
+  "images": "https://cdn.tgdd.vn/Products/Images/42/305658/Slider/vi-vn-iphone-15-pro-max-4-1020x570.jpg"
 }
 
 
@@ -29,9 +29,4 @@ content-type: application/json
   "name": "Điện thoại"
 }
 ###
-PATCH  http://localhost:9494/api/v1/categories/2 HTTP/1.1
-content-type: application/json
-
-{
-    "description": "dây điện: 3.7m,Công suất hút: 12000 Pa"
-}
+DELETE   http://localhost:3000/api/v1/categories/65904d4d4c1249aefe9e91a4 HTTP/1.1
