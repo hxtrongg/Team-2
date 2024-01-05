@@ -19,6 +19,8 @@ const tailLayout = {
 };
 
 interface ICategory {
+  _id:string;
+  id:string;
   name: string;
   image?: string;
 }
@@ -57,7 +59,7 @@ const CategoryEdit = () => {
      * @returns 
      */
     const fetchData = () =>
-    fetch(`https://api.escuelajs.co/api/v1/categories/${id}`, {
+    fetch(`http://localhost:3000/api/v1/categories/${id}`, {
       method: 'GET',
     }).then((response) => response.json());
 
@@ -75,7 +77,7 @@ const CategoryEdit = () => {
 
    //hàm call API update sản phẩm
     const updateData = (payload: ICategory) =>
-    fetch(`https://api.escuelajs.co/api/v1/categories/${id}`, {
+    fetch(`http://localhost:3000/api/v1/categories/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

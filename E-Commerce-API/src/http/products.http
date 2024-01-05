@@ -5,59 +5,33 @@ GET  http://localhost:9494/api/v1/products HTTP/1.1
 ###
 
 #Post a new user
-POST http://localhost:8080/api/v1/products HTTP/1.1
+POST http://localhost:3000/api/v1/products HTTP/1.1
 content-type: application/json
 
 {
-  "name": "MacBook Pro 14 inch M3 2023 8CPU - 10GPU",
-  "slug": "macbook-pro-14-inch-m3-2023-8cpu-10gpu", 
-  "supplier": "656a0ea500d2b32aa0693b7b", 
-  "category": "65688ef0c94df3a50a2a8e49", 
+  "id" : "2",
+  "name": "2",
+  "supplier": "657337f27143f5ca2b9a8958", 
+  "category": "6593ab1f45de61415cb12539", 
   "price": 100, 
-  "meteTitle": "Mô tả ngắn", 
-  "meteDescription": "Mô tả chi tiết", 
-  "content": "Nội dung sản phẩm", 
-  "rating": 4, 
-  "reviews": [
-    {
-      "rating": 5,
-      "comment": "Bình luận 1",
-      "customerId": "656db1879b6e79d96e994777"
-    },
-    {
-      "rating": 4,
-      "comment": "Bình luận 2",
-      "customerId": "656db3759171a0d052185716"
-    }
-  ],
-  "thumbnail": "https://cdn.tgdd.vn/Products/Images/42/305658/Slider/vi-vn-iphone-15-pro-max-4-1020x570.jpg",
-  "images": [
-    {
-      "url": "https://cdn.tgdd.vn/Products/Images/42/305658/Slider/iphone-15-pro-max-256gb---10--1020x570.jpg",
-      "alt": "Mô tả hình ảnh 1",
-      "caption": "Chú thích hình ảnh 1",
-      "position": 0
-    },
-    {
-      "url": "https://cdn.tgdd.vn/Products/Images/42/305658/Slider/vi-vn-iphone-15-pro-max-256gb--(2).jpg",
-      "alt": "Mô tả hình ảnh 2",
-      "caption": "Chú thích hình ảnh 2",
-      "position": 1
-    }
-  ],
+  "description": "Mô tả chi tiết", 
+  "images": 
+    "https://cdn.tgdd.vn/Products/Images/42/305658/Slider/vi-vn-iphone-15-pro-max-256gb--(2).jpg"
+,
   "stock": 50,
   "discount": 10
 }
 
 
 ###
-DELETE   http://localhost:9494/api/v1/products/6526a2b12a45dcd30e7a0bf7 HTTP/1.1
+DELETE   http://localhost:3000/api/v1/products/65977e948578dd98d9471810 HTTP/1.1
 
 
 ###
-PATCH  http://localhost:9494/api/v1/products/6570a1c2cc785a37486a3e49 HTTP/1.1
+PATCH  http://localhost:3000/api/v1/products/6597f5a889d56be74a27884c HTTP/1.1
 content-type: application/json
 
 {
-    "supplier" : "657337f27143f5ca2b9a8958"
+  "images": ["https://loremflickr.com/200/200/fashion?lock=1234",
+  "https://cdn.tgdd.vn/Products/Images/42/305658/Slider/vi-vn-iphone-15-pro-max-256gb--(2).jpg"]
 }

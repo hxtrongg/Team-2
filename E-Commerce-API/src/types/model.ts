@@ -17,17 +17,19 @@ export interface ISupplier {
   slug: string;
 }
 
+
 export interface IProduct {
   _id?: ObjectId;
+  id:string;
   name: string;
+  description:string;
   price: number;
   discount: number;
   stock: number;
-  meteDescription: string;
+  images: string[];
   category: ObjectId;
   supplier: ObjectId;
   slug: string;
-  thumbnail: string;
 }
 
 export interface IEmployee {

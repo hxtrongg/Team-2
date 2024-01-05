@@ -100,7 +100,7 @@ const Category = () => {
       title: "Image",
       dataIndex: "images",
       key: "images",
-      render: (text) => <Image src={text} alt="Product" width={50} />,
+      render: (text) => <Image src={text} alt="imagesCategory" width={50} />,
     },
 
     {
