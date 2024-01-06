@@ -14,9 +14,8 @@ import { RiShoppingCartLine } from "react-icons/ri";
 
 
 type FiltersType = {
-  categoryId?: number;
-  price_min?: number;
-  price_max?: number;
+  category?: string;
+  
 };
 
 const ProductsPage = () => {
@@ -26,29 +25,50 @@ const ProductsPage = () => {
   const limit = 2;
   const int_page = page ? parseInt(page) : 1;
 
+  const cid = params.get('categoryId');
+  const str_cid = cid ? cid : '';
+  console.log('<<=== 🚀 page ===>>', page, params);
+  let newParams = {};
 
+  if(cid){
+    newParams = {...newParams,categoryId: str_cid}
+  }
+
+   if(page){
+    newParams = {...newParams,page: int_page}
+  }
+  
   const [currentPage, setCurrentPage] = React.useState(int_page);
 
   const { addItem } = useCartStore();
 
   //Hàm fetch products
-  const getProducts = async ()=> {
-    return axios.get(config.urlAPI+'/v1/products')
-  }
+  const getProducts = async (page: number ,filters: FiltersType)=> {
+    // let url = config.urlAPI+'/v1/products?';
+    const offset = (page - 1) * 12;
+    if (filters.category && filters.category !== '') {
+      `http://localhost:5175/products?category=${filters.category}`;
+    }
+    // // Sử dụng URL đã xây dựng trong yêu cầu axios
+    // return axios.get(url);
+    return axios.get(config.urlAPI+`/v1/products?offset=${offset}&limit=12`)
+}
 
-   // Queries
-   const queryProducts = useQuery({ 
-    queryKey: ['products'],
-    queryFn: getProducts,
-    onSuccess: (data)=>{
-      //Thành công thì trả lại data
-      console.log(data.data.data.products);
-    },
-    onError: (error)=>{
-      console.log(error);
-    },
+// Truy vấn
+const queryProducts = useQuery({ 
+  queryKey: ['products', { int_page, str_cid }],
+  queryFn: ()=> getProducts(int_page, {category: str_cid}),
+  onSuccess: (data)=>{
+    //Thành công thì trả lại data
+    console.log(data.data.data.products);
+  },
+  onError: (error)=>{
+    console.log(error);
+  },
+})
 
-  })
+//const totalPages = Math.ceil(data.length / recordsPerPage);
+const totalPages = 12; //Tổng số trang
 
   // Handle lỗi khi ko fetch được API
   if(queryProducts.isError){
@@ -62,13 +82,13 @@ const ProductsPage = () => {
         <meta charSet="utf-8" />
         <title>Products Page</title>
       </Helmet>
-     {
-      queryProducts && (
+    
+     
         <section data-section-id="1" data-share="" data-category="search-solid" data-component-id="fce12138_02_awz" className="py-10 bg-gray-100">
         <div className="container px-4 mx-auto">
           <div className=" flex flex-wrap -mx-4">
             <div className="w-full lg:w-4/12 xl:w-3/12 px-4">
-              {/* ProductFilter */}
+            <ProductFilter queryString={newParams} currentPage={int_page} setCurrentPage={setCurrentPage} currentCategoryId={str_cid} />
             </div>
             <div className="w-full lg:w-8/12 xl:9/12 px-4">
               <div className="flex flex-col sm:flex-row mb-6 sm:items-center pb-6 border-b border-gray-400  ">
@@ -115,11 +135,11 @@ const ProductsPage = () => {
               </div>
               <div className="flex flex-wrap mb-20">
                 {
-                  queryProducts.data && queryProducts.data.data.data.products ? queryProducts.data.data.data.products.map((product: any)=>{
+                  queryProducts.data && queryProducts.data.data.data.products ? queryProducts.data.data.data.products.map((product: IProduct)=>{
                    return(
-                    <div className="w-full sm:w-1/2  xl:w-1/3 bg-white overflow-hidden group border border-gray-300 ">
+                    <div key={`queryProducts${product._id}`} className="w-full sm:w-1/2  xl:w-1/3 bg-white overflow-hidden group border border-gray-300 ">
                     <Link to={`/products/${product.slug}`} className="block p-5 ">
-                      <img className="block w-full h-80 mb-8 object-cover transition-all group-hover:scale-105" src={product.thumnail} alt={product.name} data-config-id="auto-img-1-9" />
+                      <img className="block w-full h-80 mb-8 object-contain  transition-all group-hover:scale-105" src={`../../../public/images/${product.thumbnail}`} alt={product.name} data-config-id="auto-img-1-9" />
                       <div className="">
 
                         <h6 className="font-bold text-black mt-2 mb-5" data-config-id="auto-txt-2-9">{product.name}</h6>
@@ -146,25 +166,22 @@ const ProductsPage = () => {
                     </Link>
                   </div>
                    )
-                  }) : null
+                  }):null
                 }
 
               </div>
-              <nav className="pt-10 mt-14 border-t border-blueGray-800">
-                <ul className="flex items-center justify-center">
-                  <li className="mr-5"><a className="inline-flex items-center h-6 px-2 text-sm text-black font-bold hover:bg-gray-900" href="#" data-config-id="auto-txt-1-1">1</a></li>
-                  <li className="mr-5"><a className="inline-flex items-center h-6 px-2 text-sm text-black font-bold hover:bg-gray-900" href="#" data-config-id="auto-txt-2-1">2</a></li>
-                  <li className="mr-5"><a className="inline-flex items-center h-6 px-2 text-sm text-black font-bold hover:bg-gray-900" href="#" data-config-id="auto-txt-3-1">3</a></li>
-                  <li className="mr-5"><a className="inline-flex items-center h-6 px-2 text-sm text-black font-bold hover:bg-gray-900" href="#" data-config-id="auto-txt-4-1">4</a></li>
-                  <li><a className="inline-flex items-center h-6 px-2 text-sm text-black font-bold hover:bg-gray-900" href="#" data-config-id="auto-txt-5-1">5</a></li>
-                </ul>
-              </nav>
+              {
+                queryProducts.data && queryProducts.data.data.lenght > 0 ? (
+                  <nav className="pt-10 mt-14 border-t border-blueGray-800">
+                    <Pagination queryString={newParams} totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
+                  </nav>
+                ):null
+              }
             </div>
           </div>
         </div>
       </section>
-      )
-     }
+     
     </>
   )
 }

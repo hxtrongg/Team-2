@@ -1,48 +1,78 @@
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { ICategory, ISupplier } from '../../constants/types';
+import { ICategory } from '../../constants/types';
 import config from '../../constants/config';
-import { useNavigate } from 'react-router-dom';
-import { ObjectId } from 'mongoose';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 
 
-type queryType = {
-    page?: number;
-    categoryId?: string;
-    supplierId?: string;
-  }
-  type ProductFilterType = {
-    queryString: queryType;
-    currentCategoryId: string;
-    currentSuplierId: string;
-    currentPage: number;
-    setCurrentPage: (page: number) => void;
-  };
+interface queryType {
+  page?: number;
+  category?: string;
 
-  function encodeQueryData(data: Record<string, any>) {
-    const ret = [];
-    for (const d in data)
-      ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
-    return ret.join('&');
-  }
-  
+}
 
-const ProductFilter = ({ queryString, currentSuplierId, currentCategoryId, currentPage, setCurrentPage }: ProductFilterType) => {
+interface ProductFilterType  {
+  queryString: queryType;
+  currentCategoryId: string;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+};
+
+function encodeQueryData(data: Record<string, any>) {
+  const ret = [];
+  for (const d in data)
+    ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
+  return ret.join('&');
+}
+
+
+const ProductFilter = ({ queryString, currentCategoryId, currentPage, setCurrentPage }: ProductFilterType) => {
   
     const navigate = useNavigate();
-
+    let params = useParams();
+    console.log(params);
+    const slug = params.slug;
     //=================== Fetch Categories ============ //
     const fetchCategories = async () => {
-      const url = `http://localhost:9494/api/v1/categories`;
-      return fetch(url).then((res) => res.json());
+      return axios.get(config.urlAPI+'/v1/categories')
     };
     // Sử dụng useQuery để fetch data từ API
-    const queryCategories = useQuery<ICategory[], Error>({
+    const queryCategories = useQuery({
       queryKey: ['categories'],
       queryFn: fetchCategories,
-    });
+      onSuccess: (data) => {
+        //Thành công thì trả lại data
+        console.log(data?.data.data.categories);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+  
+    })
 
-   
+
+
+    const fetchSupplier = async () => {
+      return axios.get(config.urlAPI+'/v1/suppliers')
+    };
+    // Sử dụng useQuery để fetch data từ API
+    const querySuppliers = useQuery({
+      queryKey: ['supplier'],
+      queryFn: fetchSupplier,
+      onSuccess: (data) => {
+        //Thành công thì trả lại data
+        console.log(data?.data.data.supplier);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+  
+    })
+  
+
+
     return (
     <>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-6 md:gap-8 lg:gap-10 lg:max-w-2xs lg:pt-28  lg:pb-9 px-4">
@@ -56,33 +86,36 @@ const ProductFilter = ({ queryString, currentSuplierId, currentCategoryId, curre
                 </div>
                 <div className="hidden lg:block pb-10 lg:border-b border-gray-600">
                   <h6 className="font-bold text-black mb-8" data-config-id="auto-txt-5-2">Category</h6>
-                  <li>
+                  <li className='list-none'>
                     <button
-                        onClick={() => {
+                       onClick={() => {
                         setCurrentPage(1);
                         navigate(`/products`);
-                        }}
-                        className={currentCategoryId === 0 ? `hover:text-indigo-500 font-bold text-indigo-500 btn-empty` : `btn-empty hover:text-indigo-500`}
+                      }}
+                      className={currentCategoryId === '' ? `hover:text-indigo-500 font-bold text-indigo-500 btn-empty` : `btn-empty hover:text-indigo-500`}
                     >
-                        Tất cả
+                      Tất cả
                     </button>
                     </li>
-                  {
-                    queryCategories.data &&
-                    queryCategories.data.map((item) =>{
+                      <>
+                      {
+                    queryCategories.data && queryCategories.data.data.data.categories ?  queryCategories.data.data.data.categories.map((item: ICategory) =>{
+                      
                       return(
                         <ul className="list-unstyled mb-0">
-                          <li key={`queryCategories${item._id}`} className="mb-4"><a
-                            onClick={() => {
-                                setCurrentPage(1);
-                                navigate(`/products?categoryId=${item._id}`);
-                              }}
-                          className={currentCategoryId === item._id ? `inline-block font-medium text-gray-600` : `hover:text-gray-400`}>{item.name}</a></li>
+                          <li key={`queryCategories${item._id}`} className="mb-4"><a  onClick={() => {
+                        setCurrentPage(1);
+                        navigate(`/products?category=${item._id}`);
+                      }}
+                          
+                          className={ currentCategoryId === item._id.toString() ? `inline-block font-medium text-gray-600` : `hover:text-gray-400`}>{item.name}</a></li>
                         </ul>
                       )
-                    })
+                    }):null
                   }
+                      </>
                 </div>
+                
                 
               </div>
     </>

@@ -350,7 +350,7 @@ const Header = () => {
                                               <div className="w-1/5 px-2">
                                                 <img
                                                   className="block h-16 w-full"
-                                                  src={item.thumb}
+                                                  src={`../../../../public/images/${item.thumb}`}
                                                   alt={item.name}
                                                   data-config-id="auto-img-1-3"
                                                 />
@@ -458,22 +458,22 @@ const Header = () => {
                                 </span>
                               </div>
                               <div className="sm:flex items-center">
-                                <a
+                                <Link to={'/cart'}
                                   className="inline-block w-full mb-3 sm:mb-0 sm:mr-4 px-6 py-3 text-xs text-center font-bold text-white border border-gray-800 hover:bg-gray-800 transition duration-200"
-                                  href="#"
+                                  
                                   data-config-id="auto-txt-16-3"
                                 >
                                   VIEW CART
-                                </a>
-                                <a
+                                </Link>
+                                <Link to={'/checkout'}
                                   className="relative group inline-flex items-center justify-center h-10 w-full px-4 py-3 text-xs text-center font-bold text-white bg-red-600 hover:bg-red-400 transition duration-200 overflow-hidden"
-                                  href="#"
+                                  
                                 >
 
                                   <span className="relative" data-config-id="auto-txt-17-3">
                                     CHECKOUT
                                   </span>
-                                </a>
+                                </Link>
                               </div>
                             </div>
                           </div>
@@ -485,7 +485,7 @@ const Header = () => {
 
                   <div className="inline-flex items-center font-medium text-white hover:text-yellow-500" >
 
-                    <a className="inline-flex items-center" href="#"><img className="mr-2 h-6 w-6" src={user?.photo} alt="" data-config-id="auto-img-2-4" /></a>
+                    <a className="inline-flex items-center" href="#"><img className="mr-2 h-6 w-6" src={`../../../../public/images/${user?.photo}`} alt="" data-config-id="auto-img-2-4" /></a>
                     <div className='cursor-pointer relative group'>
                       <span className="mx-3 py-3.5" data-config-id="auto-txt-15-1">Hi {user?.firstName}</span>
                       <svg className='inline-block' width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg" data-config-id="auto-svg-12-1">
@@ -512,7 +512,7 @@ const Header = () => {
                             </span>Đăng nhập</Link>
                         </div>
                         <div className="py-1" role="none">
-                          <Link to={'/customer'}
+                          <Link to={'/customers'}
                             className="flex px-4 py-2 text-sm text-gray-700 border-l-2 border-transparent dark:hover:border-blue-400 hover:border-blue-500 dark:text-gray-400 dark:hover:text-gray-300 hover:text-blue-500">
                             <span className="mr-5 mt-1">
                               <FaAddressCard />

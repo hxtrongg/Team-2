@@ -1,14 +1,37 @@
-import React, { Component } from "react";
+import React from 'react';
 import { Helmet } from 'react-helmet';
 import styles from './HomePage.module.css';
 import { FaHeart } from "react-icons/fa";
+import { IProduct } from "../../constants/types";
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Autoplay, Navigation, Pagination } from 'swiper/modules';
-
+import { useQuery } from '@tanstack/react-query';
+import config from '../../constants/config';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const HomePage = () => {
+
+  //===========Category SmartPhone=======//
+  const fetchProductSmartPhone = async (categoryId = '656d9f069b6e79d96e99466a', limit = 4): Promise<IProduct[]> => {
+    return axios.get(config.urlAPI+`/v1/products?offset=0&limit=${limit}&${categoryId}`);
+   
+  };
+  
+  // Sử dụng useQuery để fetch data từ API
+  const queryCategorySmartPhone = useQuery<IProduct[], Error>({
+    queryKey: ['products_smartphone', ],
+    queryFn: ()=>fetchProductSmartPhone('656d9f069b6e79d96e99466a', 4),
+    onSuccess: (data)=>{
+      //Thành công thì trả lại data
+      console.log(data);
+    },
+    onError: (error)=>{
+      console.log(error);
+    },
+  });
 
   return (
     <div >
@@ -521,33 +544,37 @@ const HomePage = () => {
 
                 }}
               >
-                <SwiperSlide> <div className="w-full  px-4 my-4">
+                {
+                  queryCategorySmartPhone.data &&  queryCategorySmartPhone.data.data.data.products.map((product: IProduct) => (
+                    <SwiperSlide> <div key={`queryCategorySmartPhone${product._id}`} className="w-full  px-4 my-4">
                   <div className="block relative bg-white  rounded-xl overflow-hidden hover:scale-105 ease-in duration-300">
+                    <Link to={`/products/${product.slug}`}>
                     <img
-                      className="block w-full h-80 object-cover rounded-t-xl  "
-                      src="https://www.cnet.com/a/img/resize/21b025009743623c628852f5c9c5406f7185b444/hub/2023/09/18/c44256ef-e6c1-41bb-b77b-648792f47c6c/iphone15-pro-64.jpg?auto=webp&width=1200"
-                      alt=""
+                      className="block w-full h-80 object-contain rounded-t-xl  "
+                      src={`../../../public/images/${product.thumbnail}`}
+                      alt={product.name}
                       data-config-id="auto-img-1-2"
                     />
+                    </Link>
                     <a className="group block py-4 ms-3" href="#">
                       <h6
-                        className="inline-block text-lg font-bold  text-black mb-2 hover:text-red-600"
+                        className="inline-block text-lg font-bold  text-black mb-2 hover:text-red-600 overflow-hidden whitespace-nowrap overflow-ellipsis w-52"
                         data-config-id="auto-txt-9-2"
                       >
-                        Armed Luxary Chairs
+                        {product.name}
                       </h6>
                       <div className="flex items-center mb-1">
                         <span
                           className="mr-2 text-sm font-bold text-black"
                           data-config-id="auto-txt-10-2"
                         >
-                          $129.00
+                          {product.price}
                         </span>
                         <span
                           className="mr-auto text-xs text-gray-400 line-through"
                           data-config-id="auto-txt-11-2"
                         >
-                          $239.00
+                          {product.discount}
                         </span>
                         <img
                           className="block"
@@ -567,190 +594,9 @@ const HomePage = () => {
                   </div>
 
                 </div></SwiperSlide>
-                <SwiperSlide> <div className="w-full  px-4 my-4">
-                  <div className="block relative bg-white  rounded-xl overflow-hidden hover:scale-105 ease-in duration-300">
-                    <img
-                      className="block w-full h-80 object-cover rounded-t-xl  "
-                      src="https://www.cnet.com/a/img/resize/21b025009743623c628852f5c9c5406f7185b444/hub/2023/09/18/c44256ef-e6c1-41bb-b77b-648792f47c6c/iphone15-pro-64.jpg?auto=webp&width=1200"
-                      alt=""
-                      data-config-id="auto-img-1-2"
-                    />
-                    <a className="group block py-4 ms-3" href="#">
-                      <h6
-                        className="inline-block text-lg font-bold  text-black mb-2 hover:text-red-600"
-                        data-config-id="auto-txt-9-2"
-                      >
-                        Armed Luxary Chairs
-                      </h6>
-                      <div className="flex items-center mb-1">
-                        <span
-                          className="mr-2 text-sm font-bold text-black"
-                          data-config-id="auto-txt-10-2"
-                        >
-                          $129.00
-                        </span>
-                        <span
-                          className="mr-auto text-xs text-gray-400 line-through"
-                          data-config-id="auto-txt-11-2"
-                        >
-                          $239.00
-                        </span>
-                        <img
-                          className="block"
-                          src="vendia-assets/images/item-cards/stars-gradient.svg"
-                          alt=""
-                          data-config-id="auto-img-2-2"
-                        />
-                      </div>
-                    </a>
-
-                    <a
-                      className="absolute top-0 right-0 m-3 inline-block text-white hover:text-red-600 transform duartion-200"
-                      href="#"
-                    >
-                      <span className="text-2xl font-bold"><FaHeart /></span>
-                    </a>
-                  </div>
-
-                </div></SwiperSlide>
-                <SwiperSlide> <div className="w-full  px-4 my-4">
-                  <div className="block relative bg-white  rounded-xl overflow-hidden hover:scale-105 ease-in duration-300">
-                    <img
-                      className="block w-full h-80 object-cover rounded-t-xl  "
-                      src="https://www.cnet.com/a/img/resize/21b025009743623c628852f5c9c5406f7185b444/hub/2023/09/18/c44256ef-e6c1-41bb-b77b-648792f47c6c/iphone15-pro-64.jpg?auto=webp&width=1200"
-                      alt=""
-                      data-config-id="auto-img-1-2"
-                    />
-                    <a className="group block py-4 ms-3" href="#">
-                      <h6
-                        className="inline-block text-lg font-bold  text-black mb-2 hover:text-red-600"
-                        data-config-id="auto-txt-9-2"
-                      >
-                        Armed Luxary Chairs
-                      </h6>
-                      <div className="flex items-center mb-1">
-                        <span
-                          className="mr-2 text-sm font-bold text-black"
-                          data-config-id="auto-txt-10-2"
-                        >
-                          $129.00
-                        </span>
-                        <span
-                          className="mr-auto text-xs text-gray-400 line-through"
-                          data-config-id="auto-txt-11-2"
-                        >
-                          $239.00
-                        </span>
-                        <img
-                          className="block"
-                          src="vendia-assets/images/item-cards/stars-gradient.svg"
-                          alt=""
-                          data-config-id="auto-img-2-2"
-                        />
-                      </div>
-                    </a>
-
-                    <a
-                      className="absolute top-0 right-0 m-3 inline-block text-white hover:text-red-600 transform duartion-200"
-                      href="#"
-                    >
-                      <span className="text-2xl font-bold"><FaHeart /></span>
-                    </a>
-                  </div>
-
-                </div></SwiperSlide>
-                <SwiperSlide> <div className="w-full  px-4 my-4">
-                  <div className="block relative bg-white  rounded-xl overflow-hidden hover:scale-105 ease-in duration-300">
-                    <img
-                      className="block w-full h-80 object-cover rounded-t-xl  "
-                      src="https://www.cnet.com/a/img/resize/21b025009743623c628852f5c9c5406f7185b444/hub/2023/09/18/c44256ef-e6c1-41bb-b77b-648792f47c6c/iphone15-pro-64.jpg?auto=webp&width=1200"
-                      alt=""
-                      data-config-id="auto-img-1-2"
-                    />
-                    <a className="group block py-4 ms-3" href="#">
-                      <h6
-                        className="inline-block text-lg font-bold  text-black mb-2 hover:text-red-600"
-                        data-config-id="auto-txt-9-2"
-                      >
-                        Armed Luxary Chairs
-                      </h6>
-                      <div className="flex items-center mb-1">
-                        <span
-                          className="mr-2 text-sm font-bold text-black"
-                          data-config-id="auto-txt-10-2"
-                        >
-                          $129.00
-                        </span>
-                        <span
-                          className="mr-auto text-xs text-gray-400 line-through"
-                          data-config-id="auto-txt-11-2"
-                        >
-                          $239.00
-                        </span>
-                        <img
-                          className="block"
-                          src="vendia-assets/images/item-cards/stars-gradient.svg"
-                          alt=""
-                          data-config-id="auto-img-2-2"
-                        />
-                      </div>
-                    </a>
-
-                    <a
-                      className="absolute top-0 right-0 m-3 inline-block text-white hover:text-red-600 transform duartion-200"
-                      href="#"
-                    >
-                      <span className="text-2xl font-bold"><FaHeart /></span>
-                    </a>
-                  </div>
-
-                </div></SwiperSlide>
-                <SwiperSlide> <div className="w-full  px-4 my-4">
-                  <div className="block relative bg-white  rounded-xl overflow-hidden hover:scale-105 ease-in duration-300">
-                    <img
-                      className="block w-full h-80 object-cover rounded-t-xl  "
-                      src="https://www.cnet.com/a/img/resize/21b025009743623c628852f5c9c5406f7185b444/hub/2023/09/18/c44256ef-e6c1-41bb-b77b-648792f47c6c/iphone15-pro-64.jpg?auto=webp&width=1200"
-                      alt=""
-                      data-config-id="auto-img-1-2"
-                    />
-                    <a className="group block py-4 ms-3" href="#">
-                      <h6
-                        className="inline-block text-lg font-bold  text-black mb-2 hover:text-red-600"
-                        data-config-id="auto-txt-9-2"
-                      >
-                        Armed Luxary Chairs
-                      </h6>
-                      <div className="flex items-center mb-1">
-                        <span
-                          className="mr-2 text-sm font-bold text-black"
-                          data-config-id="auto-txt-10-2"
-                        >
-                          $129.00
-                        </span>
-                        <span
-                          className="mr-auto text-xs text-gray-400 line-through"
-                          data-config-id="auto-txt-11-2"
-                        >
-                          $239.00
-                        </span>
-                        <img
-                          className="block"
-                          src="vendia-assets/images/item-cards/stars-gradient.svg"
-                          alt=""
-                          data-config-id="auto-img-2-2"
-                        />
-                      </div>
-                    </a>
-
-                    <a
-                      className="absolute top-0 right-0 m-3 inline-block text-white hover:text-red-600 transform duartion-200"
-                      href="#"
-                    >
-                      <span className="text-2xl font-bold"><FaHeart /></span>
-                    </a>
-                  </div>
-
-                </div></SwiperSlide>
+                  ))
+                }
+               
 
               </Swiper>
             </div>

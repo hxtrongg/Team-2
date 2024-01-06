@@ -12,7 +12,8 @@ import {
 import { Helmet } from "react-helmet";
 import { useCartStore } from '../../hooks/useCartStore';
 import { Link, useParams } from 'react-router-dom';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export interface IProduct {
   data: {
@@ -96,6 +97,36 @@ const ProductDetailsPage = () => {
   })
 
 
+  //========================================//
+  const handleAddToBag = () => {
+    // Thực hiện các xử lý liên quan đến thêm vào giỏ hàng
+    // ...
+    
+    // Hiển thị thông báo
+   {
+    items.map((item) => {
+      return(
+      
+           toast(
+      <Link to={'/cart'} className="hover:text-red-400">
+       <div className="flex items-center justify-center">
+        <img src={`../../../public/images/${item.thumb}`} alt={item.name} className="w-16 h-16 mr-4" />
+        <div>
+          <p className="font-bold overflow-hidden whitespace-nowrap overflow-ellipsis w-40 inline-block">{item.name}</p>
+          <p className="text-sm">{item.price}</p>
+        </div>
+      </div>
+      </Link>,
+      {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      }
+    )
+       
+      )
+    })
+   }
+  };
 
   return (
     <>
@@ -105,7 +136,15 @@ const ProductDetailsPage = () => {
       </Helmet>
       <div className='container mx-auto bg-slate-200'>
         <section className="py-10 bg-white ">
+          
           <div className="max-w-6xl px-4 mx-auto">
+          <ToastContainer
+                    position={toast.POSITION.TOP_RIGHT}
+                    autoClose={3000}
+                    className="absolute transition-opacity top-24 duration-500"
+                    toastClassName="bg-gray-800 text-white font-semibold transition-transform duration-500 transform scale-100 hover:scale-100"
+                    bodyClassName="p-4"
+                  />
             <div className="flex flex-wrap mb-24 -mx-4">
               <div className="w-full px-4 mb-8 md:w-1/2 md:mb-0">
                 <div className=" top-0 overflow-hidden gap-8 py-10 md:gap-8">
@@ -418,10 +457,10 @@ const ProductDetailsPage = () => {
                       </button>
                     </div>
 
-                    <button onClick={() => {
+                    <button  onClick={() => {
                       console.log('Thêm giỏ hàng ID', slug);
                       const item = product?.data?.data;
-
+                      handleAddToBag();
                       addItem({
                         id: item._id,
                         price: item.price,
@@ -436,12 +475,13 @@ const ProductDetailsPage = () => {
                       ADD TO BAG
                     </button>
                   </div>
-
+                 
                   {/* click chuyển sang trang cart & thêm 1 sp vào cart */}
 
                   {/* end buy */}
 
                 </div>
+                
               </div>
             </div>
           </div>
@@ -730,6 +770,7 @@ const ProductDetailsPage = () => {
               </div>
             </div>
           </div>
+          
         </section>
         <section
           data-section-id={1}

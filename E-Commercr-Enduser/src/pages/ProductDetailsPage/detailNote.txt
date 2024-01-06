@@ -5,3 +5,6 @@
 -lỗi mua hàng, thêm giỏ hàng mua theo số lượng items sp
 
 -lấy 4 sản phẩm liên quan
+
+-toastify lỗi hiển thị khi thực hiện add to card lần đầu tiên, chỉ hiện thị khi thực hiện add thêm sản phẩm
+-toastify lỗi hiển thị khi add một sản phẩm khác (hiển thị 2 model thay vì 1)

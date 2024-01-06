@@ -1,6 +1,18 @@
 import { useCartStore } from '../../hooks/useCartStore';
 import { useNavigate } from 'react-router-dom';
 
+interface FormData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    shippingAddress: string;
+    shippingCity: string;
+    paymentType: string;
+    description: string;
+
+  }
+
 
 const CheckoutPage = () => {
 
@@ -121,7 +133,7 @@ const CheckoutPage = () => {
                             return (
                                 <div className="flex space-x-4">
                                 <div className="w-28">
-                                    <img src={item.thumb} alt={item.name}
+                                    <img src={`../../../public/images/${item.thumb}`} alt={item.name}
                                         className="w-full" />
                                 </div>
                                 <div className="flex-1">

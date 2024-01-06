@@ -11,9 +11,11 @@ const router = express.Router();
 //Get All products from DB
 router.get('/', productsController.getAll);
 
+
 //get user by ID
 //Gắn middleware vào để check id có phải là số không
 router.get('/:id', productsController.getItemById);
+
 
 //Create a new user
 router.post('/', productsController.createItem);
