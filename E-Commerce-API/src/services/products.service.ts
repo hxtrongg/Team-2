@@ -67,6 +67,17 @@ const getItemBySlug = async (slug: string) => {
 
   return product;
 };
+
+const getItemByCategory = async (category: string) => {
+  //Lấy tất cả ngoại trừ __v
+  const product = await Product.find({category: category}, '-__v').
+  populate('category', '-__v').
+  populate('supplier','-__v').
+  lean({ virtuals: true });
+
+  return product;
+};
+
 const createItem = async (payload: IProduct) => {
   // Kiểm tra xem email đã tồn tại chưa
   // Lưu xuống database
@@ -92,5 +103,6 @@ export default {
   updateItem,
   createItem,
   deleteItem,
-  getItemBySlug
+  getItemBySlug,
+  getItemByCategory
 };

@@ -39,6 +39,15 @@ const getItemBySlug = async (req: Request, res: Response, next: NextFunction) =>
   }
 };
 
+const getItemByCategory = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const product = await productsService.getItemByCategory(req.params.category);
+    sendJsonSuccess(res)(product);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const createItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const payload = req.body;
@@ -77,5 +86,6 @@ export default {
   updateItem,
   createItem,
   deleteItem,
-  getItemBySlug
+  getItemBySlug,
+  getItemByCategory
 };

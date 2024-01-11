@@ -14,7 +14,7 @@ import { RiShoppingCartLine } from "react-icons/ri";
 
 
 type FiltersType = {
-  category?: string;
+  category?: number;
   
 };
 
@@ -25,13 +25,13 @@ const ProductsPage = () => {
   const limit = 2;
   const int_page = page ? parseInt(page) : 1;
 
-  const cid = params.get('categoryId');
-  const str_cid = cid ? cid : '';
+  const cid = params.get('category');
+  const int_cid = cid ? parseInt(cid) : 0;
   console.log('<<=== 🚀 page ===>>', page, params);
   let newParams = {};
 
   if(cid){
-    newParams = {...newParams,categoryId: str_cid}
+    newParams = {...newParams,category: int_cid}
   }
 
    if(page){
@@ -46,21 +46,22 @@ const ProductsPage = () => {
   const getProducts = async (page: number ,filters: FiltersType)=> {
     // let url = config.urlAPI+'/v1/products?';
     const offset = (page - 1) * 12;
-    if (filters.category && filters.category !== '') {
-      `http://localhost:5175/products?category=${filters.category}`;
+    let url = `http://localhost:9494/api/v1/products?offset=${offset}&limit=12`;
+    
+    if (filters.category && filters.category > 0) {
+      url += `/${filters.category}`;
     }
-    // // Sử dụng URL đã xây dựng trong yêu cầu axios
     // return axios.get(url);
-    return axios.get(config.urlAPI+`/v1/products?offset=${offset}&limit=12`)
+    return axios.get(url);
 }
 
 // Truy vấn
 const queryProducts = useQuery({ 
-  queryKey: ['products', { int_page, str_cid }],
-  queryFn: ()=> getProducts(int_page, {category: str_cid}),
+  queryKey: ['products', { int_page, int_cid }],
+  queryFn: ()=> getProducts(int_page, {category: int_cid}),
   onSuccess: (data)=>{
     //Thành công thì trả lại data
-    console.log(data.data.data.products);
+    console.log(data?.data.data.products);
   },
   onError: (error)=>{
     console.log(error);
@@ -88,7 +89,7 @@ const totalPages = 12; //Tổng số trang
         <div className="container px-4 mx-auto">
           <div className=" flex flex-wrap -mx-4">
             <div className="w-full lg:w-4/12 xl:w-3/12 px-4">
-            <ProductFilter queryString={newParams} currentPage={int_page} setCurrentPage={setCurrentPage} currentCategoryId={str_cid} />
+            <ProductFilter queryString={newParams} currentPage={int_page} setCurrentPage={setCurrentPage} currentCategoryId={int_cid} />
             </div>
             <div className="w-full lg:w-8/12 xl:9/12 px-4">
               <div className="flex flex-col sm:flex-row mb-6 sm:items-center pb-6 border-b border-gray-400  ">
@@ -135,7 +136,7 @@ const totalPages = 12; //Tổng số trang
               </div>
               <div className="flex flex-wrap mb-20">
                 {
-                  queryProducts.data && queryProducts.data.data.data.products ? queryProducts.data.data.data.products.map((product: IProduct)=>{
+                  queryProducts.data && queryProducts.data?.data.data.products ? queryProducts.data?.data.data.products.map((product: any)=>{
                    return(
                     <div key={`queryProducts${product._id}`} className="w-full sm:w-1/2  xl:w-1/3 bg-white overflow-hidden group border border-gray-300 ">
                     <Link to={`/products/${product.slug}`} className="block p-5 ">

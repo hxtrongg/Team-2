@@ -26,6 +26,8 @@ router.post('/', productsController.createItem);
  */
 router.patch('/:id', productsController.updateItem);
 router.get('/slug/:slug', productsController.getItemBySlug);
+
+// router.get('/category/:category', productsController.getItemByCategory);
 /**
  * Delete a user by ID
  * DELETE /api/v1//:id

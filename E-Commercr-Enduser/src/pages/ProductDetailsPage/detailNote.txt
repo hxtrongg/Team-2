@@ -8,3 +8,5 @@
 
 -toastify lỗi hiển thị khi thực hiện add to card lần đầu tiên, chỉ hiện thị khi thực hiện add thêm sản phẩm
 -toastify lỗi hiển thị khi add một sản phẩm khác (hiển thị 2 model thay vì 1)
+
+'../../../public/images/error-toast.PNG'
