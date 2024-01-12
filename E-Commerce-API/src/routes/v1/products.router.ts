@@ -11,6 +11,8 @@ const router = express.Router();
 //Get All products from DB
 router.get('/', productsController.getAll);
 
+router.get('/category/:category', productsController.getAll);
+
 
 //get user by ID
 //Gắn middleware vào để check id có phải là số không

@@ -49,7 +49,7 @@ const ProductsPage = () => {
     let url = `http://localhost:9494/api/v1/products?offset=${offset}&limit=12`;
     
     if (filters.category && filters.category > 0) {
-      url += `/${filters.category}`;
+      url += `/category/${filters.category}`;
     }
     // return axios.get(url);
     return axios.get(url);

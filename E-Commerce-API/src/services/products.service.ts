@@ -1,8 +1,8 @@
 import Product from '../models/products.model';
 import { IProduct } from '../types/model';
 
-const getAllItems = async (currentPage: number, pageSize: number) => {
-
+const getAllItems = async (category: string, currentPage: number, pageSize: number) => {
+  const query = category ? { category: category } : {};
   /**
    * Page 1: 0 - 10 (Lấy 10 sp đầu)
    * Page 2: 11 - 20 (Lấy 10 sp tiếp theo)
@@ -11,7 +11,7 @@ const getAllItems = async (currentPage: number, pageSize: number) => {
   //const currentPage = 2; //trang hiện tại
   //const pageSize = 10; // Số lượng items trên 1 trang
   // Tương đương: SELECT * FROM products (SQL)
-  const products = await Product.find({}, ' -__v').
+  const products = await Product.find(query, ' -__v').
   populate('supplier', '-__v ').
   populate('category', '-__v ').
   skip((currentPage - 1) * pageSize).
@@ -22,6 +22,7 @@ const getAllItems = async (currentPage: number, pageSize: number) => {
 
   //return response with Categories, total pages, and current page
   return {
+    
     products,
     totalRecords,
     totalPages: Math.ceil(totalRecords / pageSize),
@@ -29,7 +30,7 @@ const getAllItems = async (currentPage: number, pageSize: number) => {
     recordsPerPage: pageSize
   };
 
-  return products;
+  //return products;
 };
 
 const getItemById = async (id: string) => {
@@ -68,15 +69,7 @@ const getItemBySlug = async (slug: string) => {
   return product;
 };
 
-const getItemByCategory = async (category: string) => {
-  //Lấy tất cả ngoại trừ __v
-  const product = await Product.find({category: category}, '-__v').
-  populate('category', '-__v').
-  populate('supplier','-__v').
-  lean({ virtuals: true });
 
-  return product;
-};
 
 const createItem = async (payload: IProduct) => {
   // Kiểm tra xem email đã tồn tại chưa
@@ -104,5 +97,5 @@ export default {
   createItem,
   deleteItem,
   getItemBySlug,
-  getItemByCategory
+  
 };

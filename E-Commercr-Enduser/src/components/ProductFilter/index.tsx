@@ -68,7 +68,7 @@ const ProductFilter = ({ queryString, currentCategoryId, currentPage, setCurrent
                         <ul className="list-unstyled mb-0">
                           <li key={`queryCategory${item._id}`} className="mb-4"><a  onClick={() => {
                         setCurrentPage(1);
-                        navigate(`/products/${item._id}`);
+                        navigate(`/products/category/${item._id}`);
                       }}
                           
                           className={ currentCategoryId === item._id ? `inline-block font-medium text-gray-600` : `hover:text-gray-400`}>{item.name}</a></li>
