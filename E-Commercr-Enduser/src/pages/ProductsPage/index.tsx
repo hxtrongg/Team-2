@@ -55,6 +55,8 @@ const ProductsPage = () => {
     return axios.get(url);
 }
 
+//config.urlAPI+`/categories?category=${category}&page=${page}&limit=${limit}`
+
 // Truy vấn
 const queryProducts = useQuery({ 
   queryKey: ['products', { int_page, int_cid }],

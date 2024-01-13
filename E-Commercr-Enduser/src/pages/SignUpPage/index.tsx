@@ -38,7 +38,7 @@ const SignUpPage = () => {
   });
 
   const fetchCustomers = async (data: FormData) => {
-     const response = await axios.post(config.urlAPI + '/v1/customers', data);
+     const response = await axios.post(config.urlAPI+'/v1/customers', data);
      return response.data;
   };
 
@@ -73,23 +73,23 @@ const SignUpPage = () => {
                 <div className="mb-6">
                   <label className="block mb-1.5 text-sm text-gray-900 font-semibold" data-config-id="auto-txt-3-10">First Name</label>
                   <input {...register("firstName")} id="firstName" name="firstName" className="w-full py-3 px-4 text-sm text-gray-900 placeholder-gray-400 border border-gray-200 focus:border-purple-500 focus:outline-purple rounded-lg" type="text" />
-                  {errors.firstName && <span>This field is required</span>}
+                  {errors.firstName && <span>{errors.firstName.message}</span>}
                 </div>
                 <div className="mb-6">
                   <label className="block mb-1.5 text-sm text-gray-900 font-semibold" data-config-id="auto-txt-3-10">Last Name</label>
                   <input {...register("lastName")} id="lastName" name="lastName" className="w-full py-3 px-4 text-sm text-gray-900 placeholder-gray-400 border border-gray-200 focus:border-purple-500 focus:outline-purple rounded-lg" type="text" data-config-id="auto-input-4-10" />
-                  {errors.lastName && <span>This field is required</span>}
+                  {errors.lastName && <span>{errors.lastName.message}</span>}
                 </div>
                 <div className="mb-6">
                   <label className="block mb-1.5 text-sm text-gray-900 font-semibold" data-config-id="auto-txt-4-10">Email</label>
                   <input {...register("email")} id="email" name="email" className="w-full py-3 px-4 text-sm text-gray-900 placeholder-gray-400 border border-gray-200 focus:border-purple-500 focus:outline-purple rounded-lg" type="email" data-config-id="auto-input-5-10" />
-                  {errors.email && <span>This field is required</span>}
+                  {errors.email && <span>{errors.email.message}</span>}
                 </div>
                 <div className="mb-6">
                   <label className="block mb-1.5 text-sm text-gray-900 font-semibold" data-config-id="auto-txt-5-10">Password</label>
                   <div className="relative">
                     <input {...register("password")} id="password" name="password" className="w-full py-3 px-4 text-sm text-gray-900 placeholder-gray-400 border border-gray-200 focus:border-purple-500 focus:outline-purple rounded-lg" type="password" />
-                    {errors.password && <span>This field is required</span>}
+                    {errors.password && <span>{errors.password.message}</span>}
                   </div>
                 </div>
                 {/* <div className="flex mb-6 items-center">
