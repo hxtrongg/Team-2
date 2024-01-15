@@ -54,6 +54,13 @@ const SignUpPage = () => {
     },
   });
 
+  // console.log(?);
+  // if (!?.isAuthenticated) {
+  //   setError(result.error);
+  // } else { // create customer success
+  //   navigate("/login");
+  // }
+
   const onSubmit = (data: FormData) => {
     setError(null);
     onSubmitMutation.mutate(data);

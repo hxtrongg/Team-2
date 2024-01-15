@@ -2,12 +2,19 @@ import create from 'zustand';
 import { persist,createJSONStorage } from 'zustand/middleware';
 import { axiosClient } from '../library/axiosClient';
 import config from '../constants/config';
+
 interface CartItem {
   id: string;
   name: string;
   price: number;
   quantity: number;
   thumb: string;
+  // shippedDate: Date;
+  // shippingAddress: string;
+  // email: string;
+  // phoneNumber: string;
+  // status: string;
+  // paymentType: string;
 }
 
 interface CartStore {
