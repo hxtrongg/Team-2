@@ -5,14 +5,14 @@ GET  http://localhost:9494/api/v1/products HTTP/1.1
 ###
 
 #Post a new user
-POST http://localhost:8080/api/v1/products HTTP/1.1
+POST http://localhost:9494/api/v1/products HTTP/1.1
 content-type: application/json
 
 {
-  "name": "MacBook Pro 14 inch M3 2023 8CPU - 10GPU",
-  "slug": "macbook-pro-14-inch-m3-2023-8cpu-10gpu", 
-  "supplier": "656a0ea500d2b32aa0693b7b", 
-  "category": "65688ef0c94df3a50a2a8e49", 
+  "name": "Máy hút bụi cầm tay Deerma DX118C Pro",
+  "slug": "may-hut-bui-cam-tay-deerma-dx118c-pro", 
+  "supplier": "656a0f0600d2b32aa0693b80", 
+  "category": "656894b7c94df3a50a2a8e53", 
   "price": 100, 
   "meteTitle": "Mô tả ngắn", 
   "meteDescription": "Mô tả chi tiết", 
@@ -30,22 +30,22 @@ content-type: application/json
       "customerId": "656db3759171a0d052185716"
     }
   ],
-  "thumbnail": "https://cdn.tgdd.vn/Products/Images/42/305658/Slider/vi-vn-iphone-15-pro-max-4-1020x570.jpg",
+  "thumbnail": "may-hut-bui-cam-tay-deerma-dx118c-pro.jpg",
   "images": [
     {
-      "url": "https://cdn.tgdd.vn/Products/Images/42/305658/Slider/iphone-15-pro-max-256gb---10--1020x570.jpg",
+      "url": "may-hut-bui-cam-tay-deerma-dx118c-pro.jpg",
       "alt": "Mô tả hình ảnh 1",
       "caption": "Chú thích hình ảnh 1",
       "position": 0
     },
     {
-      "url": "https://cdn.tgdd.vn/Products/Images/42/305658/Slider/vi-vn-iphone-15-pro-max-256gb--(2).jpg",
+      "url": "may-hut-bui-cam-tay-deerma-dx118c-pro.jpg",
       "alt": "Mô tả hình ảnh 2",
       "caption": "Chú thích hình ảnh 2",
       "position": 1
     }
   ],
-  "stock": 50,
+  "stock": 10,
   "discount": 10
 }
 

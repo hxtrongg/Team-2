@@ -24,7 +24,7 @@ export interface ICategory {
     discount: number;
     stock: number;
     description: string;
-    categoryId: ObjectId;
+    category: ObjectId;
     supplier: ObjectId;
     slug: string;
     thumbnail: string

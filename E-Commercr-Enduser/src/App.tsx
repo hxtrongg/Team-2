@@ -15,6 +15,7 @@ import CustomerOrders from './pages/Customers/CustomerOrders';
 import CustomerProfile from './pages/Customers/CustomerProfile';
 import CheckoutDonePage from './pages/CheckoutDonePage';
 import SignUpPage from './pages/SignUpPage';
+import WishlistPage from './pages/WishlistPage';
 
 import {
   QueryClient,
@@ -35,8 +36,10 @@ function App() {
           <Route path='/' element={<DefaultLayout />}>
               <Route index element={<HomePage />} />
               <Route path="products" element={<ProductsPage />} />
+             
               <Route path="products/:slug" element={<ProductDetailsPage />} />
               <Route path="productdetail" element={<ProductDetailsPage />} />
+              <Route path="wishlist" element={<WishlistPage />} />
               
           </Route>
           
@@ -44,6 +47,7 @@ function App() {
           <Route path='/cart' element={<OnlyHeaderLayout />}>
               <Route index element={<CartPage />} />
           </Route>
+         
           <Route path='/checkout' element={<OnlyHeaderLayout />}>
               <Route index element={<CheckoutPage />} />
           </Route>

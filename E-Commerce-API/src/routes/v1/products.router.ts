@@ -11,9 +11,13 @@ const router = express.Router();
 //Get All products from DB
 router.get('/', productsController.getAll);
 
+router.get('/category/:category', productsController.getAll);
+
+
 //get user by ID
 //Gắn middleware vào để check id có phải là số không
 router.get('/:id', productsController.getItemById);
+
 
 //Create a new user
 router.post('/', productsController.createItem);
@@ -24,6 +28,8 @@ router.post('/', productsController.createItem);
  */
 router.patch('/:id', productsController.updateItem);
 router.get('/slug/:slug', productsController.getItemBySlug);
+
+// router.get('/category/:category', productsController.getItemByCategory);
 /**
  * Delete a user by ID
  * DELETE /api/v1//:id

@@ -12,7 +12,8 @@ import {
 import { Helmet } from "react-helmet";
 import { useCartStore } from '../../hooks/useCartStore';
 import { Link, useParams } from 'react-router-dom';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export interface IProduct {
   data: {
@@ -42,14 +43,12 @@ export interface IProduct {
 }
 
 const ProductDetailsPage = () => {
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [accordionOpen, setAccordionOpen] = useState(false);
+
   const [activeThumbnail, setActiveThumbnail] = useState(1);
   const [isThumbOpen, setIsThumbOpen] = useState(false);
   const thumbnails = [1, 2, 3, 4];
 
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
 
   const handleThumbnailClick = (index: number) => {
     setActiveThumbnail(index);
@@ -98,6 +97,36 @@ const ProductDetailsPage = () => {
   })
 
 
+  //========================================//
+  const handleAddToBag = () => {
+    // Thực hiện các xử lý liên quan đến thêm vào giỏ hàng
+    // ...
+    
+    // Hiển thị thông báo
+   {
+    items.map((item) => {
+      return(
+      
+           toast(
+      <Link to={'/cart'} className="hover:text-red-400">
+       <div className="flex items-center justify-center">
+        <img src={`../../../public/images/${item.thumb}`} alt={item.name} className="w-16 h-16 mr-4" />
+        <div>
+          <p className="font-bold overflow-hidden whitespace-nowrap overflow-ellipsis w-40 inline-block">{item.name}</p>
+          <p className="text-sm">{item.price}</p>
+        </div>
+      </div>
+      </Link>,
+      {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      }
+    )
+       
+      )
+    })
+   }
+  };
 
   return (
     <>
@@ -107,12 +136,20 @@ const ProductDetailsPage = () => {
       </Helmet>
       <div className='container mx-auto bg-slate-200'>
         <section className="py-10 bg-white ">
+          
           <div className="max-w-6xl px-4 mx-auto">
+          <ToastContainer
+                    position={toast.POSITION.TOP_RIGHT}
+                    autoClose={3000}
+                    className="absolute transition-opacity top-24 duration-500"
+                    toastClassName="bg-gray-800 text-white font-semibold transition-transform duration-500 transform scale-100 hover:scale-100"
+                    bodyClassName="p-4"
+                  />
             <div className="flex flex-wrap mb-24 -mx-4">
               <div className="w-full px-4 mb-8 md:w-1/2 md:mb-0">
                 <div className=" top-0 overflow-hidden gap-8 py-10 md:gap-8">
-                 {/* gallery thumb toggle model */}
-                 {
+                  {/* gallery thumb toggle model */}
+                  {
                     isThumbOpen && (
                       <div className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 inset-0 z-50 outline-none focus:outline-none justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full" >
                         <div className="opacity-75 w-screen h-screen fixed  z-40 bg-black"
@@ -200,7 +237,7 @@ const ProductDetailsPage = () => {
                       </div>
                     )
                   }
-                 {/* ================================= */}
+                  {/* ================================= */}
 
                   {/* gallery thumb màn hình chính */}
                   <picture className="relative flex items-center bg-orange-500 sm:bg-transparent" onClick={toggleThumb}>
@@ -353,122 +390,77 @@ const ProductDetailsPage = () => {
                     <h2 className="mb-2 text-lg font-bold text-gray-700 dark:text-gray-400">
                       Thông tin sản phẩm:
                     </h2>
-                    <div className="bg-gray-100 dark:bg-gray-700 rounded-xl">
-                      <div className="p-3 lg:p-5 ">
-                        <div className="p-2 rounded-xl lg:p-6 dark:bg-gray-800 bg-gray-50">
-                          <p>Thông tin sản phẩm đang được cập nhật...</p>
+                    <div className="bg-gray-100  rounded-xl">
+                      <div className="py-2 px-3">
+                        <button
+                          onClick={() => setAccordionOpen(!accordionOpen)}
+                          className="flex justify-between w-full items-center "
+                        >
+                          <span>abc</span>
+                          {/* {accordionOpen ? <span>-</span> : <span>+</span>} */}
+                          <svg
+                            className="fill-indigo-500 shrink-0 ml-8"
+                            width="16"
+                            height="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              y="7"
+                              width="16"
+                              height="2"
+                              rx="1"
+                              className={`transform origin-center transition duration-200 ease-out ${accordionOpen && "!rotate-180"
+                                }`}
+                            />
+                            <rect
+                              y="7"
+                              width="16"
+                              height="2"
+                              rx="1"
+                              className={`transform origin-center rotate-90 transition duration-200 ease-out ${accordionOpen && "!rotate-180"
+                                }`}
+                            />
+                          </svg>
+                        </button>
+                        <div
+                          className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${accordionOpen
+                              ? "grid-rows-[1fr] opacity-100"
+                              : "grid-rows-[0fr] opacity-0"
+                            }`}
+                        >
+                          <div className="overflow-hidden"><span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet corrupti nesciunt cum laudantium dolorum natus doloremque recusandae necessitatibus. Voluptatibus, autem sit eum nam quidem deleniti doloremque asperiores tempore dignissimos. Asperiores.</span></div>
                         </div>
                       </div>
                     </div>
 
                   </div>
-                  <div>
-                    <button onClick={toggleModal} data-modal-target="crud-modal" data-modal-toggle="crud-modal" type="button" className="w-full  text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Xem thêm cấu hình chi tiết</button>
 
-                    {
-                      isModalOpen && (
-                        <>
-                          <div id="crud-modal" tabIndex={-1} aria-hidden="true" className=" overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 inset-0 z-50 outline-none focus:outline-none justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full" onClick={(event) => {
-                            if (event.target === event.currentTarget) {
-                              setIsModalOpen(false);
-                            }
-                          }}>
-                            <div className="relative top-20 left-1/3 p-4 w-full max-w-md max-h-full ">
-
-                              <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-
-                                <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                                    Thông số kỹ thuật
-                                  </h3>
-                                  <button onClick={() => {
-                                    setIsModalOpen(false)
-                                  }} type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
-                                    <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                    </svg>
-                                    <span className="sr-only">Close modal</span>
-                                  </button>
-                                </div>
-
-                                <ul className="px-4">
-                                  <li className="flex justify-between py-5">
-                                    <span className="block w-40 text-gray-600 text-sm">Hệ điều hành:</span>
-                                    <span className="block text-gray-700">Android 11</span>
-                                  </li>
-                                  <li className="flex justify-between border-t border-gray-300 py-5">
-                                    <span className="block w-40 text-gray-600 text-sm">Camera sau:</span>
-                                    <span className="block text-gray-700">Chính 12 MP & Phụ 64 MP, 12 MP</span>
-                                  </li>
-                                  <li className="flex justify-between border-t border-gray-300 py-5">
-                                    <span className="block w-40 text-gray-600 text-sm">Camera trước:</span>
-                                    <span className="block text-gray-700">10 MP</span>
-                                  </li>
-                                  <li className="flex justify-between border-t border-gray-300 py-5">
-                                    <span className="block w-40 text-gray-600 text-sm">CPU:</span>
-                                    <span className="block text-gray-700">Exynos 2100 8 nhân</span>
-                                  </li>
-                                  <li className="flex justify-between border-t border-gray-300 py-5">
-                                    <span className="block w-40 text-gray-600 text-sm">RAM:</span>
-                                    <span className="block text-gray-700">8 GB</span>
-                                  </li>
-                                  <li className="flex justify-between border-t border-gray-300 py-5">
-                                    <span className="block w-40 text-gray-600 text-sm">Bộ nhớ trong:</span>
-                                    <span className="block text-gray-700">128 GB</span>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-
-                          </div>
-                          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-                        </>
-                      )
-                    }
-
-                  </div>
                   <div className="py-6 mb-6 border-t border-gray-200 dark:border-gray-700">
 
                   </div>
                   <div className="mb-6 " />
-                 
-                    {/* Điều chỉnh số lượng sản phẩm, mặc định 1 */}
-                    <div className="flex flex-wrap items-center mb-6">
-                    <div className="mb-4 mr-4 lg:mb-0">
-                      <div className="w-28 bg-red-400">
-                        <div className="relative flex flex-row w-full h-10 bg-transparent rounded-lg">
-                          {
-                            items.map((item) => {
-                              return (
-                                <>
-                                  <button onClick={() => {
-                                    increaseQuantity(item.id);
-                                  }} className="w-20 h-full text-gray-600 bg-gray-100 border-r rounded-l outline-none cursor-pointer dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-400 hover:text-gray-700 dark:bg-gray-900 hover:bg-gray-300">
-                                    <span className="m-auto text-2xl font-thin">+</span>
-                                  </button>
-                                  <input
-                                    className="flex items-center w-full font-semibold text-center text-gray-700 placeholder-gray-700 bg-gray-100 outline-none dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-900 focus:outline-none text-md hover:text-black"
-                                    value={item.quantity}
-                                  />
-                                  <button onClick={() => {
-                                    decreaseQuantity(item.id);
-                                  }} className="w-20 h-full text-gray-600 bg-gray-100 border-l rounded-r outline-none cursor-pointer dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-400 dark:bg-gray-900 hover:text-gray-700 hover:bg-gray-300">
-                                    <span className="m-auto text-2xl font-thin">-</span>
-                                  </button>
-                                </>
-                              )
-                            })
-                          }
-                        </div>
-                      </div>
-                    </div>
+
+                  {/* Điều chỉnh số lượng sản phẩm, mặc định 1 */}
+                  <div className="flex flex-wrap items-center mb-6">
                     <div className="mb-4 lg:mb-0">
-                     
+                      <button className="flex items-center justify-center w-full h-10 p-2 mr-4 text-gray-700 border border-gray-300 lg:w-11 hover:text-gray-50 dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 dark:hover:border-blue-500 dark:hover:text-gray-100">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width={16}
+                          height={16}
+                          fill="currentColor"
+                          className=" bi bi-heart"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+                        </svg>
+                      </button>
                     </div>
-                    <button onClick={() => {
+
+                    <button  onClick={() => {
                       console.log('Thêm giỏ hàng ID', slug);
                       const item = product?.data?.data;
-
+                      handleAddToBag();
                       addItem({
                         id: item._id,
                         price: item.price,
@@ -478,36 +470,18 @@ const ProductDetailsPage = () => {
                       });
                     }} type='button'
 
-                      className="w-full px-4 py-3 text-center text-blue-600 bg-blue-100 border border-blue-600 dark:hover:bg-gray-900 dark:text-gray-400 dark:border-gray-700 dark:bg-gray-700 hover:bg-blue-600 hover:text-gray-100 lg:w-1/2 rounded-xl"
+                      className="w-full text-lg px-4 py-2 text-center text-blue-600 bg-blue-100 border border-blue-600 dark:hover:bg-gray-900 dark:text-gray-400 dark:border-gray-700 dark:bg-gray-700 hover:bg-blue-600 hover:text-gray-100 lg:w-1/2 rounded-xl"
                     >
-                      Add to cart
+                      ADD TO BAG
                     </button>
                   </div>
-
+                 
                   {/* click chuyển sang trang cart & thêm 1 sp vào cart */}
-                  <div className="flex gap-4 mb-6">
-                    <Link
-                      to={'/cart'}
-                      onClick={() => {
-                        console.log('Thêm giỏ hàng ID', slug);
-                        const item = product?.data?.data;
-  
-                        addItem({
-                          id: item._id,
-                          price: item.price,
-                          name: item.name,
-                          quantity: 0,
-                          thumb: item.thumbnail
-                        });
-                      }}
-                      className="w-full px-4 py-3 text-center text-gray-100 bg-blue-600 border border-transparent dark:border-gray-700 hover:border-blue-500 hover:text-blue-700 hover:bg-blue-100 dark:text-gray-400 dark:bg-gray-700 dark:hover:bg-gray-900 rounded-xl"
-                    >
-                      Buy now
-                    </Link>
-                  </div>
-                      {/* end buy */}
+
+                  {/* end buy */}
 
                 </div>
+                
               </div>
             </div>
           </div>
@@ -796,6 +770,7 @@ const ProductDetailsPage = () => {
               </div>
             </div>
           </div>
+          
         </section>
         <section
           data-section-id={1}

@@ -12,7 +12,8 @@ const getAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const page = req.query.page  ? parseInt(req.query.page as string) : 1;
     const limit = req.query.page  ? parseInt(req.query.limit as string) : 10; // 10 item trên 1 limit
-    const products = await productsService.getAllItems(page,limit);
+    const category = req.query.category as string;
+    const products = await productsService.getAllItems(category,page,limit);
     // check số lượng sản phẩm hiện thị trên 1 page.
     // console.log(products.length);
     sendJsonSuccess(res)(products); // Gọi hàm mà có truyền giá trị cho data
@@ -38,6 +39,7 @@ const getItemBySlug = async (req: Request, res: Response, next: NextFunction) =>
     next(error);
   }
 };
+
 
 const createItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -77,5 +79,6 @@ export default {
   updateItem,
   createItem,
   deleteItem,
-  getItemBySlug
+  getItemBySlug,
+  
 };
