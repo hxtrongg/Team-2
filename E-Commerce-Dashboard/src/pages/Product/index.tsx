@@ -8,7 +8,9 @@ import {
   Input,
   message,
   Pagination,
+  Select,
 } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosClient } from "../../library/axiosClient";
@@ -18,12 +20,11 @@ import type { PaginationProps } from "antd";
 interface DataType {
   _id?: string;
   name: string;
-  price: number;
-  discount: number;
-  stock: number;
   description: string;
-  categoryId: string;
-  supplier: string;
+  price: number;
+  stock: number;
+  categoryId: number;
+  supplier: number;
   thumbnail: string;
 }
 
@@ -33,6 +34,14 @@ const Product = () => {
   const [isModalEditOpen, setIsModalEditOpen] = React.useState(false);
   //Toggle Modal Create
   const [isModalCreateOpen, setIsModalCreateOpen] = React.useState(false);
+  //Modal xác nhận xóa.
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
+  const [itemToDelete, setItemToDelete] = React.useState<
+    string | DataType | undefined
+  >(undefined);
+  //State để lưu danh sách categories và suppliers
+  const [categories, setCategories] = React.useState<any[]>([]); // Kiểu dữ liệu của categories phụ thuộc vào dữ liệu thực tế
+  const [suppliers, setSuppliers] = React.useState<any[]>([]); // Kiểu dữ liệu của suppliers phụ thuộc vào dữ liệu thực tế
 
   const navigate = useNavigate();
   //=========================== PHÂN TRANG =================================//
@@ -47,7 +56,7 @@ const Product = () => {
   };
 
   //Lay danh sach danhmuc
-  const getProducts = async (page = 1, limit = 5) => {
+  const getproducts = async (page = 1, limit = 5) => {
     return axiosClient.get(
       config.urlAPI + `/v1/products?page=${page}&limit=${limit}`
     );
@@ -59,23 +68,27 @@ const Product = () => {
   //Lấy danh sách về
   const queryProduct = useQuery({
     queryKey: ["products", int_page],
-    queryFn: () => getProducts(int_page, int_limit),
+    queryFn: () => getproducts(int_page, int_limit),
   });
 
-  console.log("<<=== 🚀 queryProduct.data ===>>", queryProduct.data?.data.data);
+  console.log(
+    "<<=== 🚀 queryProduct.data ===>>",
+    queryProduct.data?.data.data.products
+  );
 
   //======= Sự kiện XÓA =====//
-  const fetchDelete = async (objectID: string) => {
-    return axiosClient.delete(config.urlAPI + "/v1/products/" + objectID);
+  const fetchDelete = async (objectID: string | DataType) => {
+    const idToDelete = typeof objectID === "string" ? objectID : objectID._id;
+    return axiosClient.delete(config.urlAPI + "/v1/products/" + idToDelete);
   };
   // Mutations => Thêm mới, xóa, edit
   const mutationDelete = useMutation({
     mutationFn: fetchDelete,
     onSuccess: () => {
-      console.log("Delete success !");
+      console.log("Đã xóa !");
       messageApi.open({
         type: "success",
-        content: "Delete success !",
+        content: "Đã xóa !",
       });
       // Làm tươi lại danh sách danh mục dựa trên key đã định nghĩa
       queryClient.invalidateQueries({ queryKey: ["products"] });
@@ -94,10 +107,10 @@ const Product = () => {
   const mutationUpdate = useMutation({
     mutationFn: fetchUpdate,
     onSuccess: () => {
-      console.log("Update success !");
+      console.log("Cập nhật thành công !");
       messageApi.open({
         type: "success",
-        content: "Update success !",
+        content: "Cập nhật thành công !",
       });
       // Làm tươi lại danh sách danh mục dựa trên key đã định nghĩa
       queryClient.invalidateQueries({ queryKey: ["products"] });
@@ -126,13 +139,35 @@ const Product = () => {
   //hàm lấy thông tin từ form Edit
   const onFinishEdit = async (values: any) => {
     console.log("Success:", values); //=> chính là thông tin ở form edit
-    //Gọi API để update category
+    //Gọi API để update Product
     mutationUpdate.mutate(values);
   };
 
   const onFinishEditFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
+  // Sử dụng useEffect để lấy danh sách categories và suppliers khi component được render
+  React.useEffect(() => {
+    // Gọi API hoặc thực hiện các thao tác để lấy danh sách categories và suppliers
+    const fetchCategories = async () => {
+      console.log('Fetching categories...');
+      const response = await axiosClient.get(config.urlAPI + "/v1/categories");
+      console.log('Fetched categories:', response.data.categories);
+      setCategories(response.data.categories);
+      return response; // Trả về response để kiểm tra trong useEffect
+    };
+    
+
+    const fetchSuppliers = async () => {
+      console.log('check api',suppliers)
+      // Gọi API hoặc thực hiện các thao tác để lấy danh sách suppliers
+      const response = await axiosClient.get(config.urlAPI + "/v1/suppliers");
+      setSuppliers(response.data.data.data); // Thiết lập danh sách suppliers
+    };
+
+    fetchCategories();
+    fetchSuppliers();
+  }, []);
 
   //======= Sự kiện Create =====//
   const fetchCreate = async (formData: DataType) => {
@@ -142,10 +177,10 @@ const Product = () => {
   const mutationCreate = useMutation({
     mutationFn: fetchCreate,
     onSuccess: () => {
-      console.log("Create success !");
+      console.log("Thêm mới thành công !");
       messageApi.open({
         type: "success",
-        content: "Create success !",
+        content: "Thêm mới thành công !",
       });
       // Làm tươi lại danh sách danh mục dựa trên key đã định nghĩa
       queryClient.invalidateQueries({ queryKey: ["products"] });
@@ -157,6 +192,22 @@ const Product = () => {
       //khi gọi API bị lỗi
     },
   });
+
+  // Khi nhấn nút "Xác nhận xóa" trên modal xóa
+  const handleDeleteConfirm = async () => {
+    // Thực hiện cuộc gọi API để xóa nhân viên
+    await mutationDelete.mutate(itemToDelete);
+    // Đóng modal xác nhận xóa và đặt lại giá trị itemToDelete
+    setIsDeleteModalOpen(false);
+    setItemToDelete(undefined);
+  };
+  // Khi nhấn nút "Hủy" trên modal xóa
+  const handleDeleteCancel = () => {
+    // Đóng modal xác nhận xóa và đặt lại giá trị itemToDelete
+    setIsDeleteModalOpen(false);
+    setItemToDelete(undefined);
+    // Các hành động khác nếu cần
+  };
 
   const [createForm] = Form.useForm();
   //Khi nhấn nut OK trên Modal
@@ -175,7 +226,7 @@ const Product = () => {
   //hàm lấy thông tin từ form Create
   const onFinishCreate = async (values: any) => {
     console.log("Success:", values); //=> chính là thông tin ở form edit
-    //Gọi API để update category
+    //Gọi API để update Product
     mutationCreate.mutate(values);
   };
 
@@ -185,54 +236,73 @@ const Product = () => {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: "Name",
+      title: "Hình ảnh",
+      dataIndex: "thumbnail",
+      key: "thumbnail",
+      render: (thumbnail) => (
+        <img
+          style={{ width: 50, height: 50 }}
+          src={thumbnail}
+          alt="Thumbnail"
+        />
+      ),
+    },
+    {
+      title: "Tên sản phẩm",
       dataIndex: "name",
       key: "name",
       render: (text) => <a>{text}</a>,
     },
     {
-      title: "Price",
+      title: "Giá",
       dataIndex: "price",
       key: "price",
     },
     {
-      title: "Discount",
+      title: "Giảm giá",
       dataIndex: "discount",
       key: "discount",
     },
     {
-      title: "Stock",
+      title: "Tồn kho",
       dataIndex: "stock",
       key: "stock",
     },
     {
-      title: "Description",
+      title: "Mô tả",
       dataIndex: "description",
       key: "description",
+      render: (text) => {
+        // Kiểm tra nếu mô tả không tồn tại
+        if (!text) {
+          return <span>Null...</span>;
+        }
+
+        // Truncate the string to 3 characters and append "..."
+        const truncatedText =
+          text.length > 3 ? text.substring(0, 3) + "..." : text;
+        return <span>{truncatedText}</span>;
+      },
     },
+
     {
-      title: "Category",
+      title: "Danh mục",
       dataIndex: ["categoryId", "name"], // Hiển thị name của category.
       key: "categoryId",
     },
     {
-      title: "Supplier",
-      dataIndex: ["supplier", "name"], // Hiển thị name của supplier.
+      title: "Thương hiệu",
+      dataIndex: "supplierId", // ["supplier", "name"] Hiển thị name của supplier.
       key: "supplier",
     },
-    {
-      title: "Slug",
-      dataIndex: "slug",
-      key: "slug",
-    },
-    {
-      title: "Thumbnail",
-      dataIndex: "thumbnail",
-      key: "thumbnail",
-    },
+    // {
+    //   title: "Slug",
+    //   dataIndex: "slug",
+    //   key: "slug",
+    // },
 
     {
-      title: "Action",
+      title: "Thao tác",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
@@ -243,17 +313,20 @@ const Product = () => {
               updateForm.setFieldsValue(record);
             }}
           >
-            Edit
+            <EditOutlined />
           </Button>
 
           <Button
             danger
             onClick={() => {
               console.log("Delete this item", record);
-              mutationDelete.mutate(record._id as string);
+              if (record && "_id" in record) {
+                setItemToDelete(record);
+                setIsDeleteModalOpen(true); // Mở modal xác nhận xóa
+              }
             }}
           >
-            Delete
+            <DeleteOutlined />
           </Button>
         </Space>
       ),
@@ -271,14 +344,14 @@ const Product = () => {
           setIsModalCreateOpen(true);
         }}
       >
-        Create a new Product
+        Thêm
       </Button>
 
       <Table
         pagination={false}
         columns={columns}
         key={"_id"}
-        dataSource={queryProduct.data?.data.data}
+        dataSource={queryProduct.data?.data.data.products}
       />
       <div>
         <Pagination
@@ -290,9 +363,17 @@ const Product = () => {
           showTotal={(total) => `Total ${total} items`}
         />
       </div>
+      <Modal
+        title="Xác nhận xóa"
+        open={isDeleteModalOpen}
+        onOk={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+      >
+        <p>Bạn có chắc chắn muốn xóa?</p>
+      </Modal>
       {/* begin Edit Modal */}
       <Modal
-        title="Edit Product"
+        title="Sửa danh mục"
         open={isModalEditOpen}
         onOk={handleEditOk}
         onCancel={handleEditCancel}
@@ -348,26 +429,39 @@ const Product = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item<DataType>
+          <Form.Item
             label="Category"
             name="categoryId"
-            rules={[
-              { required: true, message: "Please input stock Name!" },
-              { min: 4, message: "Tối thiểu 4 kí tự" },
-            ]}
+            rules={[{ required: true, message: "Please select a category!" }]}
           >
-            <Input />
+            <Select>
+              {Array.isArray(categories) &&
+                categories.map((categories) => {
+                  console.log("fixbug-line99:", categories);
+                  return (
+                    <Select.Option key={categories._id} value={categories._id}>
+                      {categories.name}
+                    </Select.Option>
+                  );
+                })}
+            </Select>
           </Form.Item>
 
-          <Form.Item<DataType>
+          <Form.Item
             label="Supplier"
             name="supplier"
-            rules={[
-              { required: true, message: "Please input stock Name!" },
-              { min: 4, message: "Tối thiểu 4 kí tự" },
-            ]}
+            rules={[{ required: true, message: "Please select a supplier!" }]}
           >
-            <Input />
+            <Select>
+              <Select>
+                {Array.isArray(suppliers) &&
+                  suppliers.map((supplier) => (
+                    <Select.Option key={supplier._id} value={supplier._id}>
+                      {supplier.name}
+                    </Select.Option>
+                  ))}
+              </Select>
+            </Select>
           </Form.Item>
 
           <Form.Item<DataType>
@@ -390,7 +484,7 @@ const Product = () => {
 
       {/* begin Create Modal */}
       <Modal
-        title="Create Product"
+        title="Thêm mới danh mục"
         open={isModalCreateOpen}
         onOk={handleCreateOk}
         onCancel={handleCreateCancel}
@@ -405,7 +499,7 @@ const Product = () => {
           onFinishFailed={onFinishCreateFailed}
           autoComplete="off"
         >
-           <Form.Item<DataType>
+          <Form.Item<DataType>
             label="Name"
             name="name"
             rules={[
@@ -421,7 +515,7 @@ const Product = () => {
             name="price"
             rules={[
               { required: true, message: "Please input Price Name!" },
-              { min: 0, message: "Tối thiểu 4 kí tự" },
+              { min: 4, message: "Tối thiểu 4 kí tự" },
             ]}
           >
             <Input />
@@ -432,7 +526,7 @@ const Product = () => {
             name="stock"
             rules={[
               { required: true, message: "Please input stock Name!" },
-              { min: 0, message: "Tối thiểu 4 kí tự" },
+              { min: 4, message: "Tối thiểu 4 kí tự" },
             ]}
           >
             <Input />

@@ -9,6 +9,7 @@ import {
   message,
   Pagination,
 } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosClient } from "../../library/axiosClient";
@@ -25,6 +26,10 @@ interface DataType {
   birthDay: string;
   password: string;
 }
+interface MyError {
+  errors?: any;
+  // Thêm các thuộc tính khác của đối tượng lỗi nếu cần
+}
 
 const Customer = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -32,6 +37,11 @@ const Customer = () => {
   const [isModalEditOpen, setIsModalEditOpen] = React.useState(false);
   //Toggle Modal Create
   const [isModalCreateOpen, setIsModalCreateOpen] = React.useState(false);
+  //Modal xác nhận xóa.
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
+  const [itemToDelete, setItemToDelete] = React.useState<
+    string | DataType | undefined
+  >(undefined);
 
   const navigate = useNavigate();
   //=========================== PHÂN TRANG =================================//
@@ -58,7 +68,7 @@ const Customer = () => {
   const queryClient = useQueryClient();
 
   //Lấy danh sách về
-  console.log('debug_line53',config.urlAPI);
+  //console.log('debug_line53',config.urlAPI);
   const queryCustomer = useQuery({
     queryKey: ["customers", int_page],
     queryFn: () => getCustomers(int_page, int_limit),
@@ -68,7 +78,9 @@ const Customer = () => {
     "<<=== 🚀 queryCustomer.data ===>>",
     queryCustomer.data?.data.data
   );
-
+  console.log(
+    "<<=== 🚀 queryCustomer.error ===>>",
+     queryCustomer.error);
   //======= Sự kiện XÓA =====//
   const fetchDelete = async (objectID: string) => {
     return axiosClient.delete(config.urlAPI + "/v1/customers/" + objectID);
@@ -85,10 +97,17 @@ const Customer = () => {
       // Làm tươi lại danh sách danh mục dựa trên key đã định nghĩa
       queryClient.invalidateQueries({ queryKey: ["customers"] });
     },
-    onError: () => {
-      //khi gọi API bị lỗi
+    onError: (error) => {
+      console.error("Lỗi khi gọi API:", error);
+  
+      // Handle the error based on your requirements
+      messageApi.open({
+        type: "error",
+        content: "Đã xảy ra lỗi khi xóa dữ liệu.",
+      });
     },
   });
+  
 
   //======= Sự kiện EDit =====//
   const fetchUpdate = async (formData: DataType) => {
@@ -109,8 +128,14 @@ const Customer = () => {
       //Ẩn modal
       setIsModalEditOpen(false);
     },
-    onError: () => {
-      //khi gọi API bị lỗi
+    onError: (error) => {
+      console.error("Lỗi khi gọi API:", error);
+  
+      // Handle the error based on your requirements
+      messageApi.open({
+        type: "error",
+        content: "Đã xảy ra lỗi khi Sửa dữ liệu.",
+      });
     },
   });
 
@@ -158,10 +183,36 @@ const Customer = () => {
       setIsModalCreateOpen(false);
       createForm.resetFields(); //làm trống các input
     },
-    onError: () => {
-      //khi gọi API bị lỗi
-    },
+    onError: (error: MyError) => {
+      console.error("Lỗi khi thêm sản phẩm:", error);
+    
+      // Ép kiểu error thành kiểu cụ thể (nếu bạn chắc chắn về kiểu)
+      const specificError = error as { errors?: MyError };
+    
+      if (specificError.errors) {
+        // Log đối tượng lỗi để xem thông tin chi tiết
+        console.log("Đối tượng lỗi:", specificError.errors);
+      }
+    }
+    
+    
   });
+
+  // Khi nhấn nút "Xác nhận xóa" trên modal xóa
+  const handleDeleteConfirm = async () => {
+    // Thực hiện cuộc gọi API để xóa nhân viên
+    await mutationDelete.mutate(itemToDelete);
+    // Đóng modal xác nhận xóa và đặt lại giá trị itemToDelete
+    setIsDeleteModalOpen(false);
+    setItemToDelete(undefined);
+  };
+  // Khi nhấn nút "Hủy" trên modal xóa
+  const handleDeleteCancel = () => {
+    // Đóng modal xác nhận xóa và đặt lại giá trị itemToDelete
+    setIsDeleteModalOpen(false);
+    setItemToDelete(undefined);
+    // Các hành động khác nếu cần
+  };
 
   const [createForm] = Form.useForm();
   //Khi nhấn nut OK trên Modal
@@ -176,6 +227,7 @@ const Customer = () => {
     setIsModalCreateOpen(false);
     console.log("Create cancel");
   };
+
 
   //hàm lấy thông tin từ form Create
   const onFinishCreate = async (values: any) => {
@@ -238,17 +290,20 @@ const Customer = () => {
               updateForm.setFieldsValue(record);
             }}
           >
-            Sửa
+            <EditOutlined/>
           </Button>
 
           <Button
             danger
             onClick={() => {
               console.log("Delete this item", record);
-              mutationDelete.mutate(record._id as string);
+              if (record && "_id" in record) {
+                setItemToDelete(record);
+                setIsDeleteModalOpen(true); // Mở modal xác nhận xóa
+              }
             }}
           >
-            Xóa
+            <DeleteOutlined/>
           </Button>
         </Space>
       ),
@@ -285,6 +340,14 @@ const Customer = () => {
           showTotal={(total) => `Total ${total} items`}
         />
       </div>
+      <Modal
+        title="Xác nhận xóa"
+        open={isDeleteModalOpen}
+        onOk={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+      >
+        <p>Bạn có chắc chắn muốn xóa?</p>
+      </Modal>
       {/* begin Edit Modal */}
       <Modal
         title="Edit Customer"
