@@ -9,6 +9,7 @@ import {
   message,
   Pagination,
 } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosClient } from "../../library/axiosClient";
@@ -225,7 +226,7 @@ const Category = () => {
               updateForm.setFieldsValue(record);
             }}
           >
-            Sửa
+            <EditOutlined/>
           </Button>
 
           <Button
@@ -238,7 +239,7 @@ const Category = () => {
               }
             }}
           >
-            Xóa
+            <DeleteOutlined/>
           </Button>
         </Space>
       ),

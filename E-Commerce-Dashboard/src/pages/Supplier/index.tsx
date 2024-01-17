@@ -9,6 +9,10 @@ import {
   message,
   Pagination,
 } from "antd";
+import {
+  EditOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons"
 import type { ColumnsType } from "antd/es/table";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosClient } from "../../library/axiosClient";
@@ -200,7 +204,7 @@ const Suppliers = () => {
               updateForm.setFieldsValue(record);
             }}
           >
-            Sửa
+             <EditOutlined />
           </Button>
           <Button
             danger
@@ -211,7 +215,7 @@ const Suppliers = () => {
               }
             }}
           >
-            Xóa
+            <DeleteOutlined />
           </Button>
         </Space>
       ),
