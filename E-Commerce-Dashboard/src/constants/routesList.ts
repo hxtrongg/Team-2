@@ -9,6 +9,7 @@ import Suppliers from '../pages/Supplier';
 import Order from '../pages/Order';
 import CategoryAdd from '../pages/Category/CategoryAdd';
 import CategoryEdit from '../pages/Category/CategoryEdit';
+import UploadImages from '../pages/Product/ImageUpload';
 
 interface BaseProps {
     id: number;
@@ -37,6 +38,8 @@ const privateRoutes: Routes[] = [
     {id: 7, path: '/orders', element: Order},
     {id: 8, path: '/customers', element: Customers},
     {id: 9, path: '/employees', element: Employees},
+    {id: 10, path: '/upload', element: UploadImages},
+
 ];
 
 export {

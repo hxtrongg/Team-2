@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Button,
@@ -23,14 +24,19 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { axiosClient } from "../../library/axiosClient";
 import config from "../../constants/config";
-import React from "react";
+import React, { useState } from "react";
 import { AnyObject } from "antd/es/_util/type";
 import { ColumnsType } from "antd/es/table";
 import {
+  CloseOutlined,
   DeleteOutlined,
   EditOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
+import UploadImages from "./ImageUpload";
+import form from "antd/es/form";
+import axios from "axios";
+
 // import { useNavigate, useSearchParams } from "react-router-dom";
 // import config from "../../constants/config";
 // import type { PaginationProps } from "antd";
@@ -43,6 +49,10 @@ type supplierType = {
   _id?: string;
   name: string;
 };
+type imagesType = {
+  _id?: string;
+  url: string;
+};
 
 interface DataType {
   _id: string;
@@ -54,63 +64,71 @@ interface DataType {
   description: string;
   category: categoryType;
   supplier: supplierType;
-  images: string[];
+  images: imagesType[];
 }
 
 const ProductPage = () => {
   const navigate = useNavigate();
-
   //message edit
   const [messageApi, contextHolder] = message.useMessage();
   //Toggle Modal Edit
   const [isModalEditOpen, setIsModalEditOpen] = React.useState(false);
   //Toggle Modal Create
   const [isModalCreateOpen, setIsModalCreateOpen] = React.useState(false);
+  //upload
+  const [fileList, setFileList] = React.useState<{ path: string }[]>([]);
+
+  const [fileURL, setFileURL] = React.useState([]);
+
+  // let formattedFilename = "";
+  // if (fileList.length > 0) {
+  //   const lastModifiedValue = (
+  //     fileList[fileList.length - 1] as { lastModified: number }
+  //   ).lastModified;
+  //   const fileName = (fileList[fileList.length - 1] as { name: string }).name;
+  //   formattedFilename = `${
+  //     fileName.split(".")[0]
+  //   }-${lastModifiedValue.toString()}.${fileName.split(".")[1]}`;
+  // }
+  console.log("fileList", fileList);
   // create product
   const onFinish = async (values: DataType) => {
     console.log("Success:", values);
   };
-
   const onFinishFailed = (errorInfo: AnyObject) => {
     console.log("Failed:", errorInfo);
   };
 
   //======= lấy sản phẩm  =====//
-
   // Access the client
   const queryClient = useQueryClient();
-
-  //Lấy danh sách react query
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["products"],
     queryFn: async () =>
       await axiosClient.get(`http://localhost:3000/api/v1/products`),
   });
-  console.log("queryProducts", data);
+  // console.log("queryProducts", data);
 
   //======= lấy danh mục  =====//
-  //Lấy danh sách react query
   const queryCategories = useQuery({
     queryKey: ["categories"],
     queryFn: async () =>
       await axiosClient.get(`http://localhost:3000/api/v1/categories`),
   });
-  console.log("queryCategories", queryCategories);
+  // console.log("queryCategories", queryCategories);
 
   //======= lấy suppliers  =====//
-  //Lấy danh sách react query
   const querySuppliers = useQuery({
     queryKey: ["suppliers"],
     queryFn: async () =>
       await axiosClient.get(`http://localhost:3000/api/v1/suppliers`),
   });
-  console.log("querySuppliers", querySuppliers);
+  // console.log("querySuppliers", querySuppliers);
 
   //======= Sự kiện XÓA =====//
   const fetchDelete = async (_id: string) => {
     return await axiosClient.delete(config.urlAPI + "/v1/products/" + _id);
   };
-  // Mutations => Thêm mới, xóa, edit
   const mutationDelete = useMutation({
     mutationFn: fetchDelete,
     onSuccess: () => {
@@ -132,7 +150,6 @@ const ProductPage = () => {
     const { _id, ...payload } = formData;
     return axiosClient.patch(config.urlAPI + "/products/" + _id, payload);
   };
-  // Mutations => Thêm mới, xóa, edit
   const mutationUpdate = useMutation({
     mutationFn: fetchUpdate,
     onSuccess: () => {
@@ -164,23 +181,20 @@ const ProductPage = () => {
     setIsModalEditOpen(false);
     console.log("edit cancel");
   };
-
   //hàm lấy thông tin từ form Edit
   const onFinishEdit = async (values: DataType) => {
     console.log("Success:", values); //=> chính là thông tin ở form edit
     //Gọi API để update category
     mutationUpdate.mutate(values);
   };
-
+  //hàm lấy lỗi từ form Edit
   const onFinishEditFailed = (errorInfo: object) => {
     console.log("Failed:", errorInfo);
   };
-
   //======= Sự kiện Create =====//
   const fetchCreate = async (formData: DataType) => {
     return await axiosClient.post(config.urlAPI + "/v1/products", formData);
   };
-  // Mutations => Thêm mới, xóa, edit
   const mutationCreate = useMutation({
     mutationFn: fetchCreate,
     onSuccess: () => {
@@ -199,7 +213,7 @@ const ProductPage = () => {
       //khi gọi API bị lỗi
     },
   });
-
+  // create form
   const [createForm] = Form.useForm();
   //Khi nhấn nut OK trên Modal
   const handleCreateOk = () => {
@@ -217,16 +231,15 @@ const ProductPage = () => {
   //hàm lấy thông tin từ form Create
   const onFinishCreate = async (values: DataType) => {
     console.log("Success:", values); //=> chính là thông tin ở form edit
-    //Gọi API để update category
+    values.id = newId.toString(); // Gán ID mới cho đối tượng values
+    //Gọi API để update product
     await mutationCreate.mutate(values);
+    createForm.resetFields;
   };
-
   const onFinishCreateFailed = (errorInfo: object) => {
     console.log("Failed:", errorInfo);
   };
-
   //======= Destructuring =====//
-
   let productData = [];
   if (data && data.data) {
     const {
@@ -237,41 +250,88 @@ const ProductPage = () => {
     // const [products] = productsData
     console.log("productsItem", products);
     productData = products;
-  }
-  console.log("productData", productData);
+  } 
+  // console.log("productData", productData);
+  //======= begin logic id max =====//
+  let max: string | null = null; // Khai báo biến max trước khi vào hàm if
+  if (productData) {
+    console.log("productDataId", data);
+    const idItem = productData.map((item: DataType) => item.id);
+    console.log("idItem", idItem);
+    max = idItem[0];
 
+    for (const id of idItem) {
+      if (Number(id) > Number(max)) {
+        max = id;
+      }
+      console.log("max", max);
+    }
+  }
+  // Nếu max chưa được gán giá trị (nghĩa là chưa có categoriesData), hãy bắt đầu với ID là 1
+  const newId = max ? Number(max) + 1 : 1;
+  //end logic id max
+
+  // ERR fetchdata
+  if (isError) {
+    let errorMessage = "Failed to do something exceptional";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+    console.log("errorMessage", errorMessage);
+    // return <div>Error: {error.message}</div>;
+  }
+
+
+  // Column Page product
   const columns: ColumnsType<DataType> = [
+    //id
     {
       title: "ID",
       dataIndex: "id",
       key: "id",
     },
+    //name
     {
       title: "Tên sản phẩm",
       dataIndex: "name",
       key: "name",
       render: (text) => <a>{text}</a>,
     },
+    // ảnh
     {
       title: "Ảnh",
       dataIndex: "images",
       key: "images",
-      render: (_,record) => record.images.map(
-        (item) => <Image src={item} alt="imagesProducts" width={100} />,
+      render: (_, record) => (
+        <Image.PreviewGroup
+          preview={{
+            onChange: (current, prev) =>
+              console.log(`current index: ${current}, prev index: ${prev}`),
+          }}
+        >
+          {record.images.map((item, index) => (
+            <Image key={index} src={item.url} width={50}></Image>
+          ))}
+        </Image.PreviewGroup>
       ),
     },
+    //des
     {
       title: "Mô tả",
       dataIndex: "description",
       key: "description",
     },
+    //price
     { title: "Giá", dataIndex: "price", key: "price" },
+    //stock
     { title: "Số lượng", dataIndex: "stock", key: "stock" },
+    //discount
     {
       title: "Giảm giá %",
       dataIndex: "discount",
       key: "discount",
     },
+    //category
     {
       title: "Danh mục",
       dataIndex: "category",
@@ -280,6 +340,7 @@ const ProductPage = () => {
         return record.category?.name;
       },
     },
+    //supp
     {
       title: "Nhà cung cấp",
       dataIndex: "supplier",
@@ -288,8 +349,9 @@ const ProductPage = () => {
         return record.supplier?.name;
       },
     },
+    //action
     {
-      title: "Hành đọng",
+      title: "Hành động",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
@@ -321,12 +383,11 @@ const ProductPage = () => {
       ),
     },
   ];
-
   return (
     <>
       <div>
         <Card
-          title="Categories List"
+          title="Product List"
           extra={
             <Button
               className="visible"
@@ -358,15 +419,19 @@ const ProductPage = () => {
           >
             <Form
               form={createForm}
-              name="create-form"
+              name="create-product-form"
               labelCol={{ span: 8 }}
               wrapperCol={{ span: 16 }}
               style={{ maxWidth: 600 }}
-              initialValues={{ remember: true }}
               onFinish={onFinishCreate}
               onFinishFailed={onFinishCreateFailed}
-              autoComplete="on"
+              autoComplete="off"
+              initialValues={{ images: []}}
             >
+              {/* ID */}
+              <Form.Item<DataType> label="ID" name="id">
+                <Input placeholder={`${newId}`} readOnly />
+              </Form.Item>
               {/* Tên sản phẩm */}
               <Form.Item<DataType>
                 label="Tên sản phẩm"
@@ -399,7 +464,7 @@ const ProductPage = () => {
               </Form.Item>
               {/* Số lượng hiện có */}
               <Form.Item<DataType>
-                label="Số lượng hiện có"
+                label="Số lượng"
                 name="stock"
                 rules={[
                   { required: true, message: "Please input Category Name!" },
@@ -426,7 +491,7 @@ const ProductPage = () => {
                 <Select>
                   {queryCategories?.data?.data.data.categories.map(
                     (item: categoryType) => (
-                      <Select.Option value={item._id}>
+                      <Select.Option key={item._id} value={item._id}>
                         {item.name}
                       </Select.Option>
                     )
@@ -435,7 +500,7 @@ const ProductPage = () => {
               </Form.Item>
               {/* Tên nhà cung cấp */}
               <Form.Item<DataType>
-                label=" Tên nhà cung cấp "
+                label="Tên nhà cung cấp "
                 name="supplier"
                 rules={[
                   { required: true, message: "Please input stock Name!" },
@@ -444,30 +509,61 @@ const ProductPage = () => {
                 <Select>
                   {querySuppliers?.data?.data.data.supplier.map(
                     (item: supplierType) => (
-                      <Select.Option value={item._id}>
+                      <Select.Option key={item._id} value={item._id}>
                         {item.name}
                       </Select.Option>
                     )
                   )}
                 </Select>
               </Form.Item>
-              {/* Ảnh */}
-              <Form.Item<DataType>
+              {/* Ảnh chọn từ pc */}
+              <Form.Item
                 label="Ảnh"
-                name="images"
-                rules={[
-                  { required: true, message: "Please input stock Name!" },
-                  { min: 4, message: "Tối thiểu 4 kí tự" },
-                ]}
+                rules={[{ required: false, message: "Chọn ảnh" }]}
               >
-                <Input type="file" accept="image/*" />
+                <UploadImages
+                  fileList={fileList}
+                  setFileList={setFileList}
+                ></UploadImages>
               </Form.Item>
+              {/* images */}
+              <Form.List name="images">
+                {(fields, { add, remove }) => (
+                  <div>
+                    {fields.map((field, index) => (
+                      <Space
+                        key={field.key} // Use key for efficient renderings
+                      >
+                        <Form.Item
+                          label={`image ${index + 1}`}
+                          name={[index, "url"]}
+                          extra="Ex: https://loremflickr.com/100/100/business"
+                        >
+                          <Input name="url" />
+                        </Form.Item>
+                        <CloseOutlined
+                          onClick={() => {
+                            remove(index);
+                          }}
+                        />
+                      </Space>
+                    ))}
+                    <Button
+                      type="dashed"
+                      onClick={() => add()}
+                      disabled={fields.length >= 4}
+                    >
+                      Add Image URL
+                    </Button>
+                  </div>
+                )}
+              </Form.List>
               {/* submit button */}
-              <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+              {/* <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                 <Button type="primary" htmlType="submit">
                   Submit
                 </Button>
-              </Form.Item>
+              </Form.Item> */}
             </Form>
           </Modal>
           {/* End Create Modal */}

@@ -69,6 +69,7 @@ const getItemBySlug = async (slug: string) => {
 };
 const createItem = async (payload: IProduct) => {
   // Kiểm tra xem email đã tồn tại chưa
+  
   // Lưu xuống database
   const product = await Product.create(payload);
   return product;

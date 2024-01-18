@@ -1,0 +1,27 @@
+  #Get all User
+POST http://localhost:8080/upload HTTP/1.1
+content-type: application/file
+
+{
+ 
+}
+### User Trong
+
+###
+POST   http://localhost:3000/upload HTTP/1.1
+content-type: application/json
+
+{
+  
+}
+
+
+###
+PATCH    http://localhost:8080/api/v1/categories/65688e42c94df3a50a2a8e45 HTTP/1.1
+content-type: application/json
+
+{
+  "name": "Điện thoại"
+}
+###
+DELETE   http://localhost:3000/api/v1/categories/65904d4d4c1249aefe9e91a4 HTTP/1.1

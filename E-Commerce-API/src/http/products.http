@@ -28,10 +28,14 @@ DELETE   http://localhost:3000/api/v1/products/65977e948578dd98d9471810 HTTP/1.1
 
 
 ###
-PATCH  http://localhost:3000/api/v1/products/6597f5a889d56be74a27884c HTTP/1.1
+PATCH  http://localhost:3000/api/v1/products/6597f5b189d56be74a27884e HTTP/1.1
 content-type: application/json
 
 {
-  "images": ["https://loremflickr.com/200/200/fashion?lock=1234",
+  "images": [
+  "https://loremflickr.com/200/200/fashion?lock=1234",
+    "https://loremflickr.com/200/200/fashion?lock=1234",
+  "https://loremflickr.com/200/200/fashion?lock=1234",
+
   "https://cdn.tgdd.vn/Products/Images/42/305658/Slider/vi-vn-iphone-15-pro-max-256gb--(2).jpg"]
 }

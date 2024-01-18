@@ -1,4 +1,6 @@
+import { File } from 'buffer';
 import { ObjectId } from 'mongoose';
+
 
 export interface ICategory {
   _id:ObjectId;
@@ -6,7 +8,7 @@ export interface ICategory {
   name: string;
   images: string;
   slug: string;
-}
+};
 
 export interface ISupplier {
   _id?: ObjectId;
@@ -15,8 +17,11 @@ export interface ISupplier {
   phoneNumber: string;
   address: string;
   slug: string;
-}
+};
 
+export type IImages ={
+  url: string;
+} 
 
 export interface IProduct {
   _id?: ObjectId;
@@ -26,11 +31,11 @@ export interface IProduct {
   price: number;
   discount: number;
   stock: number;
-  images: string[];
+  images: IImages[];
   category: ObjectId;
   supplier: ObjectId;
   slug: string;
-}
+};
 
 export interface IEmployee {
   _id?: ObjectId;
@@ -46,7 +51,7 @@ export interface IEmployee {
   position?: string;
   department?: string;
   isActive?: boolean;
-}
+};
 
 export interface ICustomer {
   _id?: ObjectId;
@@ -57,7 +62,7 @@ export interface ICustomer {
   address: string;
   birthDay: Date;
   password: string;
-}
+};
 
 export interface IOrder {
   _id?: ObjectId;
@@ -71,11 +76,11 @@ export interface IOrder {
   customer: ObjectId;
   employee: ObjectId;
   orderDetail: IOderDetail[];
-}
+};
 
 export interface IOderDetail {
   product: ObjectId;
   quantity: number;
   price: number;
   discount: number;
-}
+};

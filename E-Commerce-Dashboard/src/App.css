@@ -9,3 +9,10 @@
 #control-hooks_id::placeholder {
     color: red;
  }
+ #create-product-form_id::placeholder{
+    color: red;
+
+ }
+ #create-product-form input::placeholder{
+    color: red;
+ }

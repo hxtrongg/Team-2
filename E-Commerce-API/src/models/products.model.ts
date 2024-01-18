@@ -5,10 +5,9 @@ import { IProduct } from '../types/model';
 
 const arrayLimit = (val: any) => val.length <= 5;
 
-
-type IImages = {
-  url : string
-}[];
+const imageSchema = new Schema({
+  url: {type: String}
+})
 
 const productSchema = new Schema({
   _id:{
@@ -44,9 +43,11 @@ const productSchema = new Schema({
     maxLength: 3000,
 
   },
-  images: [{
-    type: String,
-  }],
+  images: {
+    type: [imageSchema],
+    validate: [arrayLimit, '{PATH} exceeds the limit of 5'],
+    default: [],
+  },
   stock: {
     type: Number,
     required: true,
@@ -81,9 +82,6 @@ const productSchema = new Schema({
   },
 });
 
-productSchema.virtual('url').get(function () {
-  return '/products/' + this._id;
-});
 
 productSchema.virtual('salePrice').get(function () {
   const discount : number = this.discount || 0;
@@ -102,6 +100,8 @@ productSchema.pre('save', async function (next) {
 
   next();
 });
+productSchema.pre('save', async function(next){
+})
 
 const Product = model<IProduct>('Product', productSchema);
 export default Product;
