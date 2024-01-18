@@ -11,7 +11,7 @@ import productsService from '../services/products.service';
 const getAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const page = req.query.page  ? parseInt(req.query.page as string) : 1;
-    const limit = req.query.page  ? parseInt(req.query.limit as string) : 10; // 10 item trên 1 limit
+    const limit = req.query.limit  ? parseInt(req.query.limit as string) : 10; // 10 item trên 1 limit
     const category = req.query.category as string;
     const products = await productsService.getAllItems(category,page,limit);
     // check số lượng sản phẩm hiện thị trên 1 page.

@@ -2,15 +2,12 @@ import Product from '../models/products.model';
 import { IProduct } from '../types/model';
 
 const getAllItems = async (category: string, currentPage: number, pageSize: number) => {
+  // let query = {};
+  // if (category) {
+  //   query.category = category;
+  // }
   const query = category ? { category: category } : {};
-  /**
-   * Page 1: 0 - 10 (Lấy 10 sp đầu)
-   * Page 2: 11 - 20 (Lấy 10 sp tiếp theo)
-   * ...
-   */
-  //const currentPage = 2; //trang hiện tại
-  //const pageSize = 10; // Số lượng items trên 1 trang
-  // Tương đương: SELECT * FROM products (SQL)
+  
   const products = await Product.find(query, ' -__v').
   populate('supplier', '-__v ').
   populate('category', '-__v ').

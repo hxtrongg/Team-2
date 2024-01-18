@@ -1,30 +1,43 @@
-// validations/categoryValidation.ts
-import { Request, Response, NextFunction } from 'express';
-import Joi from "joi";
-import { ICategory } from "../types/model";
+import Joi from 'joi';
+import {objectId, slugFriendly} from './custom.validation'
 
-const categorySchema = Joi.object<ICategory>({
-  name: Joi.string().min(4).required(),
-  description: Joi.string(),
-  products: Joi.array().items(Joi.string()), // Giả sử các định danh sản phẩm là string
-  slug: Joi.string().min(4).required(),
-});
+const getItemById ={
+  params: Joi.object().keys({
+    id: Joi.custom(objectId).required(),
+  })
+}
 
-// Middleware để kiểm tra dữ liệu khi tạo hoặc cập nhật danh mục
-const validateCategory = (req: Request, res: Response, next:NextFunction ) => {
-  const { error } = categorySchema.validate(req.body);
 
-  if (error) {
-    return res.status(400).json({ error: error.details[0].message });
-  }
+const createItem = {
+  body: Joi.object().keys({
+    name: Joi.string().min(4).required(),
+    description: Joi.string().max(500).optional(),
+    products: Joi.custom(objectId).required(),
+    slug: Joi.custom(slugFriendly).optional()
+  })
+}
 
-  next();
-};
+const updateItem = {
+  params: Joi.object().keys({
+    id: Joi.custom(objectId).required(),
+  }),
+  body: Joi.object().keys({
+    name: Joi.string().min(4).required(),
+    description: Joi.string().max(500).optional(),
+    products: Joi.custom(objectId).required(),
+    slug: Joi.custom(slugFriendly).optional()
+  })
+}
+
+const deleteItem = {
+  params: Joi.object().keys({
+    id: Joi.custom(objectId).required()
+  })
+}
 
 export default {
-  categorySchema,
-};
-
-
-
-
+  getItemById,
+  createItem,
+  updateItem,
+  deleteItem
+}

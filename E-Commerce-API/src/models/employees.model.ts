@@ -24,10 +24,12 @@ const employeeSchema = new Schema<IEmployee>({
     type: String,
     maxLength: 50,
     unique: true,
+    required: true
   },
   address: {
     type: String,
     maxLength: 255,
+
   },
   birthDay: {
     type: Date,
@@ -41,6 +43,7 @@ const employeeSchema = new Schema<IEmployee>({
       },
       message: (props: any) => `${props.value} is not a valid password!`,
     },
+    required: true,
   },
   photo: {
     type: String,
