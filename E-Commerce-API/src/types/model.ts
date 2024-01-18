@@ -27,7 +27,7 @@ export interface IProduct {
   _id?: ObjectId;
   id:string;
   name: string;
-  description:string;
+  metaDescription:string;
   price: number;
   discount: number;
   stock: number;

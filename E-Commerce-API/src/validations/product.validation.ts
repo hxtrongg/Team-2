@@ -9,7 +9,7 @@ const productSchema = Joi.object<IProduct>({
   price: Joi.number().required(),
   discount: Joi.number().min(0).max(99).required(),
   stock: Joi.number().required(),
-  description: Joi.string().max(500).required(),
+  metaDescription: Joi.string().max(500).required(),
   category:Joi.string(),
   supplier:Joi.string(),
 });

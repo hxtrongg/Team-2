@@ -73,7 +73,7 @@ interface DataType {
   price: number;
   discount: number;
   stock: number;
-  description: string;
+  metaDescription: string;
   category: categoryType;
   supplier: supplierType;
   images: imagesType[];
@@ -335,8 +335,8 @@ console.log('filePathFormat',filePathFormat)
     //des
     {
       title: "Mô tả",
-      dataIndex: "description",
-      key: "description",
+      dataIndex: "metaDescription",
+      key: "metaDescription",
     },
     //price
     { title: "Giá", dataIndex: "price", key: "price" },
@@ -492,7 +492,7 @@ console.log('filePathFormat',filePathFormat)
               {/* Mô tả chi tiết */}
               <Form.Item<DataType>
                 label="Mô tả chi tiết"
-                name="description"
+                name="metaDescription"
                 rules={[{ required: false }]}
               >
                 <Input />
@@ -635,8 +635,8 @@ console.log('filePathFormat',filePathFormat)
               </Form.Item>
 
               <Form.Item<DataType>
-                label="Description"
-                name="description"
+                label="metaDescription"
+                name="metaDescription"
                 rules={[{ max: 500, message: "Tối đa 500 kí tự" }]}
               >
                 <Input />
