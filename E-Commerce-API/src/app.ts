@@ -22,14 +22,14 @@ const MongoClient = require("mongodb").MongoClient;
 
 const app: Express = express();
 
-const mongoClient = new MongoClient("mongodb://localhost:27017/E-Commerce-Api");
+// const mongoClient = new MongoClient("mongodb://localhost:27017/E-Commerce-Api");
 
 // Middleware Application ở đây
 app.use(cors({ origin: '*' })); // Cho phép gọi từ bất kỳ đâu
 app.use(bodyParser.json({limit:'50mb'}));
 app.use(bodyParser.urlencoded({ extended: false }));
-// Điều này cho phép Express phục vụ các tệp tĩnh từ thư mục public.
-app.use(express.static(path.join(__dirname,'public')));
+// Điều này cho phép Express phục vụ các tệp tĩnh từ thư mục.
+app.use(express.static('public'));
 // app.use(express.json({limit:'50mb'})); // Adjust limit as needed
 
 
@@ -73,16 +73,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 // SET STORAGE
 //???
-app.use(upload.array("file"));
+app.use(upload.single("file"));
 // Xử lý File
 app.post('/file/upload', upload.single('file'), (err: any, req: Request, res: Response, next: NextFunction) => {
   try {
     const file = req.file
-    const url = `'/file/upload'${file?.path}`;
-    res.send(file?.path)
-    res.json({
-      url
-    });
+      res.send(file)  
   } catch (error) {
     sendJsonErrors(res, err);
   }

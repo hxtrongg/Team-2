@@ -41,6 +41,18 @@ import axios from "axios";
 // import config from "../../constants/config";
 // import type { PaginationProps } from "antd";
 
+type responseType = {
+  destination: string;
+  fieldname: string;
+  filename: string;
+  path: string;
+  size: number;
+};
+
+type itemType = {
+  response: responseType;
+};
+
 type categoryType = {
   _id?: string;
   name: string;
@@ -76,21 +88,20 @@ const ProductPage = () => {
   //Toggle Modal Create
   const [isModalCreateOpen, setIsModalCreateOpen] = React.useState(false);
   //upload
-  const [fileList, setFileList] = React.useState<{ path: string }[]>([]);
+  const [fileList, setFileList] = React.useState<itemType[]>([]);
 
-  const [fileURL, setFileURL] = React.useState([]);
-
-  // let formattedFilename = "";
-  // if (fileList.length > 0) {
-  //   const lastModifiedValue = (
-  //     fileList[fileList.length - 1] as { lastModified: number }
-  //   ).lastModified;
-  //   const fileName = (fileList[fileList.length - 1] as { name: string }).name;
-  //   formattedFilename = `${
-  //     fileName.split(".")[0]
-  //   }-${lastModifiedValue.toString()}.${fileName.split(".")[1]}`;
-  // }
   console.log("fileList", fileList);
+
+  let filePathFormat: (string | undefined)[] = [];
+  if (fileList.length > 0) {
+    filePathFormat= fileList.map((item) => {
+      if (item.response) {  
+         // Check if response exists
+         return `http://localhost:3000/images/${item.response?.filename}`;
+      }
+    });
+  }
+console.log('filePathFormat',filePathFormat)
   // create product
   const onFinish = async (values: DataType) => {
     console.log("Success:", values);
@@ -232,9 +243,16 @@ const ProductPage = () => {
   const onFinishCreate = async (values: DataType) => {
     console.log("Success:", values); //=> chính là thông tin ở form edit
     values.id = newId.toString(); // Gán ID mới cho đối tượng values
+  
+    // 1. Extract URLs from filePathFormat
+    const imageUpload = filePathFormat.filter(Boolean) as string[]; // Remove any undefined values
+    const imageUploadUrls = imageUpload.map((url) => ({ url }));
+    
+    // 2. Build the images array with URLs
+    values.images = [...values.images, ...imageUploadUrls]
     //Gọi API để update product
     await mutationCreate.mutate(values);
-    createForm.resetFields;
+    createForm.resetFields();
   };
   const onFinishCreateFailed = (errorInfo: object) => {
     console.log("Failed:", errorInfo);
@@ -250,7 +268,7 @@ const ProductPage = () => {
     // const [products] = productsData
     console.log("productsItem", products);
     productData = products;
-  } 
+  }
   // console.log("productData", productData);
   //======= begin logic id max =====//
   let max: string | null = null; // Khai báo biến max trước khi vào hàm if
@@ -280,7 +298,6 @@ const ProductPage = () => {
     console.log("errorMessage", errorMessage);
     // return <div>Error: {error.message}</div>;
   }
-
 
   // Column Page product
   const columns: ColumnsType<DataType> = [
@@ -426,7 +443,7 @@ const ProductPage = () => {
               onFinish={onFinishCreate}
               onFinishFailed={onFinishCreateFailed}
               autoComplete="off"
-              initialValues={{ images: []}}
+              initialValues={{ images: [] }}
             >
               {/* ID */}
               <Form.Item<DataType> label="ID" name="id">
