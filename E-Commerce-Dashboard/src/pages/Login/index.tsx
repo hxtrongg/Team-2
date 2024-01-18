@@ -4,6 +4,7 @@ import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import styles from './Login.module.css'
+import { AnyObject } from 'antd/es/_util/type';
 type FieldType = {
   email?: string;
   password?: string;
@@ -15,7 +16,7 @@ const Login = () => {
   const [msg, setMsg] = React.useState("")
   const navigate = useNavigate();
   
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: AnyObject) => {
     console.log('Success:', values);
 
     try {
@@ -36,7 +37,7 @@ const Login = () => {
 
   };
 
-  const onFinishFailed = (errorInfo: any) => {
+  const onFinishFailed = (errorInfo: AnyObject) => {
     console.log('Failed:', errorInfo);
   };
 

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { sendJsonSuccess } from '../helpers/responseHandler';
 import productsService from '../services/products.service';
+import { read } from 'fs';
 
 /**
  * Controller - Điều khiển

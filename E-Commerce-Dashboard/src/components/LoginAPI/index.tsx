@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Alert } from 'antd';
@@ -34,7 +35,7 @@ const LoginAPI = () => {
     }
 
   };
-
+//disable type any
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
     setIsLoading(false);

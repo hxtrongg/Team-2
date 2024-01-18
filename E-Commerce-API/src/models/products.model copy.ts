@@ -5,33 +5,9 @@ import { IProduct } from '../types/model';
 
 const arrayLimit = (val: any) => val.length <= 5;
 
-const reviewSchema = new Schema(
-  {
-    rating: {
-      type: Number,
-      required: true,
-      min: 1,
-      max: 5,
-    },
-    comment: {
-      type: String,
-      required: true,
-    },
-    customerId: {
-      type: Types.ObjectId,
-      required: true,
-      ref: 'Customer',
-    },
-  },
-  { timestamps: true },
-);
-
 const imageSchema = new Schema({
-  url: { type: String },
-  alt: { type: String },
-  caption: { type: String },
-  position: { type: Number, default: 0 },
-});
+  url: {type: String}
+})
 
 const productSchema = new Schema({
   _id:{
@@ -46,6 +22,43 @@ const productSchema = new Schema({
     type: String,
     required: true,
     unique: true,
+  },
+ 
+  supplier: {
+    type: Types.ObjectId,
+    ref: 'Supplier',
+    required: false,
+  },
+  category: {
+    type: Types.ObjectId,
+    ref: 'Category',
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  description: {
+    type: String,
+    maxLength: 3000,
+
+  },
+  images: {
+    type: [imageSchema],
+    validate: [arrayLimit, '{PATH} exceeds the limit of 5'],
+    default: [],
+  },
+  stock: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  discount: {
+    type: Number,
+    required: false,
+    default: 0,
+    min: 0,
+    max: 100,
   },
   slug: {
     type: String,
@@ -67,75 +80,12 @@ const productSchema = new Schema({
       message: 'Slug phải duy nhất và chỉ chứa chữ cái, số và dấu gạch ngang',
     },
   },
-  supplier: {
-    type: Types.ObjectId,
-    ref: 'Supplier',
-    required: false,
-  },
-  category: {
-    type: Types.ObjectId,
-    ref: 'Category',
-    required: true,
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-  metaTitle: {
-    type: String,
-    maxLength: 255,
-  },
-  metaDescription: {
-    type: String,
-    maxLength: 255,
-  },
-  content: {
-    type: String,
-    maxLength: 3000,
-  },
-  rating: {
-    type: Number,
-    required: false,
-    min: 0,
-    max: 5,
-  },
-  reviews: {
-    type: [reviewSchema],
-    default: [],
-  },
-  thumbnail: {
-    type: String,
-  },
-  images: {
-    type: [imageSchema],
-    validate: [arrayLimit, '{PATH} exceeds the limit of 5'],
-    default: [],
-  },
-  stock: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  discount: {
-    type: Number,
-    required: false,
-    default: 0,
-    min: 0,
-    max: 100,
-  },
 });
 
-productSchema.virtual('url').get(function () {
-  return '/products/' + this._id;
-});
 
 productSchema.virtual('salePrice').get(function () {
   const discount : number = this.discount || 0;
   return this.price * (1 - discount / 100);
-});
-
-productSchema.virtual('numImages').get(function () {
-  return this.images.length;
 });
 
 productSchema.set('toJSON', { virtuals: true });
@@ -150,6 +100,8 @@ productSchema.pre('save', async function (next) {
 
   next();
 });
+productSchema.pre('save', async function(next){
+})
 
 const Product = model<IProduct>('Product', productSchema);
 export default Product;

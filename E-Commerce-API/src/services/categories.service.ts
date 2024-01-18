@@ -10,10 +10,9 @@ const getAllItems = async (page: number, limit: number) => {
     const categories = await Category.find()
       .select('-__v')
       .skip((page - 1) * limit)
-      .limit(limit);
+      .limit(limit).exec()
 
     const totalRecords = await Category.countDocuments();
-
     return {
       categories,
       totalRecords,
@@ -37,8 +36,8 @@ const getItemById = async (id: string) => {
 
 const createItem = async (payload: ICategory) => {
   try {
-    const category = await Category.create(payload);
-    return category;
+    const addCategory = await Category.create(payload);
+    return addCategory;
   } catch (error) {
     throw error;
   }
@@ -57,7 +56,7 @@ const updateItem = async (id: string, payload: ICategory) => {
 
 const deleteItem = async (id: string) => {
   try {
-    const deletedCategory = await Category.findByIdAndDelete(id);
+    const deletedCategory = await Category.deleteOne({id});
     return deletedCategory;
   } catch (error) {
     throw error;

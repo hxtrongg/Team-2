@@ -1,35 +1,35 @@
 // categoriesModel.ts
 
-import { Schema, model, Document } from 'mongoose';
+import { number } from 'joi';
+import { Schema, model, Types } from 'mongoose';
 import slugify from 'slugify';
+import { ICategory } from '../types/model';
 
-export interface ICategory extends Document {
-  name: string;
-  description?: string;
-  products: Schema.Types.ObjectId[];
-  slug: string;
-}
 
 const categoriesSchema = new Schema<ICategory>(
   {
+    _id:{
+      type: Types.ObjectId,
+      auto:true,
+
+    },
+    id: {
+      type: String,
+      unique: true,
+    },
     name: {
       type: String,
       required: true,
       unique: true,
-      minLength: 4,
+      minLength: 2,
     },
-    description: {
+    images:{
       type: String,
     },
-    products: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Product',
-    }],
     slug: {
       type: String,
       unique: true,
       required: false,
-      minLength: 4,
     },
   },
   { timestamps: true }
@@ -41,10 +41,7 @@ categoriesSchema.pre<ICategory>('save', function (next) {
   next();
 });
 
-categoriesSchema.pre<ICategory>('updateOne', function (next) {
-  // this.slug = slugify(this.name, { lower: true });  // Uncomment if updating the name should also update the slug
-  next();
-});
+
 
 const Category = model<ICategory>('Category', categoriesSchema);
 

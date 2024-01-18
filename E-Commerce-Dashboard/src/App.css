@@ -4,3 +4,15 @@
 .text-color{
     color: #212121;
 }
+/* antd styles */
+/* placeholder id */
+#control-hooks_id::placeholder {
+    color: red;
+ }
+ #create-product-form_id::placeholder{
+    color: red;
+
+ }
+ #create-product-form input::placeholder{
+    color: red;
+ }
