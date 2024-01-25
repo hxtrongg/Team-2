@@ -33,7 +33,7 @@ import {
   EditOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
-import UploadImages from "./ImageUpload";
+import UploadImages from "../../components/ImageUpload";
 import form from "antd/es/form";
 import axios from "axios";
 
@@ -94,14 +94,14 @@ const ProductPage = () => {
 
   let filePathFormat: (string | undefined)[] = [];
   if (fileList.length > 0) {
-    filePathFormat= fileList.map((item) => {
-      if (item.response) {  
-         // Check if response exists
-         return `http://localhost:3000/images/${item.response?.filename}`;
+    filePathFormat = fileList.map((item) => {
+      if (item.response) {
+        // Check if response exists
+        return `http://localhost:3000/images/${item.response?.filename}`;
       }
     });
   }
-console.log('filePathFormat',filePathFormat)
+  console.log("filePathFormat", filePathFormat);
   // create product
   const onFinish = async (values: DataType) => {
     console.log("Success:", values);
@@ -126,8 +126,9 @@ console.log('filePathFormat',filePathFormat)
     queryFn: async () =>
       await axiosClient.get(`http://localhost:3000/api/v1/categories`),
   });
-  // console.log("queryCategories", queryCategories);
-
+  // const currentCategory = queryCategories?.data?.data.data.categories.find(
+  //   (item) => item._id === currentCategoryId
+  // );
   //======= lấy suppliers  =====//
   const querySuppliers = useQuery({
     queryKey: ["suppliers"],
@@ -243,13 +244,13 @@ console.log('filePathFormat',filePathFormat)
   const onFinishCreate = async (values: DataType) => {
     console.log("Success:", values); //=> chính là thông tin ở form edit
     values.id = newId.toString(); // Gán ID mới cho đối tượng values
-  
+
     // 1. Extract URLs from filePathFormat
     const imageUpload = filePathFormat.filter(Boolean) as string[]; // Remove any undefined values
     const imageUploadUrls = imageUpload.map((url) => ({ url }));
-    
+
     // 2. Build the images array with URLs
-    values.images = [...values.images, ...imageUploadUrls]
+    values.images = [...values.images, ...imageUploadUrls];
     //Gọi API để update product
     await mutationCreate.mutate(values);
     createForm.resetFields();
@@ -575,12 +576,6 @@ console.log('filePathFormat',filePathFormat)
                   </div>
                 )}
               </Form.List>
-              {/* submit button */}
-              {/* <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit">
-                  Submit
-                </Button>
-              </Form.Item> */}
             </Form>
           </Modal>
           {/* End Create Modal */}
@@ -606,29 +601,24 @@ console.log('filePathFormat',filePathFormat)
                 name="name"
                 rules={[
                   { required: true, message: "Please input category Name!" },
-                  { min: 4, message: "Tối thiểu 4 kí tự" },
                 ]}
               >
                 <Input />
               </Form.Item>
-
               <Form.Item<DataType>
                 label="Price"
                 name="price"
                 rules={[
                   { required: true, message: "Please input Price Name!" },
-                  { min: 4, message: "Tối thiểu 4 kí tự" },
                 ]}
               >
                 <Input />
               </Form.Item>
-
               <Form.Item<DataType>
                 label="Stock"
                 name="stock"
                 rules={[
                   { required: true, message: "Please input stock Name!" },
-                  { min: 4, message: "Tối thiểu 4 kí tự" },
                 ]}
               >
                 <Input />
@@ -643,37 +633,72 @@ console.log('filePathFormat',filePathFormat)
               </Form.Item>
 
               <Form.Item<DataType>
-                label="Category"
+                label="Tên danh mục"
                 name="category"
                 rules={[
                   { required: true, message: "Please input stock Name!" },
-                  { min: 4, message: "Tối thiểu 4 kí tự" },
                 ]}
               >
-                <Input />
+                <Select>
+                  {queryCategories?.data?.data.data.categories.map(
+                    (item: categoryType) => (
+                      <Select.Option key={item._id} value={item._id}>
+                        {item.name}
+                      </Select.Option>
+                    )
+                  )}
+                </Select>
               </Form.Item>
 
               <Form.Item<DataType>
-                label="Supplier"
+                label="Tên nhà cung cấp "
                 name="supplier"
                 rules={[
                   { required: true, message: "Please input stock Name!" },
-                  { min: 4, message: "Tối thiểu 4 kí tự" },
                 ]}
               >
-                <Input />
+                <Select>
+                  {querySuppliers?.data?.data.data.supplier.map(
+                    (item: supplierType) => (
+                      <Select.Option key={item._id} value={item._id}>
+                        {item.name}
+                      </Select.Option>
+                    )
+                  )}
+                </Select>
               </Form.Item>
 
-              <Form.Item<DataType>
-                label="images"
-                name="images"
-                rules={[
-                  { required: true, message: "Please input stock Name!" },
-                  { min: 4, message: "Tối thiểu 4 kí tự" },
-                ]}
-              >
-                <Input />
-              </Form.Item>
+              <Form.List name="images">
+                {(fields, { add, remove }) => (
+                  <div>
+                    {fields.map((field, index) => (
+                      <Space
+                        key={field.key} // Use key for efficient renderings
+                      >
+                        <Form.Item
+                          label={`image ${index + 1}`}
+                          name={[index, "url"]}
+                          extra="Ex: https://loremflickr.com/100/100/business"
+                        >
+                          <Input name="url" />
+                        </Form.Item>
+                        <CloseOutlined
+                          onClick={() => {
+                            remove(index);
+                          }}
+                        />
+                      </Space>
+                    ))}
+                    <Button
+                      type="dashed"
+                      onClick={() => add()}
+                      disabled={fields.length >= 4}
+                    >
+                      Add Image URL
+                    </Button>
+                  </div>
+                )}
+              </Form.List>
 
               <Form.Item hidden label="Id" name="_id">
                 <Input />

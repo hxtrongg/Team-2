@@ -5,13 +5,11 @@ const customersSchema = new Schema<ICustomer>({
   firstName: {
     type: String,
     require: true,
-    minLength: 2,
     maxLength: 50,
   },
   lastName: {
     type: String,
     require: true,
-    minLength: 2,
     maxLength: 50,
   },
   email: {
@@ -29,18 +27,11 @@ const customersSchema = new Schema<ICustomer>({
     type: String,
     maxLength: 500,
   },
-  birthDay: {
-    type: Date,
+  age: {
+    type: Number,
   },
   password: {
     type: String,
-    min: [8, 'Ít nhất là 8 kí tự'],
-    validate: {
-      validator: function (v: string) {
-        return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/.test(v);
-      },
-      message: (props: any) => `${props.value} is not a valid password!`,
-    },
   },
 });
 

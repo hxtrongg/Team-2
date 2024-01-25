@@ -7,7 +7,6 @@ const supplierSchema = new Schema<ISupplier>(
         name: {
             type: String,
             required: true,
-            minLength: 4,
         },
         email: {
             type: String,

@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import Navigation from "../../Navigation";
-import { FaRegTrashAlt,  FaAddressCard } from "react-icons/fa";
+import { FaRegTrashAlt, FaAddressCard } from "react-icons/fa";
 import { useCartStore } from '../../../hooks/useCartStore';
 import useAuth from '../../../hooks/useAuth';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
+
   const { user, logout } = useAuth();
-  const { items, total, itemCount, removeItem } = useCartStore();
+  const { items, total, itemCount, removeItem, decreaseQuantity, increaseQuantity } = useCartStore();
   console.log('Header render');
+
+
   useEffect(() => {
     const toggleMenu = () => {
       const menus = document.querySelectorAll('.navbar-menu');
@@ -24,6 +27,7 @@ const Header = () => {
     const handleClose = () => {
       toggleMenu();
     };
+
 
     const burger = document.querySelectorAll('.navbar-burger');
     if (burger.length) {
@@ -293,79 +297,195 @@ const Header = () => {
                   {/* end search */}
 
                   <div className='relative group'>
-                    <Link className="mr-7 inline-flex items-center" to={'/cart'}>
-                      <span className="text-white  group-hover:text-yellow-500">
-                        <svg width="20" height="25" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg" data-config-id="auto-svg-10-1">
-                          <path d="M11.3334 8.16667V4.83333C11.3334 2.99238 9.84099 1.5 8.00004 1.5C6.15909 1.5 4.66671 2.99238 4.66671 4.83333V8.16667M2.16671 6.5H13.8334L14.6667 16.5H1.33337L2.16671 6.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg>
-                      </span>
-                      <span className="-ml-2 -mt-4 flex items-center justify-center h-6 w-6 border-2 bg-red-600 rounded-full">
-                        <span className="text-xs  font-semibold text-white" data-config-id="auto-txt-14-1">{itemCount}</span>
-                      </span>
-                    </Link>
-                    {/* dropdown */}
-                    <div className="hidden group-hover:block absolute mt-5 top-full -right-20 min-w-max p-9 bg-gray-700 z-50">
-                      <div className="absolute right-24 inline-block w-9 overflow-hidden -translate-x-1/2 -top-6">
+                    <div className='relative group'>
+                      <Link className="mr-7 inline-flex items-center" to={'/cart'}>
+                        <span className="text-white  group-hover:text-yellow-500">
+                          <svg width="20" height="25" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg" data-config-id="auto-svg-10-1">
+                            <path d="M11.3334 8.16667V4.83333C11.3334 2.99238 9.84099 1.5 8.00004 1.5C6.15909 1.5 4.66671 2.99238 4.66671 4.83333V8.16667M2.16671 6.5H13.8334L14.6667 16.5H1.33337L2.16671 6.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                          </svg>
+                        </span>
+                        <span className="-ml-2 -mt-4 flex items-center justify-center h-6 w-6 border-2 bg-red-600 rounded-full">
+                          <span className="text-xs  font-semibold text-white" data-config-id="auto-txt-14-1">{itemCount}</span>
+                        </span>
+                      </Link>
+                      {/* dropdown */}
+
+                    </div>
+                    <div className="hidden group-hover:block absolute top-full -right-36 z-50 bg-black" style={{ width: '512px', marginTop: '25px' }}>
+                      <div className="absolute right-40 inline-block w-9 overflow-hidden -translate-x-1/2 -top-6">
                         <div
                           className="w-6 h-6 origin-bottom-left transform rotate-45 bg-gray-500 drop-shadow">
                         </div>
                       </div>
-                      <div className="flex -mx-2 pb-8 border-b border-blueGray-800 items-center">
-                        {
-                          itemCount === 0 ? (
-                            <div className='py-2 text-center'>
-                              <picture>
-                              <img width={270} height={180} src="../../../../public/images/empty-cart.png" alt="" />
-                              </picture>
-                              <p className='text-white font-semibold text-base'>Chưa có sản phẩm trong giỏ hàng</p>
+                      <div className="py-7 px-6 h-full bg-gray-900 overflow-auto">
+                        <div className="flex flex-col h-full">
+                          <div className="flex w-full mb-5 items-center justify-between">
+                            <h6
+                              className="font-bold text-xl text-white mb-0"
+                              data-config-id="auto-txt-1-3"
+                            >
+                              MY BAG ({itemCount})
+                            </h6>
+
+                          </div>
+                          <div>
+                            {
+                              itemCount === 0 ? (
+                                <div className='text-center  h-96 mt-5'>
+                                  <span><img src="../../../../public/images/empty-cart.png" alt="" /></span>
+                                  <span><h3 className='text-xl text-white font-bold'>Chưa có sản phẩm nào trong giỏ hàng</h3></span>
+                                  <Link to={'/products'}>
+                                    <button className='text-white p-2 rounded-md mt-4 bg-red-600 font-semibold hover:bg-red-400' type='button'>VIEW PRODUCTS</button>
+                                  </Link>
+                                </div>
+                              ) : (
+                                <>
+                                  {
+                                    items.map((item) => {
+                                      return (
+                                        <>
+                                          <div className="mb-auto pb-10">
+
+                                            <div className="flex -mx-2 pt-4 pb-5 border-t border-gray-800">
+                                              <div className="w-1/5 px-2">
+                                                <img
+                                                  className="block h-16 w-full"
+                                                  src={`../../../../public/images/${item.thumb}`}
+                                                  alt={item.name}
+                                                  data-config-id="auto-img-1-3"
+                                                />
+                                              </div>
+                                              <div className="w-4/5 px-2">
+                                                <div className="flex mb-2 items-center justify-between">
+                                                  <h6
+                                                    className="font-bold text-sm text-white overflow-hidden whitespace-nowrap overflow-ellipsis w-64"
+                                                    data-config-id="auto-txt-2-3"
+                                                  >
+                                                    {item.name}
+                                                  </h6>
+                                                  <span
+                                                    className="block text-sm font-bold text-white"
+                                                    data-config-id="auto-txt-3-3"
+                                                  >
+                                                    {item.price}
+                                                  </span>
+                                                </div>
+                                                <div className="flex items-end justify-between">
+                                                  <div className="inline-flex mt-4 px-2 font-bold text-gray-400 border border-blueGray-800">
+                                                    <button onClick={() => {
+                                                      decreaseQuantity(item.id);
+                                                    }} className="inline-block p-1">
+                                                      <svg
+                                                        width={8}
+                                                        height={2}
+                                                        viewBox="0 0 8 2"
+                                                        fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        data-config-id="auto-svg-2-3"
+                                                      >
+                                                        <path
+                                                          d="M7 1H1"
+                                                          stroke="white"
+                                                          strokeWidth="0.8"
+                                                          strokeLinecap="round"
+                                                          strokeLinejoin="round"
+                                                        />
+                                                      </svg>
+                                                    </button>
+                                                    <input
+                                                      className="w-12 text-sm font-bold text-center bg-transparent outline-none"
+                                                      value={item.quantity}
+
+                                                      data-config-id="auto-input-5-3"
+                                                    />
+                                                    <button onClick={() => {
+                                                      increaseQuantity(item.id);
+                                                    }} className="inline-block p-1">
+                                                      <svg
+                                                        width={8}
+                                                        height={8}
+                                                        viewBox="0 0 8 8"
+                                                        fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        data-config-id="auto-svg-3-3"
+                                                      >
+                                                        <path
+                                                          d="M4 1V4M4 4V7M4 4H7M4 4L1 4"
+                                                          stroke="white"
+                                                          strokeWidth="0.8"
+                                                          strokeLinecap="round"
+                                                          strokeLinejoin="round"
+                                                        />
+                                                      </svg>
+                                                    </button>
+                                                  </div>
+                                                  <a onClick={() => {
+                                                    removeItem(item.id);
+                                                  }}
+                                                    className="inline-block text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-400 hover:from-yellow-300 hover:via-green-300 hover:to-blue-500"
+                                                    href="#"
+                                                    data-config-id="auto-txt-4-3"
+                                                  >
+                                                    Remove
+                                                  </a>
+                                                </div>
+                                              </div>
+                                            </div>
+
+
+                                          </div>
+
+                                        </>
+                                      )
+                                    })
+                                  }
+                                </>
+                              )
+                            }
+                            <div className="pt-4 border-t border-blueGray-800">
+                              <div className="flex mb-5 content-center justify-between">
+                                <span
+                                  className="text-sm font-medium text-gray-400"
+                                  data-config-id="auto-txt-14-3"
+                                >
+                                  Subtotal
+                                </span>
+                                <span
+                                  className="text-sm font-medium text-white"
+                                  data-config-id="auto-txt-15-3"
+                                >
+                                  ${total}
+                                </span>
+                              </div>
+                              <div className="sm:flex items-center">
+                                <Link to={'/cart'}
+                                  className="inline-block w-full mb-3 sm:mb-0 sm:mr-4 px-6 py-3 text-xs text-center font-bold text-white border border-gray-800 hover:bg-gray-800 transition duration-200"
+                                  
+                                  data-config-id="auto-txt-16-3"
+                                >
+                                  VIEW CART
+                                </Link>
+                                <Link to={'/checkout'}
+                                  className="relative group inline-flex items-center justify-center h-10 w-full px-4 py-3 text-xs text-center font-bold text-white bg-red-600 hover:bg-red-400 transition duration-200 overflow-hidden"
+                                  
+                                >
+
+                                  <span className="relative" data-config-id="auto-txt-17-3">
+                                    CHECKOUT
+                                  </span>
+                                </Link>
+                              </div>
                             </div>
-                          ) : (
-                            <>
-                              {
-                                items.map((item) => {
-                                  return (
-
-                                    <>
-                                      <div className="w-1/4 px-2">
-                                        <img className="block h-16 w-full" src={item.thumb} alt={item.name} />
-                                      </div>
-                                      <div className="w-3/4 px-2 flex">
-                                        <div className="pr-14">
-                                          <h6 className="font-bold text-white mb-1" data-config-id="auto-txt-9-2">{item.name}</h6>
-                                          <span className="text-sm text-gray-400" data-config-id="auto-txt-10-2">{item.quantity} x ${item.price * item.quantity}</span>
-                                        </div>
-                                        <a href="#"
-                                          onClick={() => {
-                                            removeItem(item.id);
-                                          }} className='text-white mt-2'>
-                                          <FaRegTrashAlt />
-                                        </a>
-                                      </div>
-                                    </>
-
-                                  )
-                                })
-                              }
-                            </>
-                          )
-                        }
-                      </div>
-
-                      <div className="mt-8 text-center">
-                        <Link to={'/cart'} className="relative group inline-flex items-center justify-center h-11 w-full mb-5 px-4 py-3 text-center font-bold text-black transition duration-200 overflow-hidden hover:text-white">
-                          <div className="absolute top-0 left-0 w-full h-24 transform -translate-y-8 group-hover:-translate-y-1 transition duration-500 bg-gradient-to-br from-yellow-500 via-green-300 to-blue-500"></div>
-                          <span className="relative" data-config-id="auto-txt-15-2">Giỏ hàng</span>
-                        </Link>
-                        <Link to={'/product'} className="inline-block text-sm font-bold text-gray-400 hover:text-gray-200" data-config-id="auto-txt-16-2">Đến mục sản phẩm</Link>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                   {/* orderdropdown */}
 
-
                   <div className="inline-flex items-center font-medium text-white hover:text-yellow-500" >
-                    
-                    <a className="inline-flex items-center" href="#"><img className="mr-2 h-6 w-6" src={user?.photo} alt="" data-config-id="auto-img-2-4" /></a>
+
+                    <a className="inline-flex items-center" href="#"><img className="mr-2 h-6 w-6" src={`../../../../public/images/${user?.photo}`} alt="" data-config-id="auto-img-2-4" /></a>
                     <div className='cursor-pointer relative group'>
                       <span className="mx-3 py-3.5" data-config-id="auto-txt-15-1">Hi {user?.firstName}</span>
                       <svg className='inline-block' width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg" data-config-id="auto-svg-12-1">
@@ -392,10 +512,10 @@ const Header = () => {
                             </span>Đăng nhập</Link>
                         </div>
                         <div className="py-1" role="none">
-                          <Link to={'/customer'}
+                          <Link to={'/customers'}
                             className="flex px-4 py-2 text-sm text-gray-700 border-l-2 border-transparent dark:hover:border-blue-400 hover:border-blue-500 dark:text-gray-400 dark:hover:text-gray-300 hover:text-blue-500">
                             <span className="mr-5 mt-1">
-                            <FaAddressCard />
+                              <FaAddressCard />
                             </span>Khách hàng</Link>
                         </div>
                         <div className="py-1" role="none">

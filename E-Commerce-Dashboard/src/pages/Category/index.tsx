@@ -19,12 +19,15 @@ import {
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { axiosClient } from "../../library/axiosClient";
 import config from "../../constants/config";
-
+type imagesType = {
+  _id?: string;
+  url: string;
+};
 interface CategoryType {
   _id: string;
   id: string;
   name: string;
-  image: string;
+  images: imagesType[];
 }
 /**
  * Component Category
@@ -97,10 +100,21 @@ const Category = () => {
       key: "id",
     },
     {
-      title: "Image",
+      title: "Ảnh",
       dataIndex: "images",
       key: "images",
-      render: (text) => <Image src={text} alt="imagesCategory" width={50} />,
+      render: (_, record) => (
+        <Image.PreviewGroup
+          preview={{
+            onChange: (current, prev) =>
+              console.log(`current index: ${current}, prev index: ${prev}`),
+          }}
+        >
+          {record.images.map((item, index) => (
+            <Image key={index} src={item.url} width={50}></Image>
+          ))}
+        </Image.PreviewGroup>
+      ),
     },
 
     {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import {
   Space,
@@ -22,7 +23,7 @@ interface DataType {
   email: string;
   phoneNumber: number;
   address: string;
-  birthDay: string;
+  age: number;
   password: string;
 }
 
@@ -216,9 +217,9 @@ const Customer = () => {
       key: "address",
     },
     {
-      title: "Năm sinh",
-      dataIndex: "birthDay",
-      key: "birthDay",
+      title: "tuổi",
+      dataIndex: "age",
+      key: "age",
     },
     // {
     //   title: "PassWord",
@@ -307,7 +308,6 @@ const Customer = () => {
             name="firstName"
             rules={[
               { required: true, message: "Please input your FirstName!" },
-              { min: 2, message: "Tối thiểu 2 kí tự" },
             ]}
           >
             <Input />
@@ -318,7 +318,6 @@ const Customer = () => {
             name="lastName"
             rules={[
               { required: true, message: "Please input your LastName!" },
-              { min: 2, message: "Tối thiểu 2 kí tự" },
             ]}
           >
             <Input />
@@ -353,7 +352,7 @@ const Customer = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item<DataType> label="BirthDay" name="birthDay">
+          <Form.Item<DataType> label="age" name="age">
             <Input />
           </Form.Item>
 
@@ -394,7 +393,6 @@ const Customer = () => {
             name="firstName"
             rules={[
               { required: true, message: "Please input your FirstName!" },
-              { min: 2, message: "Tối thiểu 2 kí tự" },
             ]}
           >
             <Input />
@@ -405,7 +403,6 @@ const Customer = () => {
             name="lastName"
             rules={[
               { required: true, message: "Please input your LastName!" },
-              { min: 2, message: "Tối thiểu 2 kí tự" },
             ]}
           >
             <Input />
@@ -440,7 +437,7 @@ const Customer = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item<DataType> label="BirthDay" name="birthDay">
+          <Form.Item<DataType> label="age" name="age">
             <Input />
           </Form.Item>
 

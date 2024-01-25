@@ -4,7 +4,6 @@ import React, { Dispatch, SetStateAction } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
 import { Button, Upload } from "antd";
-import axios from "axios";
 
 const UploadImages: React.FC<{
   fileList: any[];
@@ -12,18 +11,19 @@ const UploadImages: React.FC<{
 }> = ({ fileList, setFileList }) => {
   //upload
   const [isDisabled, setIsDisabled] = React.useState(false);
+  const [selectedFile, setSelectedFile] = React.useState(null);
+
 
   const handleFileChange = ({ file, fileList: newFileList }: any) => {
     setFileList(newFileList);
     if (newFileList.length > 1) {
       setIsDisabled(true);
     }
-
     if (file.status !== "uploading") {
       console.log("File uploaded successfully", file, newFileList);
     }
-    // setFileList([]);
-  };
+  };  
+  
 
   const props: UploadProps = {
     name: "file",
@@ -33,7 +33,8 @@ const UploadImages: React.FC<{
     accept: "image/*",
     onChange: handleFileChange,
   };
-
+  
+  
   return (
     <Upload {...props}>
       <Button icon={<UploadOutlined />}>Upload</Button>

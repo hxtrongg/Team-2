@@ -1,12 +1,15 @@
 import { File } from 'buffer';
 import { ObjectId } from 'mongoose';
 
+export type IImages = {
+  url: string;
+} 
 
 export interface ICategory {
   _id:ObjectId;
   id: string;
   name: string;
-  images: string;
+  images: IImages[];
   slug: string;
 };
 
@@ -19,9 +22,6 @@ export interface ISupplier {
   slug: string;
 };
 
-export type IImages ={
-  url: string;
-} 
 
 export interface IProduct {
   _id?: ObjectId;
@@ -60,7 +60,7 @@ export interface ICustomer {
   email: string;
   phoneNumber: string;
   address: string;
-  birthDay: Date;
+  age: number;
   password: string;
 };
 

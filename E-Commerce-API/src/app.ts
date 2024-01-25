@@ -4,6 +4,8 @@ import cors from 'cors';
 import createError from 'http-errors';
 import { sendJsonErrors } from './helpers/responseHandler';
 
+import upload from './middleware/multer.middleware';
+
 import usersRouter from './routes/v1/users.route';
 import categoriesRouter from './routes/v1/categories.route';
 import suppliersRouter from './routes/v1/suppliers.router';
@@ -13,11 +15,8 @@ import productsRouter from './routes/v1/products.router';
 import authRoute from './routes/v1/auth.router';
 import ordersRoute from './routes/v1/orders.router';
 
-import multer from 'multer';
+import fs from "fs";
 import path from 'path';
-import slugify from 'slugify';
-
-const MongoClient = require("mongodb").MongoClient;
 
 
 const app: Express = express();
@@ -26,12 +25,11 @@ const app: Express = express();
 
 // Middleware Application ở đây
 app.use(cors({ origin: '*' })); // Cho phép gọi từ bất kỳ đâu
-app.use(bodyParser.json({limit:'50mb'}));
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 // Điều này cho phép Express phục vụ các tệp tĩnh từ thư mục.
 app.use(express.static('public'));
 // app.use(express.json({limit:'50mb'})); // Adjust limit as needed
-
 
 // Danh sách các routes
 app.get('/', (req: Request, res: Response) => {
@@ -47,44 +45,31 @@ app.use('/api/v1/products', productsRouter);
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/orders', ordersRoute);
 
-// multer
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/images/');
-  },
-  filename: function (req, file, cb) {
-    //lấy thông tin file vừa up lên
-    const fileInfo = path.parse(file.originalname);
-    cb(
-      null,
-      slugify(fileInfo.name, {
-        lower: true,
-        remove: /[*+~.()'"!:@]/g,
-        strict: true,
-        locale: 'vi',
-      }) +
-        '-' +
-        Date.now() +
-        fileInfo.ext,
-    );
-  },
-});
-
-const upload = multer({ storage: storage });
-// SET STORAGE
-//???
-app.use(upload.single("file"));
-// Xử lý File
-app.post('/file/upload', upload.single('file'), (err: any, req: Request, res: Response, next: NextFunction) => {
+app.post('/file/upload', upload.single('file'), (req, res, next) => {
+  const file = req.file
+  if (!file) {
+    const error = new Error('Please upload a file')
+    return next(error)
+  }
+  res.send(file)
+})
+app.delete('/delete-file', async (req, res) => {
   try {
-    const file = req.file
-      res.send(file)  
-  } catch (error) {
-    sendJsonErrors(res, err);
+    const { file } = req.body;
+    const filePath = path.join(__dirname, file.path); // Đảm bảo đường dẫn chính xác
+
+    await fs.promises.unlink(filePath);
+
+    res.status(200).send('File deleted successfully');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error deleting file');
   }
 });
-// Handle Errors App
 
+
+
+// Handle Errors App
 // catch 404 and forward to error handler
 app.use(function (req: Request, res: Response, next: NextFunction) {
   next(createError(404));

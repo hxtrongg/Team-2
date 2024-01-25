@@ -7,7 +7,7 @@ const DefaultLayout = () => {
     <>
      <Header  />
       <main className='py-3' style={{minHeight: 500}}>
-          <div className="container mx-auto ">
+          <div className="mx-auto ">
           <Outlet />
           </div>
       </main>

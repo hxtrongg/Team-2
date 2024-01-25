@@ -16,3 +16,7 @@
  #create-product-form input::placeholder{
     color: red;
  }
+.ant-select-selector::placeholder{
+    color: red;
+
+ }

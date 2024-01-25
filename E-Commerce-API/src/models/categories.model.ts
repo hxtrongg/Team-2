@@ -5,6 +5,14 @@ import { Schema, model, Types } from 'mongoose';
 import slugify from 'slugify';
 import { ICategory } from '../types/model';
 
+const arrayLimit = (val: any) => val.length <= 5;
+
+const imageSchema = new Schema({
+  url: { type: String },
+  alt: { type: String },
+  caption: { type: String },
+  position: { type: Number, default: 0 },
+});
 
 const categoriesSchema = new Schema<ICategory>(
   {
@@ -21,10 +29,11 @@ const categoriesSchema = new Schema<ICategory>(
       type: String,
       required: true,
       unique: true,
-      minLength: 2,
     },
-    images:{
-      type: String,
+    images: {
+      type: [imageSchema],
+      validate: [arrayLimit, '{PATH} exceeds the limit of 5'],
+      default: [],
     },
     slug: {
       type: String,

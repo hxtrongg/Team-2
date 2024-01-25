@@ -9,7 +9,7 @@ import Suppliers from '../pages/Supplier';
 import Order from '../pages/Order';
 import CategoryAdd from '../pages/Category/CategoryAdd';
 import CategoryEdit from '../pages/Category/CategoryEdit';
-import UploadImages from '../pages/Product/ImageUpload';
+import UploadImages from '../components/ImageUpload';
 
 interface BaseProps {
     id: number;

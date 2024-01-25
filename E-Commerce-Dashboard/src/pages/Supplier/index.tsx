@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import {
   Space,
@@ -268,7 +269,6 @@ const Suppliers = () => {
             name="name"
             rules={[
               { required: true, message: "Please input supplier Name!" },
-              { min: 4, message: "Tối thiểu 4 kí tự" },
             ]}
           >
             <Input />
@@ -334,7 +334,6 @@ const Suppliers = () => {
             name="name"
             rules={[
               { required: true, message: "Please input supplier Name!" },
-              { min: 4, message: "Tối thiểu 4 kí tự" },
             ]}
           >
             <Input />

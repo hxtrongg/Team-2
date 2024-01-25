@@ -1,5 +1,7 @@
 import create from 'zustand';
 import { persist,createJSONStorage } from 'zustand/middleware';
+import { axiosClient } from '../library/axiosClient';
+import config from '../constants/config';
 
 interface CartItem {
   id: string;
@@ -7,6 +9,12 @@ interface CartItem {
   price: number;
   quantity: number;
   thumb: string;
+  // shippedDate: Date;
+  // shippingAddress: string;
+  // email: string;
+  // phoneNumber: string;
+  // status: string;
+  // paymentType: string;
 }
 
 interface CartStore {
@@ -17,6 +25,9 @@ interface CartStore {
   removeItem: (id: string) => void; //phương thức xóa item
   increaseQuantity: (id: string) => void; //tăng số lượng của item
   decreaseQuantity: (id: string) => void; //giảm số lượng của item
+  placeOrder:(payload: any)=> Promise<{ok: boolean, message: string}>;
+  isLoading: boolean,
+  error: string | null
 }
 
 export const useCartStore = create(
@@ -25,6 +36,8 @@ export const useCartStore = create(
       items: [],
       total: 0,
       itemCount: 0,
+      isLoading: false,
+      error: null,
       addItem: (item) =>
         set((state) => {
           const existingItem = state.items.find((i) => i.id === item.id);
@@ -87,6 +100,39 @@ export const useCartStore = create(
             itemCount: state.itemCount - 1,
           };
         }),
+        placeOrder: async (payload)=>{
+
+          try {
+            set({isLoading: true });
+            const {data} = await axiosClient.post(config.urlAPI+'/v1/orders', payload);
+            console.log('placeOrder ok',data);
+            /*
+            if gui don hanh cong
+              - Xoa gio hang
+              - Chuyen huong den trang thong bao thanh cong
+            else
+              - show message loi
+            */
+           
+
+            if(data.statusCode === 200){
+               //Reset state
+              set({isLoading: false, itemCount: 0, items: [], total: 0, error:  null });
+              return {ok: true, message: 'success'}
+            }
+            else{
+              set({isLoading: false });
+              return {ok: false, message: 'not success'}
+            }
+
+          } catch (error: any) {
+            console.log('placeOrder nok',error?.response?.data.message);
+            const msg = error?.response?.data.message || 'Internal Server Error)'
+            set({isLoading: false, error: msg });
+            return {ok: false, message: msg}
+          }
+          
+        }
     }),
     {
       name: 'cart-storage', // tên của key trong localStorage
