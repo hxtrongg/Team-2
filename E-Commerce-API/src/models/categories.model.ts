@@ -20,6 +20,8 @@ const categoriesSchema = new Schema<ICategory>(
     },
     description: {
       type: String,
+      required: false,
+      maxLength: 500
     },
     products: [{
       type: Schema.Types.ObjectId,
