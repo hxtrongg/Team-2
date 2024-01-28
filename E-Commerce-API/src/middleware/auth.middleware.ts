@@ -3,6 +3,7 @@ import createError from 'http-errors'
 import jwt, {JwtPayload} from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import Employee from '../models/employees.model';
+import Customer from '../models/customer.model';
 dotenv.config();
 
 
@@ -24,9 +25,7 @@ const checkToken = async (req:Request, res: Response, next:NextFunction)=>{
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as decodedJWT;
       //try verify user exits in database
-      const user = await Employee.findById(decoded._id);
-
-
+      const user = await Customer.findById(decoded._id) || await Employee.findById(decoded._id);
 
       if (!user) {
         return next(createError(401, 'Unauthorized'));

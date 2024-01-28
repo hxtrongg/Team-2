@@ -75,7 +75,7 @@ axiosClient.interceptors.response.use(
         
         const refreshToken = window.localStorage.getItem('refreshToken');
         if (refreshToken) {
-          const response = await axiosClient.post('/auth/refresh-token', {
+          const response = await axiosClient.post('/auth/refresh-token-client', {
             refreshToken: refreshToken,
           });
 

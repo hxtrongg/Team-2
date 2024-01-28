@@ -36,5 +36,5 @@ const customersSchema = new Schema<ICustomer>({
 });
 
 // 3. Tạo model categories.
-const customer = model('Customer', customersSchema);
-export default customer;
+const Customer = model('Customer', customersSchema);
+export default Customer;

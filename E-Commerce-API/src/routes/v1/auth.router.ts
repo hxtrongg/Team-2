@@ -10,13 +10,15 @@ const router = express.Router();
 //localhost:8080/api/v1/auth/login
 router.post('/login', validateSchema(authValidation.login), authController.login);
 
-router.post('/loginCustomer', validateSchema(authValidation.login), authController.login);
-
 /** Phải nằm trước id */
 router.get('/profile', authMiddleware.checkToken, authController.getProfile);
+router.get('/profileClient', authMiddleware.checkToken, authController.getProfileClient);
+
 
 /** Phải nằm trước id */
 router.get('/refresh-token', authMiddleware.checkToken, authController.freshToken);
+router.get('/refresh-token-client', authMiddleware.checkToken, authController.freshTokenClient);
+
 
 
 export default router;

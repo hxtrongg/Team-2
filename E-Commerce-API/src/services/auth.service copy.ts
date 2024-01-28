@@ -17,19 +17,16 @@ const login = async(payload: {email: string, password: string})=>{
     email: payload.email
   });
   //Nếu không tồn tại
-  if(!employee && !customer){
+  if(!employee || !customer){
     throw createError(404, 'Employee or customer not found');
   }
   //Nếu tồn tại ==> So sánh mật khẩu trong DB
   //với mật khẩu người dùng gửi lên
-  // if(employee.password !== payload.password  customer.password !== payload.password){
-  //   throw createError(400, 'Email or password is invalid');
-  // }
+  if(employee.password !== payload.password || customer.password !== payload.password){
+    throw createError(400, 'Email or password is invalid');
+  }
   //Nếu khớp tất cả ==> trả về token
   if(employee){
-    if(employee.password !== payload.password){
-      throw createError(400, 'Email or password is invalid');
-    }
     //Tồn tại thì trả lại thông tin user kèm token
     const token = jwt.sign(
       { _id: employee._id, email: employee.email},
@@ -52,9 +49,6 @@ const login = async(payload: {email: string, password: string})=>{
     };
   }else if(customer)
   {
-    if(customer.password !== payload.password){
-      throw createError(400, 'Email or password is invalid');
-    }
     //Tồn tại thì trả lại thông tin user kèm token
     const token = jwt.sign(
       { _id: customer._id, email: customer.email},
