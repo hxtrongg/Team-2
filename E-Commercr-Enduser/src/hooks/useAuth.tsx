@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { axiosClient } from '../library/axiosClient';
-import { persist, createJSONStorage } from 'zustand/middleware'
+import { persist, createJSONStorage, } from 'zustand/middleware'
 import config from '../constants/config';
 interface User {
   _id: string;
@@ -64,7 +64,6 @@ const useAuth = create(
         return { isAuthenticated: false,isLoading: false, error: 'Login failed' };
       }
     },
-    
     logout: () => {
       // Xóa trạng thái user và isAuthenticated
       set({ user: null, isAuthenticated: false });

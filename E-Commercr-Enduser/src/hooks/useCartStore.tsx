@@ -9,12 +9,6 @@ interface CartItem {
   price: number;
   quantity: number;
   thumb: string;
-  // shippedDate: Date;
-  // shippingAddress: string;
-  // email: string;
-  // phoneNumber: string;
-  // status: string;
-  // paymentType: string;
 }
 
 interface CartStore {

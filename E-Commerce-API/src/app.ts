@@ -15,9 +15,8 @@ import productsRouter from './routes/v1/products.router';
 import authRoute from './routes/v1/auth.router';
 import ordersRoute from './routes/v1/orders.router';
 
-import fs from "fs";
+import fs from 'fs';
 import path from 'path';
-
 
 const app: Express = express();
 
@@ -45,29 +44,46 @@ app.use('/api/v1/products', productsRouter);
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/orders', ordersRoute);
 
-app.post('/file/upload', upload.single('file'), (req, res, next) => {
+app.post('/file/upload', upload.single('file'),(req, res, next) => {
   const file = req.file
+
   if (!file) {
     const error = new Error('Please upload a file')
     return next(error)
   }
+
   res.send(file)
-})
+});
+
+// app.post('/file/upload', upload.single('file'), async (req, res, next) => {
+//   try {
+//     const fileReq = req.file;
+//     if (!fileReq) {
+//       const error = new Error('Please upload a file');
+//       return next(error);
+//     }
+//     const file = await sharp(fileReq.buffer).resize({ width: 300, height: 200 }).toBuffer();
+//     res.send(file); // Send the resized image in the response
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
 app.delete('/delete-file', async (req, res) => {
   try {
-    const { file } = req.body;
-    const filePath = path.join(__dirname, file.path); // Đảm bảo đường dẫn chính xác
+    const file = req.file;
+    if (file) {
+      const filePath = path.join(__dirname, file.path); // Đảm bảo đường dẫn chính xác
 
-    await fs.promises.unlink(filePath);
+      await fs.promises.unlink(filePath);
 
-    res.status(200).send('File deleted successfully');
+      res.status(200).send('File deleted successfully');
+    }
   } catch (err) {
     console.error(err);
     res.status(500).send('Error deleting file');
   }
 });
-
-
 
 // Handle Errors App
 // catch 404 and forward to error handler

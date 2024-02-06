@@ -10,11 +10,12 @@ const login = async(req:Request, res: Response, next: NextFunction)=>{
     const payload = req.body;
     const result = await authService.login(payload);
     console.log('<<=== 🚀 result ===>>',payload,result);
-    sendJsonSuccess(res)(result);
+    sendJsonSuccess(res)(result); 
   } catch (error) {
     next(error)
   }
 }
+
 
 const getProfile = async (req: Request, res: Response, next: NextFunction) => {
   try {

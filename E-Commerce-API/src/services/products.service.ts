@@ -8,8 +8,6 @@ const getAllItems = async (currentPage: number, pageSize: number) => {
    * Page 2: 11 - 20 (Lấy 10 sp tiếp theo)
    * ...
    */
-  //const currentPage = 2; //trang hiện tại
-  //const pageSize = 10; // Số lượng items trên 1 trang
   // Tương đương: SELECT * FROM products (SQL)
   const products = await Product.find({}, ' -__v').
   populate('supplier', '-__v ').
@@ -35,19 +33,6 @@ const getAllItems = async (currentPage: number, pageSize: number) => {
 const getItemById = async (id: string) => {
   // SELECT * FROM products WHERE id = id
   console.log(id);
-
-  //Join với 2 collection 
-  // const product = await Product.findById(id).
-  // populate('category', 'name').
-  // populate('supplier', 'name').
-  // lean({ virtuals: true });
-
-  //Lấy các trường cần thiết
-  // const product = await Product.findOne({_id: id}, 'name price').
-  // populate('category').
-  // populate('supplier').
-  // lean({ virtuals: true });
-
 
   //Lấy tất cả ngoại trừ __v
   const product = await Product.findOne({_id: id}, '-__v').

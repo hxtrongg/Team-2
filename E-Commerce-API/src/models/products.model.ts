@@ -5,32 +5,8 @@ import { IProduct } from '../types/model';
 
 const arrayLimit = (val: any) => val.length <= 5;
 
-const reviewSchema = new Schema(
-  {
-    rating: {
-      type: Number,
-      required: true,
-      min: 1,
-      max: 5,
-    },
-    comment: {
-      type: String,
-      required: true,
-    },
-    customerId: {
-      type: Types.ObjectId,
-      required: true,
-      ref: 'Customer',
-    },
-  },
-  { timestamps: true },
-);
-
 const imageSchema = new Schema({
   url: { type: String },
-  alt: { type: String },
-  caption: { type: String },
-  position: { type: Number, default: 0 },
 });
 
 const productSchema = new Schema({
@@ -47,25 +23,11 @@ const productSchema = new Schema({
     required: true,
     unique: true,
   },
-  slug: {
+  description: {
     type: String,
-    lowercase: true,
-    required: false,
-    unique: true,
-    maxLength: 160,
-    validate: {
-      validator: (value: any) => {
-        if (!value) return true;
-
-        if (value.length > 0) {
-          const slugRegex = /^[a-z0-9\-]+$/;
-          return slugRegex.test(value);
-        }
-
-        return true;
-      },
-      message: 'Slug phải duy nhất và chỉ chứa chữ cái, số và dấu gạch ngang',
-    },
+  },
+  price_before_discount: {
+    type: Number,
   },
   supplier: {
     type: Types.ObjectId,
@@ -81,14 +43,6 @@ const productSchema = new Schema({
     type: Number,
     required: true,
   },
-  metaTitle: {
-    type: String,
-    maxLength: 255,
-  },
-  metaDescription: {
-    type: String,
-    maxLength: 255,
-  },
   content: {
     type: String,
     maxLength: 3000,
@@ -99,21 +53,21 @@ const productSchema = new Schema({
     min: 0,
     max: 5,
   },
-  reviews: {
-    type: [reviewSchema],
-    default: [],
-  },
-  thumbnail: {
-    type: String,
-  },
   images: {
     type: [imageSchema],
     validate: [arrayLimit, '{PATH} exceeds the limit of 5'],
     default: [],
   },
-  stock: {
+  quantity: {
     type: Number,
     required: true,
+    default: 1,
+  },
+  view: {
+    type: Number,
+  },
+  sold: {
+    type: Number,
     default: 0,
   },
   discount: {
@@ -122,6 +76,26 @@ const productSchema = new Schema({
     default: 0,
     min: 0,
     max: 100,
+  },
+  slug: {
+    type: String,
+    lowercase: true,
+    required: false,
+    unique: true,
+    maxLength: 160,
+    validate: {
+      validator: (value: any) => {
+        if (!value) return true;
+  
+        if (value.length > 0) {
+          const slugRegex = /^[a-z0-9\-]+$/;
+          return slugRegex.test(value);
+        }
+  
+        return true;
+      },
+      message: 'Slug phải duy nhất và chỉ chứa chữ cái, số và dấu gạch ngang',
+    },
   },
 });
 

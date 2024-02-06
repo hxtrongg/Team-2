@@ -1,35 +1,39 @@
-import { ObjectId } from 'mongoose';
-import {ICategory} from './../../../E-Commerce-API/src/types/model'
-
-
+type imagesType = {
+  _id?: string;
+  url: string;
+};
+export interface ISupplier {
+  _id: number;
+  name: string;
+  slug: string;
+}
 
 export interface ICategory {
-  _id: number;
-    name: string;
-    slug: string;
-  }
-  
-  export interface ISupplier {
-    _id: number;
-    name: string;
-    slug: string
-  }
+  _id: string;
+  id:string;
+  name: string;
+  slug: string;
+  images: imagesType[];
+}
 
-  export interface IProduct {
-    _id: number;
-    name: string;
-    price: number;
-    discount: number;
-    stock: number;
-    description: string;
-    category: {
-      _id: number;
-      slug: string
-    };
-    supplier: {
-      _id: number;
-      slug: string
-    };
+export interface IProduct {
+  _id: string;
+  id:string;
+  name: string;
+  price: number;
+  discount: number;
+  stock: number;
+  description: string;
+  category: {
+    _id: string;
+    id: string;
     slug: string;
-    thumbnail: string
-  }
+  };
+  supplier: {
+    _id: string;
+    id: string;
+    slug: string;
+  };
+  slug: string;
+  images: imagesType[];
+}

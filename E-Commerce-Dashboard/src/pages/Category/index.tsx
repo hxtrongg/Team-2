@@ -19,6 +19,7 @@ import {
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { axiosClient } from "../../library/axiosClient";
 import config from "../../constants/config";
+
 type imagesType = {
   _id?: string;
   url: string;
