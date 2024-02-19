@@ -29,7 +29,7 @@ const path = {
     historyPurchase: '/user/purchase',
     login: '/api/v1/auth/login',
     register: '/register',
-    logout: '/logout',
+    logout: '/api/v1/auth/logout',
     purchase: '/history-purchase',
     productDetail: ':nameId',
     cart: '/cart',

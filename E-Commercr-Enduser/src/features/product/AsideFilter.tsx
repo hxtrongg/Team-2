@@ -11,8 +11,6 @@ import { QueryConfig } from '../../pages/HomePage';
 import { Category } from '../../types/category.type';
 import RatingStars from './RatingStars';
 
-
-
 interface Props {
   queryConfig: QueryConfig;
   categoriesAsider: Category[]

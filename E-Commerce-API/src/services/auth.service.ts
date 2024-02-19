@@ -1,8 +1,9 @@
 import Employee from "../models/employees.model";
+import Customer from "../models/customer.model";
+import User from "../models/user.model";
 import createError from 'http-errors'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv';
-import Customer from "../models/customer.model";
 
 dotenv.config();
 
@@ -20,11 +21,6 @@ const login = async(payload: {email: string, password: string})=>{
   if(!employee && !customer){
     throw createError(404, 'Employee or customer not found');
   }
-  //Nếu tồn tại ==> So sánh mật khẩu trong DB
-  //với mật khẩu người dùng gửi lên
-  // if(employee.password !== payload.password  customer.password !== payload.password){
-  //   throw createError(400, 'Email or password is invalid');
-  // }
   //Nếu khớp tất cả ==> trả về token
   if(employee){
     if(employee.password !== payload.password){
@@ -76,8 +72,30 @@ const login = async(payload: {email: string, password: string})=>{
       refreshToken
     };
   }
+}
+const logout = async(payload: { token: string,
+  refreshToken: string })=>{
+  //Tìm xem trong collection User
+  const user = await User.findOne({
+    token: payload.token
+  });
+  //có tồn tại user có token này không
+  //Nếu không tồn tại
+  if(!user){
+    throw createError(404, 'Employee or customer not found');
   }
-
+  //Nếu khớp tất cả ==> xoá user token jwt
+  if(user){
+    if(user.token !== payload.token){
+      throw createError(400, 'Token unable');
+    }
+    //Tồn tại thì xoá token ở User
+    let token = user.token 
+      token === "" 
+    return {
+      token,
+    };
+  }}
 const refreshToken = async (employee: {_id: string, email: string})=>{
 
   const token = jwt.sign(
@@ -150,6 +168,7 @@ const getProfileClient = async (id: string) => {
 
 export default {
   login,
+  logout,
   refreshToken,
   getProfile,
   getProfileClient,

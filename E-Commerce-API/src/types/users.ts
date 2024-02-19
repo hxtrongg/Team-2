@@ -1,15 +1,13 @@
-import { ObjectId } from "mongoose";
+import { Date, ObjectId } from 'mongoose';
 
 export interface IUser {
-  _id?: ObjectId;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  email: string;
-  password: string;
+  _id: ObjectId;
+  id: string;
+  account_id: string;
+  token: string;
 }
 
-export interface IUserSchema extends IUser{
-  customMethod: ()=> boolean;
-  fullName: string
+export interface IUserSchema extends IUser {
+  customMethod: () => boolean;
+  fullName: string;
 }

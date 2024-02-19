@@ -9,6 +9,8 @@ const router = express.Router();
 //Login thì cần method POST
 //localhost:3000/api/v1/auth/login
 router.post('/login', validateSchema(authValidation.login), authController.login);
+router.post('/logout', validateSchema(authValidation.login), authController.login);
+
 
 /** Phải nằm trước id */
 router.get('/profile', authMiddleware.checkToken, authController.getProfile);

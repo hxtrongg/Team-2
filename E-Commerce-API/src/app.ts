@@ -84,8 +84,8 @@ app.delete('/delete-file', async (req, res) => {
     res.status(500).send('Error deleting file');
   }
 });
-
 // Handle Errors App
+
 // catch 404 and forward to error handler
 app.use(function (req: Request, res: Response, next: NextFunction) {
   next(createError(404));

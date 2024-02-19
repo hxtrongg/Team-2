@@ -26,15 +26,23 @@ export interface Product {
 
 export interface ProductList {
     products: Product[];
-    pagination: {
-        page: number;
-        limit: number;
-        page_size: number;
-    };
+    // pagination: {
+    //     page: number;
+    //     limit: number;
+    //     page_size: number;
+    // };
+    totalRecords: number ;
+    totalPages:number ;
+    currentPage:number ;
+    recordsPerPage:number ;
 }
 
 export interface ProductListConfig {
     page?: number | string;
+    totalRecords?: number;
+    totalPages?:number;
+    currentPage?:number;
+    recordsPerPage?:number;
     limit?: number | string;
     sort_by?: 'createAt' | 'view' | 'sold' | 'price';
     order?: 'asc' | 'desc';

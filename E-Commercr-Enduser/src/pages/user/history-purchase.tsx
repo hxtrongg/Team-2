@@ -1,12 +1,19 @@
 import classNames from 'classnames';
 import { useQuery } from 'react-query';
 import { createSearchParams, Link } from 'react-router-dom';
-import { path } from 'src/constants';
-import { purchasesStatus } from 'src/constants/purchase';
-import useQueryParams from 'src/hooks/useQueryParams';
-import { purchaseService } from 'src/services';
-import { PurchaseListStatus } from 'src/types/purchase.type';
-import { formatCurrency, generateNameId } from 'src/utils';
+import { purchasesStatus } from '../../constants/purchase';
+import { useQueryParams } from '../../hooks';
+import { purchaseService } from '../../services';
+import { PurchaseListStatus } from '../../types/purchase.type';
+import { path } from '../../constants';
+import { Key, ReactElement, JSXElementConstructor, ReactNode } from 'react';
+import { formatCurrency, generateNameId } from '../../utils';
+// import { path } from 'src/constants';
+// import { purchasesStatus } from 'src/constants/purchase';
+// import useQueryParams from 'src/hooks/useQueryParams';
+// import { purchaseService } from 'src/services';
+// import { PurchaseListStatus } from 'src/types/purchase.type';
+// import { formatCurrency, generateNameId } from 'src/utils';
 
 const purchaseTabs = [
     { status: purchasesStatus.all, name: 'Tất cả' },
@@ -60,7 +67,7 @@ export default function HistoryPurchase() {
                         {purchaseTabsLink}
                     </div>
                     <div>
-                        {purchasesInCart?.map((purchase) => (
+                        {purchasesInCart?.map((purchase: { _id: Key | null | undefined; product: { name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined; _id: any; image: string | undefined; price_before_discount: any; price: number; }; buy_count: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined; }) => (
                             <div
                                 key={purchase._id}
                                 className="mt-4 rounded-sm border-black/10 bg-white p-6 text-gray-800 shadow-sm"

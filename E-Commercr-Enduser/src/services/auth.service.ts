@@ -13,8 +13,9 @@ const authService = {
     login: (body: { email: string; password: string }) => {
         return httpRequest.post<AuthResponse>(path.login, body);
     },
-    logout: () => {
-        return httpRequest.post<AuthResponse>(path.logout);
+    logout: async() => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
     },
 };
 

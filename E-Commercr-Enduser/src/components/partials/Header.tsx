@@ -1,10 +1,10 @@
 import { AiOutlineSearch, AiOutlineShoppingCart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { useSearchProducts } from '../../hooks';
+import useSearchProducts from '../../hooks/useSearchProducts';
 import { useAppContext } from '../../contexts/app.context';
 import NavHeader from './NavHeader';
 import { Logo } from '../icons';
-import { Button } from '../shared';
+import Button from '../shared/Button';
 
 // import { Logo } from 'src/components/icons';
 // import { Button, Popover } from 'src/components/shared';

@@ -37,7 +37,7 @@ function NavHeader() {
     };
 
     return (
-        <div className="flex items-center justify-end space-x-4 py-2">
+        <div className=" flex items-center justify-end space-x-4 py-2">
             {/* language switcher */}
             <Popover
                 renderPopover={

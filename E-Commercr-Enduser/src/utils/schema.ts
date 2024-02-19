@@ -61,7 +61,11 @@ export const userSchema = yup.object({
     password: yup
         .string()
         .required('Please enter your password')
-        ,
+        .min(8, 'Password must be at least 8 characters long')
+        .matches(
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm,
+            'At least 8 characters must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number Can contain special characters.',
+        ),
     confirmPassword: schema.fields['confirmPassword'],
     name: yup.string().max(160, 'Độ dài tên không được quá 160 ký tự'),
     phone: yup.string().max(20, 'Độ dài số điện thoại không được quá 20 ký tự'),
@@ -73,7 +77,11 @@ export const userSchema = yup.object({
     new_password: yup
         .string()
         .required('Please enter your password')
-       ,
+        .min(8, 'Password must be at least 8 characters long')
+        .matches(
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm,
+            'At least 8 characters must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number Can contain special characters.',
+        ),
     confirm_password: yup
         .string()
         .oneOf([yup.ref('new_password')], 'Mật khẩu không khớp'),

@@ -4,15 +4,19 @@ import { path } from './constants';
 import { useAppContext } from './contexts/app.context';
 import UserLayout from './pages/user/layouts/UserLayout';
 import { Suspense, lazy } from 'react';
+// import { ProfilePage } from './pages/user';
+// import RegisterPage from './pages/RegisterPage/register';
+// import { ProfilePage } from './pages/user';
+// import ProductDetailPage from './pages/ProductDetailPage/product-detail';
 
-// const LoginPage = lazy(() => import('./pages/login'));
+const LoginPage = lazy(() => import('./pages/LoginPage/login'));
 const HomePage = lazy(() => import('./pages/HomePage'));
-// const RegisterPage = lazy(() => import('./pages/register'));
-// const ProductDetailPage = lazy(() => import('./pages/product-detail'));
-// const ChangePasswordPage = lazy(() => import('./pages/user/change-password'));
-// const ProfilePage = lazy(() => import('./pages/user/profile'));
-// const PurchasePage = lazy(() => import('./pages/user/history-purchase'));
-// const CartPage = lazy(() => import('./pages/cart'));
+const RegisterPage = lazy(() => import('./pages/RegisterPage/register'));
+const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage/product-detail'));
+const ChangePasswordPage = lazy(() => import('./pages/user/change-password'));
+const ProfilePage = lazy(() => import('./pages/user/profile'));
+const PurchasePage = lazy(() => import('./pages/user/history-purchase'));
+const CartPage = lazy(() => import('./pages/CartPage/cart'));
 // const NotFoundPage = lazy(() => import('./pages/notFound'));
 
 function ProtectedRoute() {
@@ -45,7 +49,7 @@ const routes = [
         element: (
             <MainLayout>
                 <Suspense>
-                    {/* <ProductDetailPage /> */}
+                    <ProductDetailPage />
                 </Suspense>
             </MainLayout>
         ),
@@ -68,7 +72,7 @@ const routes = [
                         path: path.profile,
                         element: (
                             <Suspense>
-                                {/* <ProfilePage /> */}
+                                <ProfilePage />
                             </Suspense>
                         ),
                     },
@@ -76,7 +80,7 @@ const routes = [
                         path: path.changePassword,
                         element: (
                             <Suspense>
-                                {/* <ChangePasswordPage /> */}
+                                <ChangePasswordPage />
                             </Suspense>
                         ),
                     },
@@ -84,7 +88,7 @@ const routes = [
                         path: path.historyPurchase,
                         element: (
                             <Suspense>
-                                {/* <PurchasePage /> */}
+                                <PurchasePage />
                             </Suspense>
                         ),
                     },
@@ -95,7 +99,7 @@ const routes = [
                 element: (
                     <CartLayout>
                         <Suspense>
-                            {/* <CartPage /> */}
+                            <CartPage />
                         </Suspense>
                     </CartLayout>
                 ),
@@ -112,7 +116,7 @@ const routes = [
                 element: (
                     <RegisterLayout>
                         <Suspense>
-                            {/* <LoginPage /> */}
+                            <LoginPage />
                         </Suspense>
                     </RegisterLayout>
                 ),
@@ -122,7 +126,7 @@ const routes = [
                 element: (
                     <RegisterLayout>
                         <Suspense>
-                            {/* <RegisterPage /> */}
+                            <RegisterPage />
                         </Suspense>
                     </RegisterLayout>
                 ),

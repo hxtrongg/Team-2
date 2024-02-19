@@ -17,7 +17,8 @@ interface PaginationProps {
 }
 
 const SortProductList = ({ queryConfig, pageSize }: PaginationProps) => {
-    const page = Number(queryConfig.page);
+    const page = Number(queryConfig.page)
+    console.log('page', page)
     const navigate = useNavigate();
     const { sort_by = productSortBy.createAt, order } = queryConfig;
 
