@@ -17,14 +17,17 @@ const getAllItems = async (currentPage: number, pageSize: number) => {
   
   /// get total documents in the Categories collection 
   const totalRecords = await Product.countDocuments();
-
-  //return response with Categories, total pages, and current page
-  return {
-    products,
-    totalRecords,
+  const pagination = {
+    totalRecords, 
     totalPages: Math.ceil(totalRecords / pageSize),
     currentPage: currentPage,
-    recordsPerPage: pageSize
+    page_size: pageSize
+}
+
+  //return response, total pages, and current page
+  return {
+    products,
+    pagination
   };
 
   return products;

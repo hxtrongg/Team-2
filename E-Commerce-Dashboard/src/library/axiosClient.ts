@@ -11,10 +11,10 @@ const axiosClient = axios.create({
 // REQUEST
 axiosClient.interceptors.request.use(
   (config) => {
-    const token = window.localStorage.getItem('token');
+    const access_token = window.localStorage.getItem('access_token');
     //Check nếu có token thì đính kèm token vào header
-    if (token) {
-      config.headers['Authorization'] = 'Bearer ' + token;
+    if (access_token&&config.headers) {
+      config.headers.Authorization = 'Bearer ' + access_token;
     }
 
     return config;
@@ -33,10 +33,10 @@ axiosClient.interceptors.response.use(
      * bạn điều chỉnh lại cho đúng với cách code của bạn
      */
     // console.log('<<=== 🚀 axiosClient response.data  ===>>',response);
-    const { token, refreshToken } = response.data.data;
+    const { access_token, refreshToken } = response.data.data;
     // khi LOGIN oK ==> LƯU token và freshTOken xuống localStorage
-    if (token) {
-      window.localStorage.setItem('token', token);
+    if (access_token) {
+      window.localStorage.setItem('access_token', access_token);
     }
     if (refreshToken) {
       window.localStorage.setItem('refreshToken', refreshToken);
@@ -61,8 +61,8 @@ axiosClient.interceptors.response.use(
       originalConfig.sent = true;
       try {
         // Trường hợp không có token thì chuyển sang trang LOGIN
-        const token = window.localStorage.getItem('token');
-        if (!token) {
+        const access_token = window.localStorage.getItem('access_token');
+        if (!access_token) {
           console.log('Token not found',window.location.pathname);
           //Nếu trang hiện tại đang đứng không phải là login thì chuyển hướng login
           if(window.location.pathname !== '/login'){
@@ -79,12 +79,12 @@ axiosClient.interceptors.response.use(
             refreshToken: refreshToken,
           });
 
-          const { token } = response.data.data;
-          window.localStorage.setItem('token', token);
+          const { access_token } = response.data.data;
+          window.localStorage.setItem('access_token', access_token);
 
           originalConfig.headers = {
             ...originalConfig.headers,
-            authorization: `Bearer ${token}`,
+            authorization: `Bearer ${access_token}`,
           };
 
           return axiosClient(originalConfig);

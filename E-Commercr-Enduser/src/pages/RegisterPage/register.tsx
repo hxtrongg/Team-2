@@ -13,16 +13,6 @@ import { path } from '../../constants/index.ts';
 import omit from 'lodash/omit';
 import { useAppContext } from '../../contexts/app.context.tsx';
 
-// import { Button, InputField } from 'src/components/shared';
-// import authService from 'src/services/auth.service';
-// import omit from 'lodash/omit';
-// import { isAxiosUnprocessableEntityError } from 'src/utils';
-// import { ErrorResponseApi } from 'src/types/util.type.ts';
-// import { toast } from 'react-toastify';
-// import { useAppContext } from 'src/contexts/app.context';
-// import { path } from 'src/constants';
-// import { useSchemaValidate } from 'src/hooks';
-
 interface FormData {
     email: string;
     password: string;

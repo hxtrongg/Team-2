@@ -25,6 +25,7 @@ interface DataType {
   address: string;
   age: number;
   password: string;
+  role:string;
 }
 
 const Customer = () => {
@@ -221,11 +222,11 @@ const Customer = () => {
       dataIndex: "age",
       key: "age",
     },
-    // {
-    //   title: "PassWord",
-    //   dataIndex: "password",
-    //   key: "password",
-    // },
+    {
+      title: "vai trò",
+      dataIndex: "roles",
+      key: "roles",
+    },
 
     {
       title: "Thao tác",
@@ -448,6 +449,14 @@ const Customer = () => {
           >
             <Input />
           </Form.Item>
+          
+          {/* <Form.Item<DataType>
+            label="Role"
+            name="role"
+            rules={[{ required: false, message: "Please input your Role!" }]}
+          >
+            <Input />
+          </Form.Item> */}
         </Form>
       </Modal>
       {/* End Create Modal */}

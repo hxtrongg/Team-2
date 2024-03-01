@@ -13,14 +13,10 @@ const userSchema = new Schema<IUser>({
     type: Types.ObjectId,
     auto:true,
   },
-  id:{
-    type:String,
-    unique:true,
-  },
   account_id:{
     type: String,
   },
-  token:{
+  access_token:{
     type: String
   }
 },

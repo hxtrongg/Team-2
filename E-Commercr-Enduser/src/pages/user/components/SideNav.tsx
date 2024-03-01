@@ -4,13 +4,14 @@ import { useAppContext } from '../../../contexts/app.context';
 import { path } from '../../../constants';
 
 export default function SideNav() {
+    
     const { profile } = useAppContext();
 
     if (!profile) {
         return <div>no profile</div>;
     }
 
-    console.log(profile);
+    // console.log('profile',profile);
 
     return (
         <div>

@@ -33,6 +33,12 @@ const customersSchema = new Schema<ICustomer>({
   password: {
     type: String,
   },
+  roles: {
+    type: String,
+    required: true,
+    enum: ["admin", "user"],
+    default: 'user',
+  },
 });
 
 // 3. Tạo model categories.

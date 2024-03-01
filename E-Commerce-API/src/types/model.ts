@@ -62,25 +62,22 @@ export interface ICustomer {
   address: string;
   age: number;
   password: string;
+  roles: string;
+
 };
 
-export interface IOrder {
-  _id?: ObjectId;
-  createdDate: Date;
-  shippedDate: Date;
-  status: string;
-  description: string;
-  shippingAddress: string;
-  shippingCity: string;
-  paymentType: string;
-  customer: ObjectId;
-  employee: ObjectId;
-  orderDetail: IOderDetail[];
-};
+export type purchasesStatus = -1 | 1 | 2 | 3 | 4 | 5;
 
-export interface IOderDetail {
-  product: ObjectId;
-  quantity: number;
-  price: number;
-  discount: number;
-};
+export interface IPurchase {
+    _id?: ObjectId;
+    product_id: ObjectId;
+    price: number;
+    price_before_discount: number;
+    buy_count: number;
+    createdAt: string;
+    updatedAt: string;
+    user: ObjectId;
+    status: number;
+    disable:boolean;
+    checked:boolean;
+}

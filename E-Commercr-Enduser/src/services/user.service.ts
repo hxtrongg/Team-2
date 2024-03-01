@@ -1,6 +1,11 @@
-import { SuccessResponseApi } from 'src/types/util.type.ts';
-import httpRequest from 'src/utils/http';
-import { User } from 'src/types/user.type';
+// import { SuccessResponseApi } from 'src/types/util.type.ts';
+// import httpRequest from 'src/utils/http';
+// import { User } from 'src/types/user.type';
+
+import { axiosClient } from "../library/axiosClient.ts";
+import { SuccessResponseApi } from "../types/util.type.ts";
+import { User } from "../utils";
+import httpRequest from "../utils/http";
 
 interface BodyUpdateProfile
     extends Omit<
@@ -13,7 +18,7 @@ interface BodyUpdateProfile
 
 const userService = {
     getProfile() {
-        return httpRequest.get<SuccessResponseApi<User>>(`me`);
+        return httpRequest.get<SuccessResponseApi<User>>('/api/v1/auth/profileClient');
     },
     updateProfile(body: BodyUpdateProfile) {
         return httpRequest.put<SuccessResponseApi<User>>('user', body);

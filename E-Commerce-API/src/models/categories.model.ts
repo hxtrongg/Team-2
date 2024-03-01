@@ -9,9 +9,6 @@ const arrayLimit = (val: any) => val.length <= 5;
 
 const imageSchema = new Schema({
   url: { type: String },
-  alt: { type: String },
-  caption: { type: String },
-  position: { type: Number, default: 0 },
 });
 
 const categoriesSchema = new Schema<ICategory>(

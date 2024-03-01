@@ -2,11 +2,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
-import { Button, InputField } from 'src/components/shared';
-import userService from 'src/services/user.service';
-import { ErrorResponseApi } from 'src/types/util.type.ts';
-import { isAxiosUnprocessableEntityError } from 'src/utils';
-import { UserSchema, userSchema } from 'src/utils/schema';
+import { UserSchema, userSchema } from '../../utils/schema';
+import userService from '../../services/user.service';
+import { isAxiosUnprocessableEntityError } from '../../utils';
+import { ErrorResponseApi } from '../../types/util.type.ts';
+import InputField from '../../components/shared/InputField.tsx';
+import Button from '../../components/shared/Button.tsx';
+// import { Button, InputField } from 'src/components/shared';
+// import userService from 'src/services/user.service';
+// import { ErrorResponseApi } from 'src/types/util.type.ts';
+// import { isAxiosUnprocessableEntityError } from 'src/utils';
+// import { UserSchema, userSchema } from 'src/utils/schema';
 
 type FormData = Pick<
     UserSchema,
@@ -25,7 +31,7 @@ export default function ChangePassword() {
             confirm_password: '',
             new_password: '',
         },
-        resolver: yupResolver(passwordSchema),
+        // resolver: yupResolver(passwordSchema),
     });
     const updateProfileMutation = useMutation(userService.updateProfile);
 

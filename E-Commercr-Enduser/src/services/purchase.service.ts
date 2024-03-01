@@ -1,8 +1,9 @@
-import { Purchase } from "../types/purchase.type.ts";
+import { Purchase, PurchaseListStatus } from "../types/purchase.type.ts";
 import { SuccessResponseApi } from "../types/util.type.ts";
 import httpRequest from "../utils/http";
+import { purchasesStatus } from '../constants/purchase.ts';
 
-const URL = 'purchases';
+const URL = '/api/v1/purchases';
 
 const purchaseService = {
     addToCart: (body: { product_id: string; buy_count: number }) => {
@@ -11,11 +12,9 @@ const purchaseService = {
             body,
         );
     },
-    // getPurchases: (params: { status: PurchaseListStatus }) => {
-    //     return httpRequest.get<SuccessResponseApi<Purchase[]>>(URL, {
-    //         params,
-    //     });
-    // },
+    getPurchases: () => {
+        return httpRequest.get<SuccessResponseApi<Purchase[]>>(`${URL}/${purchasesStatus.inCart}`);
+    },
     buyProducts: (body: { product_id: string; buy_count: number }[]) => {
         return httpRequest.post<SuccessResponseApi<Purchase[]>>(
             `${URL}/buy-products`,

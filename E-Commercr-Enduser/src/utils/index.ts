@@ -33,7 +33,7 @@ export function saveAccessToken(access_token: string) {
 
 export function clearLocalStorage() {
     localStorage.removeItem('access_token');
-    localStorage.removeItem('profile');
+    localStorage.removeItem('user');
     const clearEvent = new Event('clearLocalStorage');
     LocalStorageEventTarget.dispatchEvent(clearEvent);
 }
@@ -42,13 +42,12 @@ export function getAccessToken() {
     return localStorage.getItem('access_token') || '';
 }
 
-export function getProfile() {
-    const profile = localStorage.getItem('profileClient');
-    return profile ? JSON.parse(profile) : null;
-}
-
-export function saveProfile(profile: User) {
-    localStorage.setItem('profile', JSON.stringify(profile));
+export default function getProfile() {
+    const user = localStorage.getItem('_id');
+    return user ? JSON.parse(user) : null;
+  }
+export function saveProfile(user: User) {
+    localStorage.setItem('_id', JSON.stringify(user));
 }
 
 export function formatCurrency(value: number) {

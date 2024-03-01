@@ -18,7 +18,7 @@ const getAllItems = async (page: number, limit: number) => {
       totalRecords,
       totalPages: Math.ceil(totalRecords / limit),
       currentPage: page,
-      recordsPerPage: limit,
+      page_size: limit,
     };
   } catch (error) {
     throw error;

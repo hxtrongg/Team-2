@@ -67,7 +67,7 @@ export default function HistoryPurchase() {
                         {purchaseTabsLink}
                     </div>
                     <div>
-                        {purchasesInCart?.map((purchase: { _id: Key | null | undefined; product: { name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined; _id: any; image: string | undefined; price_before_discount: any; price: number; }; buy_count: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined; }) => (
+                        {purchasesInCart?.map((purchase: { _id: Key | null | undefined; product: { name: string ; _id: any; image: string | undefined; price_before_discount: any; price: number; }; buy_count: number; }) => (
                             <div
                                 key={purchase._id}
                                 className="mt-4 rounded-sm border-black/10 bg-white p-6 text-gray-800 shadow-sm"
@@ -83,7 +83,6 @@ export default function HistoryPurchase() {
                                         <img
                                             className="h-20 w-20 object-cover"
                                             src={purchase.product.image}
-                                            alt={purchase.product.name}
                                         />
                                     </div>
                                     <div className="ml-3 flex-grow overflow-hidden">

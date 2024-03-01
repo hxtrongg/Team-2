@@ -32,7 +32,7 @@ const getUserById = async (id: string) => {
  return user;
 };
 
-const createItem = async (payload: IUser) => {
+const createItem = async (payload:IUser) => {
   //Kiểm tra xem email đã tồn tại chưa
   // Lưu xuống database
   const user =  await User.create(payload);

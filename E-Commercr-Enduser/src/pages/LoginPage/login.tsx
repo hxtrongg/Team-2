@@ -11,13 +11,7 @@ import { ErrorResponseApi } from '../../types/util.type.ts';
 import InputField from '../../components/shared/InputField.tsx';
 import Button from '../../components/shared/Button.tsx';
 
-// import { Button, InputField } from 'src/components/shared';
-// import authService from 'src/services/auth.service';
-// import { toast } from 'react-toastify';
-// import { isAxiosUnprocessableEntityError } from 'src/utils';
-// import { ErrorResponseApi } from 'src/types/util.type.ts';
-// import { useAppContext } from 'src/contexts/app.context';
-// import { useSchemaValidate } from 'src/hooks';
+
 interface FormData {
     email: string;
     password: string;

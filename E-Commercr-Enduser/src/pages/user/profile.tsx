@@ -4,28 +4,14 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useAppContext } from '../../contexts/app.context';
 import { Controller, useForm } from 'react-hook-form';
 import userService from '../../services/user.service';
-import { getAvatarUrl, isAxiosUnprocessableEntityError, saveProfile } from '../../utils';
+import { getAvatarUrl, isAxiosUnprocessableEntityError } from '../../utils';
 import { ErrorResponseApi } from '../../types/util.type.ts';
 import { maxSizeUpload } from '../../constants/upload.ts';
 import InputField from '../../components/shared/InputField.tsx';
 import DateSelect from '../../components/shared/DateSelect.tsx';
 import Button from '../../components/shared/Button.tsx';
 import { toast } from 'react-toastify';
-// import { Button, DateSelect, InputField } from 'src/components/shared';
-// import userService from 'src/services/user.service';
-// import { UserSchema, userSchema } from 'src/utils/schema';
-// import { useForm, Controller } from 'react-hook-form';
-// import { yupResolver } from '@hookform/resolvers/yup';
-// import { useEffect, useMemo, useRef, useState } from 'react';
-// import { toast } from 'react-toastify';
-// import { useAppContext } from 'src/contexts/app.context';
-// import {
-//     getAvatarUrl,
-//     isAxiosUnprocessableEntityError,
-//     saveProfile,
-// } from 'src/utils';
-// import { ErrorResponseApi } from 'src/types/util.type.ts';
-// import { maxSizeUpload } from 'src/constants/upload';
+
 
 type FormState = Pick<
     UserSchema,
@@ -49,7 +35,7 @@ export default function Profile() {
     const preview = useMemo(() => {
         return file ? URL.createObjectURL(file) : '';
     }, [file]);
-    const { setProfile } = useAppContext();
+    // const { setProfile } = useAppContext();
     const {
         control,
         handleSubmit,
@@ -90,7 +76,7 @@ export default function Profile() {
             }
             const response = await updateProfileMutation.mutateAsync({
                 ...data,
-                date_of_birth: data.date_of_birth?.toISOString(),
+                // date_of_birth: data.date_of_birth?.toISOString(),
                 avatar: avatarName,
             });
             refetch();
@@ -138,14 +124,14 @@ export default function Profile() {
     useEffect(() => {
         if (profile) {
             setValue('name', profile.name);
-            setValue('phone', profile.phone);
+            // setValue('phone', profile.phone);
             setValue('address', profile.address);
-            setValue(
-                'date_of_birth',
-                profile.date_of_birth
-                    ? new Date(profile.date_of_birth)
-                    : new Date(1990, 0, 1),
-            );
+            // setValue(
+            //     'date_of_birth',
+            //     profile.date_of_birth
+            //         ? new Date(profile.date_of_birth)
+            //         : new Date(1990, 0, 1),
+            // );
             setValue('avatar', profile.avatar);
         }
     }, [profile, setValue]);

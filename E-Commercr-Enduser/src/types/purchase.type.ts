@@ -5,8 +5,8 @@ export type purchasesStatus = -1 | 1 | 2 | 3 | 4 | 5;
 export type PurchaseListStatus = purchasesStatus | 0;
 
 export interface Purchase {
-    _id: string;
-    product: Product;
+    _id?: string;
+    product_id: Product;
     price: number;
     price_before_discount: number;
     buy_count: number;
@@ -17,6 +17,6 @@ export interface Purchase {
 }
 
 export interface ExtendedPurchases extends Purchase {
-    disable: boolean;
+    disable?: boolean;
     checked: boolean;
 }

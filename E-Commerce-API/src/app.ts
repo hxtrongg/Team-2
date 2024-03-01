@@ -13,7 +13,7 @@ import employeesRouter from './routes/v1/employees.router';
 import customersRouter from './routes/v1/customers.router';
 import productsRouter from './routes/v1/products.router';
 import authRoute from './routes/v1/auth.router';
-import ordersRoute from './routes/v1/orders.router';
+import purchaseRouter from './routes/v1/purchase.router';
 
 import fs from 'fs';
 import path from 'path';
@@ -42,7 +42,7 @@ app.use('/api/v1/employees', employeesRouter);
 app.use('/api/v1/customers', customersRouter);
 app.use('/api/v1/products', productsRouter);
 app.use('/api/v1/auth', authRoute);
-app.use('/api/v1/orders', ordersRoute);
+app.use('/api/v1/purchases', purchaseRouter);
 
 app.post('/file/upload', upload.single('file'),(req, res, next) => {
   const file = req.file
@@ -54,20 +54,6 @@ app.post('/file/upload', upload.single('file'),(req, res, next) => {
 
   res.send(file)
 });
-
-// app.post('/file/upload', upload.single('file'), async (req, res, next) => {
-//   try {
-//     const fileReq = req.file;
-//     if (!fileReq) {
-//       const error = new Error('Please upload a file');
-//       return next(error);
-//     }
-//     const file = await sharp(fileReq.buffer).resize({ width: 300, height: 200 }).toBuffer();
-//     res.send(file); // Send the resized image in the response
-//   } catch (error) {
-//     next(error);
-//   }
-// });
 
 app.delete('/delete-file', async (req, res) => {
   try {

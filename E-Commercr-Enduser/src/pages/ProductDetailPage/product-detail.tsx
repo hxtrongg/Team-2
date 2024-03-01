@@ -17,21 +17,7 @@ import { purchasesStatus } from '../../constants/purchase';
 import { Product, ProductRating } from '../../features/product';
 import { Button, QuantityController } from '../../components/shared';
 
-// import { Button, QuantityController } from 'src/components/shared';
-// import { purchasesStatus } from 'src/constants/purchase';
-// import { useAppContext } from 'src/contexts/app.context';
-// import { Product, ProductRating } from 'src/features/product';
-// import { productService, purchaseService } from 'src/services';
-// import {
-//     Product as ProductType,
-//     ProductListConfig,
-// } from 'src/types/product.type';
-// import {
-//     formatCurrency,
-//     formatNumberToSocialStyle,
-//     getIdFromNameId,
-//     rateSale,
-// } from 'src/utils';
+
 
 function ProductDetailPage() {
     const navigate = useNavigate();
@@ -40,6 +26,15 @@ function ProductDetailPage() {
     const { nameId } = useParams();
     const id = getIdFromNameId(nameId as string);
     const queryClient = useQueryClient();
+
+    const { data: purchasesInCartData, refetch } = useQuery({
+        queryKey: ['purchases', { status: purchasesStatus.inCart }],
+        queryFn: () => purchaseService.getPurchases(),
+      });
+
+      console.log('purchasesInCartData',purchasesInCartData)
+
+
     const { data: productData } = useQuery({
         queryKey: ['product', id],
         queryFn: () => {
@@ -172,6 +167,7 @@ function ProductDetailPage() {
         return <div>Loading...</div>;
     }
 
+   
     return (
         <div className="bg-gray-200 py-6">
             <div className="container">

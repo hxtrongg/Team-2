@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react';
-import { getAccessToken, getProfile } from '../utils';
-// import { User } from 'src/types/user.type';
-// import { ExtendedPurchases } from 'src/types/purchase.type';
+import  getProfile, { getAccessToken } from '../utils';
+import { ExtendedPurchases } from '../types/purchase.type';
+
 
 type Role = 'admin' | 'user';
 
@@ -22,10 +22,10 @@ export interface AppContextProps {
     setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
     profile: User | null;
     setProfile: React.Dispatch<React.SetStateAction<User | null>>;
-    // extendedPurchases: ExtendedPurchases[];
-    // setExtendedPurchases: React.Dispatch<
-    //     React.SetStateAction<ExtendedPurchases[]>
-    // >;
+    extendedPurchases: ExtendedPurchases[];
+    setExtendedPurchases: React.Dispatch<
+        React.SetStateAction<ExtendedPurchases[]>
+    >;
     reset: () => void;
 }
 
@@ -34,8 +34,8 @@ const initialAppContext: AppContextProps = {
     setIsAuthenticated: () => null,
     profile: getProfile(),
     setProfile: () => null,
-    // extendedPurchases: [],
-    // setExtendedPurchases: () => null,
+    extendedPurchases: [],
+    setExtendedPurchases: () => null,
     reset: () => null,
 };
 
@@ -46,16 +46,16 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         initialAppContext.isAuthenticated,
     );
 
-    // const [extendedPurchases, setExtendedPurchases] = useState<
-    //     ExtendedPurchases[]
-    // >([]);
+    const [extendedPurchases, setExtendedPurchases] = useState<
+        ExtendedPurchases[]
+    >([]);
 
     const [profile, setProfile] = useState(initialAppContext.profile);
 
     const reset = () => {
         setIsAuthenticated(false);
         setProfile(null);
-        // setExtendedPurchases([]);
+        setExtendedPurchases([]);
     };
 
     return (
@@ -64,9 +64,9 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
                 isAuthenticated,
                 setIsAuthenticated,
                 profile,
-                setProfile,
-                // extendedPurchases,
-                // setExtendedPurchases,
+                setProfile, 
+                extendedPurchases,
+                setExtendedPurchases,
                 reset,
             }}
         >

@@ -5,6 +5,14 @@ import { useAppContext } from '../../contexts/app.context';
 import NavHeader from './NavHeader';
 import { Logo } from '../icons';
 import Button from '../shared/Button';
+import { useQuery } from 'react-query';
+import { purchasesStatus } from '../../constants/purchase';
+import { purchaseService } from '../../services';
+import { Popover } from '../shared';
+import noproduct from 'src/assets/images/no-product.png'
+import { formatCurrency } from '../../utils';
+import { path } from '../../constants';
+
 
 // import { Logo } from 'src/components/icons';
 // import { Button, Popover } from 'src/components/shared';
@@ -25,14 +33,14 @@ function Header() {
 
     const { isAuthenticated } = useAppContext();
 
-    // const { data: purchasesInCartData } = useQuery({
-    //     queryKey: ['purchase', purchasesStatus.inCart],
-    //     queryFn: () =>
-    //         purchaseService.getPurchases({ status: purchasesStatus.inCart }),
-    //     enabled: isAuthenticated,
-    // });
+    const { data: purchasesInCartData } = useQuery({
+        queryKey: ['purchase', purchasesStatus.inCart],
+        queryFn: () =>
+            purchaseService.getPurchases({ status: purchasesStatus.inCart }),
+        enabled: isAuthenticated,
+    });
 
-    // const purchasesInCart = purchasesInCartData?.data.data;
+    const purchasesInCart = purchasesInCartData?.data.data;
 
     return (
         <header className="bg-[linear-gradient(-180deg,#f53d2d,#f63)]">
@@ -75,20 +83,18 @@ function Header() {
                         </div>
                     </form>
 
-                    {/* <div className="flex-center col-span-1 justify-self-end">
+                    <div className="flex-center col-span-1 justify-self-end">
                         <Popover
                             renderPopover={
                                 <div className="relative max-w-[400px] space-x-2 rounded-sm border border-gray-200 bg-white p-4 text-sm shadow-md">
-                                    {/* header */}
-                                    {/* {purchasesInCart &&
+                                    {purchasesInCart &&
                                     purchasesInCart.length > 0 ? (
                                         <div className="p-2">
                                             <p className="capitalize text-gray-400">
                                                 Sản phẩm mới thêm
-                                            </p> */}
+                                            </p>
 
-                                            {/* body */}
-                                            {/* {purchasesInCart
+                                            {purchasesInCart
                                                 .slice(0, MAX_PURCHASES)
                                                 .map((item) => (
                                                     <div
@@ -98,12 +104,12 @@ function Header() {
                                                         <div className="flex-shrink-0">
                                                             <img
                                                                 src={
-                                                                    item.product
-                                                                        .image
+                                                                    item.product_id
+                                                                        .images[0].url
                                                                 }
                                                                 alt={
-                                                                    item.product
-                                                                        .name
+                                                                    item.product_id
+                                                                    .name
                                                                 }
                                                                 className="h-11 w-11 object-cover"
                                                             />
@@ -111,8 +117,8 @@ function Header() {
                                                         <div className="ml-2 flex-grow overflow-hidden">
                                                             <p className="truncate">
                                                                 {
-                                                                    item.product
-                                                                        .name
+                                                                    item.product_id
+                                                                    .name
                                                                 }
                                                             </p>
                                                         </div>
@@ -120,16 +126,15 @@ function Header() {
                                                             <span className="text-primary">
                                                                 đ
                                                                 {formatCurrency(
-                                                                    item.product
-                                                                        .price,
+                                                                      item.product_id
+                                                                      .price
                                                                 )}
                                                             </span>
                                                         </div>
                                                     </div>
-                                                ))} */}
+                                                ))}
 
-                                            {/* footer */}
-                                            {/* <div className="mt-6 flex items-center justify-between">
+                                            <div className="mt-6 flex items-center justify-between">
                                                 <p className="text-sx capitalize text-gray-500">
                                                     {purchasesInCart.length >
                                                     MAX_PURCHASES
@@ -169,8 +174,8 @@ function Header() {
                                     </span>
                                 )}
                             </Link>
-                        </Popover> */}
-                    {/* </div> */} 
+                        </Popover>
+                    </div> 
                 </nav>
             </div>
         </header>
