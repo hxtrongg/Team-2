@@ -1,8 +1,7 @@
 import {Request, Response, NextFunction} from 'express'
 import authService from '../services/auth.service';
 import { sendJsonSuccess } from '../helpers/responseHandler';
-import jwt from 'jsonwebtoken'
-import User from '../models/user.model';
+
 
 const login = async(req:Request, res: Response, next: NextFunction)=>{
   try {
@@ -47,11 +46,11 @@ const getProfile = async (req: Request, res: Response, next: NextFunction) => {
 
 const getProfileClient = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log('getProfileClient',res.locals.user)
-    const {_id} = res.locals.user;
-    const user = await authService.getProfileClient(_id);
+    const {_id} = res.locals.customer;
+    console.log('getProfileClient',_id)
+    const customer = await authService.getProfileClient(_id);
     
-    sendJsonSuccess(res)(user);
+    sendJsonSuccess(res)(customer);
   } catch (error) {
     next(error);
   }

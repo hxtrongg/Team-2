@@ -35,7 +35,7 @@ export default function Profile() {
     const preview = useMemo(() => {
         return file ? URL.createObjectURL(file) : '';
     }, [file]);
-    // const { setProfile } = useAppContext();
+    const { setProfile } = useAppContext();
     const {
         control,
         handleSubmit,
@@ -56,9 +56,10 @@ export default function Profile() {
     const avatar = watch('avatar');
 
     const { data, refetch } = useQuery({
-        queryKey: 'profile',
+        queryKey: 'customer',
         queryFn: userService.getProfile,
     });
+    console.log('dataProfile',data)
     const updateProfileMutation = useMutation(userService.updateProfile);
     const uploadAvatarMutation = useMutation(userService.uploadAvatar);
 

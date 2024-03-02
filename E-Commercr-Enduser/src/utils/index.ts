@@ -33,7 +33,7 @@ export function saveAccessToken(access_token: string) {
 
 export function clearLocalStorage() {
     localStorage.removeItem('access_token');
-    localStorage.removeItem('user');
+    localStorage.removeItem('customer');
     const clearEvent = new Event('clearLocalStorage');
     LocalStorageEventTarget.dispatchEvent(clearEvent);
 }
@@ -43,11 +43,11 @@ export function getAccessToken() {
 }
 
 export default function getProfile() {
-    const user = localStorage.getItem('_id');
-    return user ? JSON.parse(user) : null;
+    const customer = localStorage.getItem('customer');
+    return customer ? JSON.parse(customer) : null;
   }
-export function saveProfile(user: User) {
-    localStorage.setItem('_id', JSON.stringify(user));
+export function saveProfile(customer: User) {
+    localStorage.setItem('customer', JSON.stringify(customer));
 }
 
 export function formatCurrency(value: number) {

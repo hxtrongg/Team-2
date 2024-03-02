@@ -4,7 +4,7 @@ import { SuccessResponseApi } from './util.type.ts';
 export interface data {
     access_token: string;
     expires: string;
-    user: User;
+    customer: User;
 }
 
 export type AuthResponse = SuccessResponseApi<data>;

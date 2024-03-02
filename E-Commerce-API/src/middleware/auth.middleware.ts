@@ -40,7 +40,8 @@ export const authenticateTokenDasboard = async (req: Request, res: Response, nex
 export const authenticateTokenClient = async (req: Request, res: Response, next: NextFunction) => {
   console.log('req_AuthenticateTokenClient',req.headers.authorization)
   //Get the jwt token from the head
-  const access_token = req.headers.authorization?.replace('Bearer ', '')
+  const access_token = req.headers.authorization?.replace('Bearer ','')
+  console.log('authenticateTokenClient',access_token)
      //If token is not valid, respond with 401 (unauthorized)
      if (!access_token) {
       return next(createError(401, 'Unauthorized'));
@@ -48,12 +49,13 @@ export const authenticateTokenClient = async (req: Request, res: Response, next:
     try {
       const decoded = jwt.verify(access_token, process.env.JWT_SECRET as string) as decodedJWT;
       //try verify user exits in database
-      const user = await Customer.findById(decoded._id);
-      if (!user) {
+      const customer = await Customer.findById(decoded._id);
+      console.log('customerAuthMidd',customer)
+      if (!customer) {
         return next(createError(401, 'Unauthorized'));
       }
+      return res.locals.customer = customer;
         //Đăng ký biến user global trong app
-        res.locals.user = user;
     } catch (err) {
       return next(createError(403, 'Forbidden'));
     }

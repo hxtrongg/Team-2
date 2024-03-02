@@ -1,7 +1,11 @@
-import { Schema, model } from 'mongoose';
+import { Schema, Types, model } from 'mongoose';
 import { ICustomer } from '../types/model';
 
 const customersSchema = new Schema<ICustomer>({
+  _id:{
+    type: Types.ObjectId,
+    auto:true,
+  },
   firstName: {
     type: String,
     require: true,
