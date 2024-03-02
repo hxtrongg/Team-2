@@ -46,7 +46,7 @@ const ProductsPage = () => {
   const getProducts = async (page: number ,filters: FiltersType)=> {
     // let url = config.urlAPI+'/v1/products?';
     const offset = (page - 1) * 12;
-    let url = `http://localhost:9494/api/v1/products?offset=${offset}&limit=12`;
+    let url = `http://localhost:8080/api/v1/products?offset=${offset}&limit=12`;
     
     if (filters.category && filters.category > 0) {
       url += `/category/${filters.category}`;

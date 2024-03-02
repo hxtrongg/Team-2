@@ -1,7 +1,7 @@
-import React from 'react';
-import Skeleton from 'react-loading-skeleton';
+import React, { useState } from 'react';
+// import Skeleton from 'react-loading-skeleton';
 import { useQuery } from '@tanstack/react-query';
-import { ICategory } from '../../constants/types';
+// import { ICategory } from '../../constants/types';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -13,35 +13,76 @@ type queryType = {
 type ProductFilterType = {
     queryString: queryType;
     currentCategoryId: number;
+    currentSuppliersId: number;
     currentPage: number;
     setCurrentPage: (page: number) => void;
 }
 
-const ProductFilter = ({ queryString, currentCategoryId, currentPage, setCurrentPage }: ProductFilterType) =>{
+const ProductFilter = ({ queryString, currentSuppliersId ,currentCategoryId, currentPage, setCurrentPage }: ProductFilterType) =>{
 
     const navigate = useNavigate();
-
+    // State để lưu trữ giá trị của thanh trượt giá
+    const [priceRange, setPriceRange] = useState([0, 200]); 
+    // hàm lấy category
     const getCategories = async () => {
-        return axios.get(`http://localhost:9494/api/v1/categories`);
+        return axios.get(`http://localhost:8080/api/v1/categories`);
     };
+
+    // hàm lấy suppliers.
+    const getSuppliers = async () => {
+      return axios.get(`http://localhost:8080/api/v1/suppliers`);
+    };
+    
 
     const queryCategory = useQuery({
         queryKey: ['categories'],
         queryFn: ()=> getCategories(),
         onSuccess: (data)=>{
             //Thành công thì trả lại data
-            console.log(data?.data.data.categories);
+            console.log('<<=== 🚀 Category ===>>',data?.data.data.categories);
           },
           onError: (error)=>{
             console.log(error);
           },
-    })
+    });
+
+    const querySuppliers = useQuery({
+      queryKey: ['suppliers'],
+      queryFn: getSuppliers,
+      onSuccess: (data) => {
+         // Log dữ liệu nhà cung cấp khi thành công
+        console.log('<<=== 🚀 Suppliers ===>>', data?.data.data.supplier); 
+      },
+      onError: (error) => {
+        console.log(error); // Log lỗi nếu có
+      },
+    });
+
+     // Hàm lọc giá tiền sản phẩm theo số
+     const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const newPrice = parseInt(event.target.value);
+      const updatedPriceRange = [...priceRange]; // Tạo một bản sao của mảng priceRange
+      updatedPriceRange[1] = newPrice; // Cập nhật giá trị max của khoảng giá mới
+      setPriceRange(updatedPriceRange); // Cập nhật biến state priceRange
+      // Lọc sản phẩm dựa trên khoảng giá mới
+      // Ví dụ: navigate(`/products?minPrice=${updatedPriceRange[0]}&maxPrice=${updatedPriceRange[1]}`);
+  };
+    
 
     return(
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-6 md:gap-8 lg:gap-10 lg:max-w-2xs lg:pt-28  lg:pb-9 px-4">
                 <div className="hidden lg:block pb-10 lg:border-b border-gray-600">
-                  <h6 className="font-bold text-black mb-5" data-config-id="auto-txt-2-2">Price</h6>
-                  <input className="w-full bg-blue-500" type="range" data-config-id="auto-input-1-2" />
+                  <h6 className="font-bold text-black mb-5" data-config-id="auto-txt-2-2">Giá</h6>
+                  <input
+                    className="w-full bg-blue-500"
+                    type="range"
+                    min="0"
+                    max="200"
+                    step="1"
+                    value={priceRange[1]} // Sử dụng giá trị max của khoảng giá để hiển thị trên thanh trượt
+                    onChange={handlePriceChange}
+                    data-config-id="auto-input-1-2"
+                />
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-gray-600" data-config-id="auto-txt-3-2">$0</span>
                     <span className="text-sm font-medium text-gray-600" data-config-id="auto-txt-4-2">$200</span>
@@ -50,15 +91,7 @@ const ProductFilter = ({ queryString, currentCategoryId, currentPage, setCurrent
                 <div className="hidden lg:block pb-10 lg:border-b border-gray-600">
                   <h6 className="font-bold text-black mb-8" data-config-id="auto-txt-5-2">Category</h6>
                   <li className='list-none'>
-                    <button
-                       onClick={() => {
-                        setCurrentPage(1);
-                        navigate(`/products`);
-                      }}
-                      className={currentCategoryId === 0 ? `hover:text-indigo-500 font-bold text-indigo-500 btn-empty` : `btn-empty hover:text-indigo-500`}
-                    >
-                      Tất cả
-                    </button>
+                   
                     </li>
                       <>
                       {
@@ -72,6 +105,29 @@ const ProductFilter = ({ queryString, currentCategoryId, currentPage, setCurrent
                       }}
                           
                           className={ currentCategoryId === item._id ? `inline-block font-medium text-gray-600` : `hover:text-gray-400`}>{item.name}</a></li>
+                        </ul>
+                      )
+                    }):null
+                  }
+                      </>
+                </div>
+
+                <div className="hidden lg:block pb-10 lg:border-b border-gray-600">
+                  <h6 className="font-bold text-black mb-8" data-config-id="auto-txt-5-2">Thương hiệu</h6>
+                  <li className='list-none'>
+                    </li>
+                      <>
+                      {
+                    querySuppliers.data && querySuppliers.data?.data.data.supplier ?  querySuppliers.data?.data.data.supplier.map((item: any) =>{
+                      
+                      return(
+                        <ul className="list-unstyled mb-0">
+                          <li key={`querySupplier${item._id}`} className="mb-4"><a  onClick={() => {
+                        setCurrentPage(1);
+                        navigate(`/products/supplier/${item._id}`);
+                      }}
+                          
+                          className={ currentSuppliersId === item._id ? `inline-block font-medium text-gray-600` : `hover:text-gray-400`}>{item.name}</a></li>
                         </ul>
                       )
                     }):null
