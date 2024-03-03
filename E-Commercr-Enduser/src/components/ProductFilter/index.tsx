@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import Skeleton from 'react-loading-skeleton';
 import { useQuery } from '@tanstack/react-query';
 // import { ICategory } from '../../constants/types';
@@ -23,6 +23,10 @@ const ProductFilter = ({ queryString, currentSuppliersId ,currentCategoryId, cur
     const navigate = useNavigate();
     // State để lưu trữ giá trị của thanh trượt giá
     const [priceRange, setPriceRange] = useState([0, 200]); 
+    // State để lưu trữ danh sách sản phẩm đã lọc
+    const [filteredProducts, setFilteredProducts] = useState<any[]>([]); 
+
+
     // hàm lấy category
     const getCategories = async () => {
         return axios.get(`http://localhost:8080/api/v1/categories`);
@@ -63,10 +67,19 @@ const ProductFilter = ({ queryString, currentSuppliersId ,currentCategoryId, cur
       const newPrice = parseInt(event.target.value);
       const updatedPriceRange = [...priceRange]; // Tạo một bản sao của mảng priceRange
       updatedPriceRange[1] = newPrice; // Cập nhật giá trị max của khoảng giá mới
+      if (updatedPriceRange[1] > 200) {
+        updatedPriceRange[1] = 200; // Đảm bảo giá trị max không vượt quá 200
+    }
       setPriceRange(updatedPriceRange); // Cập nhật biến state priceRange
       // Lọc sản phẩm dựa trên khoảng giá mới
-      // Ví dụ: navigate(`/products?minPrice=${updatedPriceRange[0]}&maxPrice=${updatedPriceRange[1]}`);
+       navigate(`/products?minPrice=${updatedPriceRange[0]}&maxPrice=${updatedPriceRange[1]}`);
   };
+
+  useEffect(() => {
+    // Thực hiện lọc sản phẩm dựa trên giá đã lọc
+    //fetchProductsFilteredByPrice(priceRange[0], priceRange[1])
+    // Sau đó cập nhật danh sách sản phẩm đã lọc vào state filteredProducts
+}, [priceRange]);
     
 
     return(
