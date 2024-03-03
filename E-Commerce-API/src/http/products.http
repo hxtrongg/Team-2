@@ -5,17 +5,17 @@ GET  http://localhost:9494/api/v1/products HTTP/1.1
 ###
 
 #Post a new user
-POST http://localhost:9494/api/v1/products HTTP/1.1
+POST http://localhost:8080/api/v1/products HTTP/1.1
 content-type: application/json
 
 {
-  "name": "Máy hút bụi cầm tay Deerma DX118C Pro",
-  "slug": "may-hut-bui-cam-tay-deerma-dx118c-pro", 
-  "supplier": "656a0f0600d2b32aa0693b80", 
-  "category": "656894b7c94df3a50a2a8e53", 
-  "price": 100, 
-  "meteTitle": "Mô tả ngắn", 
-  "meteDescription": "Mô tả chi tiết", 
+  "name": "Laptop HP Pavilion 15 eg2034TX i7 1255U/8GB/512GB/2GB MX550/Win11 (6K780PA)",
+  "slug": "", 
+  "supplier": "656a0f5200d2b32aa0693b85", 
+  "category": "65688ef0c94df3a50a2a8e49", 
+  "price": 50, 
+  "meteTitle": "Laptop HP Pavilion 15 eg2034TX i7 1255U/8GB/512GB/2GB MX550/Win11 (6K780PA)", 
+  "meteDescription": "Laptop HP Pavilion 15 eg2034TX i7 (6K780PA) hứa hẹn sẽ là một đối thủ đáng quan ngại trong phân khúc laptop học tập - văn phòng khi sở hữu cấu hình mạnh mẽ đến từ chip Intel Gen 12 cùng ngoại hình đơn giản nhưng không kém phần hiện đại.", 
   "content": "Nội dung sản phẩm", 
   "rating": 4, 
   "reviews": [
@@ -30,16 +30,16 @@ content-type: application/json
       "customerId": "656db3759171a0d052185716"
     }
   ],
-  "thumbnail": "may-hut-bui-cam-tay-deerma-dx118c-pro.jpg",
+  "thumbnail": "hp-pavilion-15-eg2034tx-i7-6k780pa-ab.jpg",
   "images": [
     {
-      "url": "may-hut-bui-cam-tay-deerma-dx118c-pro.jpg",
+      "url": "hp-pavilion-15-eg2034tx-i7-6k780pa-ab.jpg",
       "alt": "Mô tả hình ảnh 1",
       "caption": "Chú thích hình ảnh 1",
       "position": 0
     },
     {
-      "url": "may-hut-bui-cam-tay-deerma-dx118c-pro.jpg",
+      "url": "hp-pavilion-15-eg2034tx-i7-6k780pa-ab.jpg",
       "alt": "Mô tả hình ảnh 2",
       "caption": "Chú thích hình ảnh 2",
       "position": 1
@@ -51,7 +51,7 @@ content-type: application/json
 
 
 ###
-DELETE   http://localhost:9494/api/v1/products/6526a2b12a45dcd30e7a0bf7 HTTP/1.1
+DELETE   http://localhost:8080/api/v1/products/6570a1c2cc785a37486a3e49 HTTP/1.1
 
 
 ###

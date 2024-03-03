@@ -42,7 +42,7 @@ const productSchema = new Schema({
   slug: {
     type: String,
     lowercase: true,
-    required: true,
+    required: false,
     unique: true,
     maxLength: 160,
     validate: {
@@ -138,6 +138,9 @@ productSchema.plugin(mongooseLeanVirtuals);
 productSchema.pre('save', async function (next) {
   if (!this.slug && this.name) {
     this.slug = buildSlug(this.name);
+  } else if (!this.slug) {
+    // Tự tạo slug dựa trên _id nếu không có tên sản phẩm
+    this.slug = this._id.toString();
   }
 
   next();
