@@ -404,7 +404,7 @@ const Product = () => {
             name="price"
             rules={[
               { required: true, message: "Please input Price Name!" },
-              { min: 4, message: "Tối thiểu 4 kí tự" },
+              { min: 1, message: "Giá không hợp lệ" },
             ]}
           >
             <Input />
@@ -415,7 +415,7 @@ const Product = () => {
             name="stock"
             rules={[
               { required: true, message: "Please input stock Name!" },
-              { min: 4, message: "Tối thiểu 4 kí tự" },
+              { min: 1, message: "Tồn kho không hợp lệ" },
             ]}
           >
             <Input />
